@@ -1,0 +1,54 @@
+#
+# Makefile
+# parallel_GFM
+#
+# Based on the file at http://hiltmon.com/
+#
+
+# Compiler
+CC := g++
+
+# Folders
+SRCDIR := source
+BUILDDIR := objectfiles
+
+# Target
+TARGET := parallel_GFM
+
+# Code Lists
+SOURCES := $(shell find $(SRCDIR) -type f -name *.cpp)
+OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
+
+# Folder Lists
+INCDIRS := include
+INCLIST := -I include
+BUILDLIST := $(BUILDDIR)
+
+# Shared Compiler Flags
+OPLEVEL := 
+CFLAGS := -Wall -c -g -std=c++0x $(OPLEVEL)
+INC := $(INCLIST)
+TESTERFLAGS :=
+
+# Linking Step
+$(TARGET): $(OBJECTS)
+	@mkdir -p $(BUILDLIST)
+	@echo "Linking..."
+	@echo "  Linking $(TARGET)"; $(CC) $^ $(OPLEVEL) -o $(TARGET)
+	@echo "Success."
+
+# Compilation Step
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(BUILDLIST)	
+	@echo "Compiling $<..."; $(CC) $(CFLAGS) $(INC) -o $@ $<
+
+# Test Environment
+tester:
+	@echo "Compiling maintest..."; $(CC) $(CFLAGS) $(TESTERFLAGS) $(INC) -o test/maintest.o test/maintest.cpp
+	@echo "Linking maintest..."; $(CC) $(filter-out $(BUILDDIR)/main.o,$(OBJECTS)) test/maintest.o $(OPLEVEL) $(TESTERFLAGS) -o test/maintest
+	@echo "Success."
+
+clean:
+	@echo "Cleaning $(TARGET)..."; rm -r $(BUILDDIR) $(TARGET) test/*.o test/maintest
+
+
