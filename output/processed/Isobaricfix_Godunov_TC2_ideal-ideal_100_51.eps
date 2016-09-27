@@ -1,0 +1,5199 @@
+%!PS-Adobe-2.0 EPSF-2.0
+%%Title: ./../output/processed/Isobaricfix_Godunov_TC2_ideal-ideal_100_51.eps
+%%Creator: gnuplot 4.6 patchlevel 4
+%%CreationDate: Wed Sep 21 16:53:23 2016
+%%DocumentFonts: (atend)
+%%BoundingBox: 50 50 2210 1490
+%%EndComments
+%%BeginProlog
+/gnudict 256 dict def
+gnudict begin
+%
+% The following true/false flags may be edited by hand if desired.
+% The unit line width and grayscale image gamma correction may also be changed.
+%
+/Color true def
+/Blacktext false def
+/Solid false def
+/Dashlength 1 def
+/Landscape false def
+/Level1 false def
+/Rounded false def
+/ClipToBoundingBox false def
+/SuppressPDFMark false def
+/TransparentPatterns false def
+/gnulinewidth 5.000 def
+/userlinewidth gnulinewidth def
+/Gamma 1.0 def
+/BackgroundColor {-1.000 -1.000 -1.000} def
+%
+/vshift -200 def
+/dl1 {
+  10.0 Dashlength mul mul
+  Rounded { currentlinewidth 0.75 mul sub dup 0 le { pop 0.01 } if } if
+} def
+/dl2 {
+  10.0 Dashlength mul mul
+  Rounded { currentlinewidth 0.75 mul add } if
+} def
+/hpt_ 31.5 def
+/vpt_ 31.5 def
+/hpt hpt_ def
+/vpt vpt_ def
+/doclip {
+  ClipToBoundingBox {
+    newpath 50 50 moveto 2210 50 lineto 2210 1490 lineto 50 1490 lineto closepath
+    clip
+  } if
+} def
+%
+% Gnuplot Prolog Version 4.6 (September 2012)
+%
+%/SuppressPDFMark true def
+%
+/M {moveto} bind def
+/L {lineto} bind def
+/R {rmoveto} bind def
+/V {rlineto} bind def
+/N {newpath moveto} bind def
+/Z {closepath} bind def
+/C {setrgbcolor} bind def
+/f {rlineto fill} bind def
+/g {setgray} bind def
+/Gshow {show} def   % May be redefined later in the file to support UTF-8
+/vpt2 vpt 2 mul def
+/hpt2 hpt 2 mul def
+/Lshow {currentpoint stroke M 0 vshift R 
+	Blacktext {gsave 0 setgray show grestore} {show} ifelse} def
+/Rshow {currentpoint stroke M dup stringwidth pop neg vshift R
+	Blacktext {gsave 0 setgray show grestore} {show} ifelse} def
+/Cshow {currentpoint stroke M dup stringwidth pop -2 div vshift R 
+	Blacktext {gsave 0 setgray show grestore} {show} ifelse} def
+/UP {dup vpt_ mul /vpt exch def hpt_ mul /hpt exch def
+  /hpt2 hpt 2 mul def /vpt2 vpt 2 mul def} def
+/DL {Color {setrgbcolor Solid {pop []} if 0 setdash}
+ {pop pop pop 0 setgray Solid {pop []} if 0 setdash} ifelse} def
+/BL {stroke userlinewidth 2 mul setlinewidth
+	Rounded {1 setlinejoin 1 setlinecap} if} def
+/AL {stroke userlinewidth 2 div setlinewidth
+	Rounded {1 setlinejoin 1 setlinecap} if} def
+/UL {dup gnulinewidth mul /userlinewidth exch def
+	dup 1 lt {pop 1} if 10 mul /udl exch def} def
+/PL {stroke userlinewidth setlinewidth
+	Rounded {1 setlinejoin 1 setlinecap} if} def
+3.8 setmiterlimit
+% Default Line colors
+/LCw {1 1 1} def
+/LCb {0 0 0} def
+/LCa {0 0 0} def
+/LC0 {1 0 0} def
+/LC1 {0 1 0} def
+/LC2 {0 0 1} def
+/LC3 {1 0 1} def
+/LC4 {0 1 1} def
+/LC5 {1 1 0} def
+/LC6 {0 0 0} def
+/LC7 {1 0.3 0} def
+/LC8 {0.5 0.5 0.5} def
+% Default Line Types
+/LTw {PL [] 1 setgray} def
+/LTb {BL [] LCb DL} def
+/LTa {AL [1 udl mul 2 udl mul] 0 setdash LCa setrgbcolor} def
+/LT0 {PL [] LC0 DL} def
+/LT1 {PL [4 dl1 2 dl2] LC1 DL} def
+/LT2 {PL [2 dl1 3 dl2] LC2 DL} def
+/LT3 {PL [1 dl1 1.5 dl2] LC3 DL} def
+/LT4 {PL [6 dl1 2 dl2 1 dl1 2 dl2] LC4 DL} def
+/LT5 {PL [3 dl1 3 dl2 1 dl1 3 dl2] LC5 DL} def
+/LT6 {PL [2 dl1 2 dl2 2 dl1 6 dl2] LC6 DL} def
+/LT7 {PL [1 dl1 2 dl2 6 dl1 2 dl2 1 dl1 2 dl2] LC7 DL} def
+/LT8 {PL [2 dl1 2 dl2 2 dl1 2 dl2 2 dl1 2 dl2 2 dl1 4 dl2] LC8 DL} def
+/Pnt {stroke [] 0 setdash gsave 1 setlinecap M 0 0 V stroke grestore} def
+/Dia {stroke [] 0 setdash 2 copy vpt add M
+  hpt neg vpt neg V hpt vpt neg V
+  hpt vpt V hpt neg vpt V closepath stroke
+  Pnt} def
+/Pls {stroke [] 0 setdash vpt sub M 0 vpt2 V
+  currentpoint stroke M
+  hpt neg vpt neg R hpt2 0 V stroke
+ } def
+/Box {stroke [] 0 setdash 2 copy exch hpt sub exch vpt add M
+  0 vpt2 neg V hpt2 0 V 0 vpt2 V
+  hpt2 neg 0 V closepath stroke
+  Pnt} def
+/Crs {stroke [] 0 setdash exch hpt sub exch vpt add M
+  hpt2 vpt2 neg V currentpoint stroke M
+  hpt2 neg 0 R hpt2 vpt2 V stroke} def
+/TriU {stroke [] 0 setdash 2 copy vpt 1.12 mul add M
+  hpt neg vpt -1.62 mul V
+  hpt 2 mul 0 V
+  hpt neg vpt 1.62 mul V closepath stroke
+  Pnt} def
+/Star {2 copy Pls Crs} def
+/BoxF {stroke [] 0 setdash exch hpt sub exch vpt add M
+  0 vpt2 neg V hpt2 0 V 0 vpt2 V
+  hpt2 neg 0 V closepath fill} def
+/TriUF {stroke [] 0 setdash vpt 1.12 mul add M
+  hpt neg vpt -1.62 mul V
+  hpt 2 mul 0 V
+  hpt neg vpt 1.62 mul V closepath fill} def
+/TriD {stroke [] 0 setdash 2 copy vpt 1.12 mul sub M
+  hpt neg vpt 1.62 mul V
+  hpt 2 mul 0 V
+  hpt neg vpt -1.62 mul V closepath stroke
+  Pnt} def
+/TriDF {stroke [] 0 setdash vpt 1.12 mul sub M
+  hpt neg vpt 1.62 mul V
+  hpt 2 mul 0 V
+  hpt neg vpt -1.62 mul V closepath fill} def
+/DiaF {stroke [] 0 setdash vpt add M
+  hpt neg vpt neg V hpt vpt neg V
+  hpt vpt V hpt neg vpt V closepath fill} def
+/Pent {stroke [] 0 setdash 2 copy gsave
+  translate 0 hpt M 4 {72 rotate 0 hpt L} repeat
+  closepath stroke grestore Pnt} def
+/PentF {stroke [] 0 setdash gsave
+  translate 0 hpt M 4 {72 rotate 0 hpt L} repeat
+  closepath fill grestore} def
+/Circle {stroke [] 0 setdash 2 copy
+  hpt 0 360 arc stroke Pnt} def
+/CircleF {stroke [] 0 setdash hpt 0 360 arc fill} def
+/C0 {BL [] 0 setdash 2 copy moveto vpt 90 450 arc} bind def
+/C1 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 0 90 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C2 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 90 180 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C3 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 0 180 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C4 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 180 270 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C5 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 0 90 arc
+	2 copy moveto
+	2 copy vpt 180 270 arc closepath fill
+	vpt 0 360 arc} bind def
+/C6 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 90 270 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C7 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 0 270 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C8 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 270 360 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C9 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 270 450 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C10 {BL [] 0 setdash 2 copy 2 copy moveto vpt 270 360 arc closepath fill
+	2 copy moveto
+	2 copy vpt 90 180 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C11 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 0 180 arc closepath fill
+	2 copy moveto
+	2 copy vpt 270 360 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C12 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 180 360 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C13 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 0 90 arc closepath fill
+	2 copy moveto
+	2 copy vpt 180 360 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/C14 {BL [] 0 setdash 2 copy moveto
+	2 copy vpt 90 360 arc closepath fill
+	vpt 0 360 arc} bind def
+/C15 {BL [] 0 setdash 2 copy vpt 0 360 arc closepath fill
+	vpt 0 360 arc closepath} bind def
+/Rec {newpath 4 2 roll moveto 1 index 0 rlineto 0 exch rlineto
+	neg 0 rlineto closepath} bind def
+/Square {dup Rec} bind def
+/Bsquare {vpt sub exch vpt sub exch vpt2 Square} bind def
+/S0 {BL [] 0 setdash 2 copy moveto 0 vpt rlineto BL Bsquare} bind def
+/S1 {BL [] 0 setdash 2 copy vpt Square fill Bsquare} bind def
+/S2 {BL [] 0 setdash 2 copy exch vpt sub exch vpt Square fill Bsquare} bind def
+/S3 {BL [] 0 setdash 2 copy exch vpt sub exch vpt2 vpt Rec fill Bsquare} bind def
+/S4 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt Square fill Bsquare} bind def
+/S5 {BL [] 0 setdash 2 copy 2 copy vpt Square fill
+	exch vpt sub exch vpt sub vpt Square fill Bsquare} bind def
+/S6 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt vpt2 Rec fill Bsquare} bind def
+/S7 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt vpt2 Rec fill
+	2 copy vpt Square fill Bsquare} bind def
+/S8 {BL [] 0 setdash 2 copy vpt sub vpt Square fill Bsquare} bind def
+/S9 {BL [] 0 setdash 2 copy vpt sub vpt vpt2 Rec fill Bsquare} bind def
+/S10 {BL [] 0 setdash 2 copy vpt sub vpt Square fill 2 copy exch vpt sub exch vpt Square fill
+	Bsquare} bind def
+/S11 {BL [] 0 setdash 2 copy vpt sub vpt Square fill 2 copy exch vpt sub exch vpt2 vpt Rec fill
+	Bsquare} bind def
+/S12 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt2 vpt Rec fill Bsquare} bind def
+/S13 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt2 vpt Rec fill
+	2 copy vpt Square fill Bsquare} bind def
+/S14 {BL [] 0 setdash 2 copy exch vpt sub exch vpt sub vpt2 vpt Rec fill
+	2 copy exch vpt sub exch vpt Square fill Bsquare} bind def
+/S15 {BL [] 0 setdash 2 copy Bsquare fill Bsquare} bind def
+/D0 {gsave translate 45 rotate 0 0 S0 stroke grestore} bind def
+/D1 {gsave translate 45 rotate 0 0 S1 stroke grestore} bind def
+/D2 {gsave translate 45 rotate 0 0 S2 stroke grestore} bind def
+/D3 {gsave translate 45 rotate 0 0 S3 stroke grestore} bind def
+/D4 {gsave translate 45 rotate 0 0 S4 stroke grestore} bind def
+/D5 {gsave translate 45 rotate 0 0 S5 stroke grestore} bind def
+/D6 {gsave translate 45 rotate 0 0 S6 stroke grestore} bind def
+/D7 {gsave translate 45 rotate 0 0 S7 stroke grestore} bind def
+/D8 {gsave translate 45 rotate 0 0 S8 stroke grestore} bind def
+/D9 {gsave translate 45 rotate 0 0 S9 stroke grestore} bind def
+/D10 {gsave translate 45 rotate 0 0 S10 stroke grestore} bind def
+/D11 {gsave translate 45 rotate 0 0 S11 stroke grestore} bind def
+/D12 {gsave translate 45 rotate 0 0 S12 stroke grestore} bind def
+/D13 {gsave translate 45 rotate 0 0 S13 stroke grestore} bind def
+/D14 {gsave translate 45 rotate 0 0 S14 stroke grestore} bind def
+/D15 {gsave translate 45 rotate 0 0 S15 stroke grestore} bind def
+/DiaE {stroke [] 0 setdash vpt add M
+  hpt neg vpt neg V hpt vpt neg V
+  hpt vpt V hpt neg vpt V closepath stroke} def
+/BoxE {stroke [] 0 setdash exch hpt sub exch vpt add M
+  0 vpt2 neg V hpt2 0 V 0 vpt2 V
+  hpt2 neg 0 V closepath stroke} def
+/TriUE {stroke [] 0 setdash vpt 1.12 mul add M
+  hpt neg vpt -1.62 mul V
+  hpt 2 mul 0 V
+  hpt neg vpt 1.62 mul V closepath stroke} def
+/TriDE {stroke [] 0 setdash vpt 1.12 mul sub M
+  hpt neg vpt 1.62 mul V
+  hpt 2 mul 0 V
+  hpt neg vpt -1.62 mul V closepath stroke} def
+/PentE {stroke [] 0 setdash gsave
+  translate 0 hpt M 4 {72 rotate 0 hpt L} repeat
+  closepath stroke grestore} def
+/CircE {stroke [] 0 setdash 
+  hpt 0 360 arc stroke} def
+/Opaque {gsave closepath 1 setgray fill grestore 0 setgray closepath} def
+/DiaW {stroke [] 0 setdash vpt add M
+  hpt neg vpt neg V hpt vpt neg V
+  hpt vpt V hpt neg vpt V Opaque stroke} def
+/BoxW {stroke [] 0 setdash exch hpt sub exch vpt add M
+  0 vpt2 neg V hpt2 0 V 0 vpt2 V
+  hpt2 neg 0 V Opaque stroke} def
+/TriUW {stroke [] 0 setdash vpt 1.12 mul add M
+  hpt neg vpt -1.62 mul V
+  hpt 2 mul 0 V
+  hpt neg vpt 1.62 mul V Opaque stroke} def
+/TriDW {stroke [] 0 setdash vpt 1.12 mul sub M
+  hpt neg vpt 1.62 mul V
+  hpt 2 mul 0 V
+  hpt neg vpt -1.62 mul V Opaque stroke} def
+/PentW {stroke [] 0 setdash gsave
+  translate 0 hpt M 4 {72 rotate 0 hpt L} repeat
+  Opaque stroke grestore} def
+/CircW {stroke [] 0 setdash 
+  hpt 0 360 arc Opaque stroke} def
+/BoxFill {gsave Rec 1 setgray fill grestore} def
+/Density {
+  /Fillden exch def
+  currentrgbcolor
+  /ColB exch def /ColG exch def /ColR exch def
+  /ColR ColR Fillden mul Fillden sub 1 add def
+  /ColG ColG Fillden mul Fillden sub 1 add def
+  /ColB ColB Fillden mul Fillden sub 1 add def
+  ColR ColG ColB setrgbcolor} def
+/BoxColFill {gsave Rec PolyFill} def
+/PolyFill {gsave Density fill grestore grestore} def
+/h {rlineto rlineto rlineto gsave closepath fill grestore} bind def
+%
+% PostScript Level 1 Pattern Fill routine for rectangles
+% Usage: x y w h s a XX PatternFill
+%	x,y = lower left corner of box to be filled
+%	w,h = width and height of box
+%	  a = angle in degrees between lines and x-axis
+%	 XX = 0/1 for no/yes cross-hatch
+%
+/PatternFill {gsave /PFa [ 9 2 roll ] def
+  PFa 0 get PFa 2 get 2 div add PFa 1 get PFa 3 get 2 div add translate
+  PFa 2 get -2 div PFa 3 get -2 div PFa 2 get PFa 3 get Rec
+  TransparentPatterns {} {gsave 1 setgray fill grestore} ifelse
+  clip
+  currentlinewidth 0.5 mul setlinewidth
+  /PFs PFa 2 get dup mul PFa 3 get dup mul add sqrt def
+  0 0 M PFa 5 get rotate PFs -2 div dup translate
+  0 1 PFs PFa 4 get div 1 add floor cvi
+	{PFa 4 get mul 0 M 0 PFs V} for
+  0 PFa 6 get ne {
+	0 1 PFs PFa 4 get div 1 add floor cvi
+	{PFa 4 get mul 0 2 1 roll M PFs 0 V} for
+ } if
+  stroke grestore} def
+%
+/languagelevel where
+ {pop languagelevel} {1} ifelse
+ 2 lt
+	{/InterpretLevel1 true def}
+	{/InterpretLevel1 Level1 def}
+ ifelse
+%
+% PostScript level 2 pattern fill definitions
+%
+/Level2PatternFill {
+/Tile8x8 {/PaintType 2 /PatternType 1 /TilingType 1 /BBox [0 0 8 8] /XStep 8 /YStep 8}
+	bind def
+/KeepColor {currentrgbcolor [/Pattern /DeviceRGB] setcolorspace} bind def
+<< Tile8x8
+ /PaintProc {0.5 setlinewidth pop 0 0 M 8 8 L 0 8 M 8 0 L stroke} 
+>> matrix makepattern
+/Pat1 exch def
+<< Tile8x8
+ /PaintProc {0.5 setlinewidth pop 0 0 M 8 8 L 0 8 M 8 0 L stroke
+	0 4 M 4 8 L 8 4 L 4 0 L 0 4 L stroke}
+>> matrix makepattern
+/Pat2 exch def
+<< Tile8x8
+ /PaintProc {0.5 setlinewidth pop 0 0 M 0 8 L
+	8 8 L 8 0 L 0 0 L fill}
+>> matrix makepattern
+/Pat3 exch def
+<< Tile8x8
+ /PaintProc {0.5 setlinewidth pop -4 8 M 8 -4 L
+	0 12 M 12 0 L stroke}
+>> matrix makepattern
+/Pat4 exch def
+<< Tile8x8
+ /PaintProc {0.5 setlinewidth pop -4 0 M 8 12 L
+	0 -4 M 12 8 L stroke}
+>> matrix makepattern
+/Pat5 exch def
+<< Tile8x8
+ /PaintProc {0.5 setlinewidth pop -2 8 M 4 -4 L
+	0 12 M 8 -4 L 4 12 M 10 0 L stroke}
+>> matrix makepattern
+/Pat6 exch def
+<< Tile8x8
+ /PaintProc {0.5 setlinewidth pop -2 0 M 4 12 L
+	0 -4 M 8 12 L 4 -4 M 10 8 L stroke}
+>> matrix makepattern
+/Pat7 exch def
+<< Tile8x8
+ /PaintProc {0.5 setlinewidth pop 8 -2 M -4 4 L
+	12 0 M -4 8 L 12 4 M 0 10 L stroke}
+>> matrix makepattern
+/Pat8 exch def
+<< Tile8x8
+ /PaintProc {0.5 setlinewidth pop 0 -2 M 12 4 L
+	-4 0 M 12 8 L -4 4 M 8 10 L stroke}
+>> matrix makepattern
+/Pat9 exch def
+/Pattern1 {PatternBgnd KeepColor Pat1 setpattern} bind def
+/Pattern2 {PatternBgnd KeepColor Pat2 setpattern} bind def
+/Pattern3 {PatternBgnd KeepColor Pat3 setpattern} bind def
+/Pattern4 {PatternBgnd KeepColor Landscape {Pat5} {Pat4} ifelse setpattern} bind def
+/Pattern5 {PatternBgnd KeepColor Landscape {Pat4} {Pat5} ifelse setpattern} bind def
+/Pattern6 {PatternBgnd KeepColor Landscape {Pat9} {Pat6} ifelse setpattern} bind def
+/Pattern7 {PatternBgnd KeepColor Landscape {Pat8} {Pat7} ifelse setpattern} bind def
+} def
+%
+%
+%End of PostScript Level 2 code
+%
+/PatternBgnd {
+  TransparentPatterns {} {gsave 1 setgray fill grestore} ifelse
+} def
+%
+% Substitute for Level 2 pattern fill codes with
+% grayscale if Level 2 support is not selected.
+%
+/Level1PatternFill {
+/Pattern1 {0.250 Density} bind def
+/Pattern2 {0.500 Density} bind def
+/Pattern3 {0.750 Density} bind def
+/Pattern4 {0.125 Density} bind def
+/Pattern5 {0.375 Density} bind def
+/Pattern6 {0.625 Density} bind def
+/Pattern7 {0.875 Density} bind def
+} def
+%
+% Now test for support of Level 2 code
+%
+Level1 {Level1PatternFill} {Level2PatternFill} ifelse
+%
+/Symbol-Oblique /Symbol findfont [1 0 .167 1 0 0] makefont
+dup length dict begin {1 index /FID eq {pop pop} {def} ifelse} forall
+currentdict end definefont pop
+/MFshow {
+   { dup 5 get 3 ge
+     { 5 get 3 eq {gsave} {grestore} ifelse }
+     {dup dup 0 get findfont exch 1 get scalefont setfont
+     [ currentpoint ] exch dup 2 get 0 exch R dup 5 get 2 ne {dup dup 6
+     get exch 4 get {Gshow} {stringwidth pop 0 R} ifelse }if dup 5 get 0 eq
+     {dup 3 get {2 get neg 0 exch R pop} {pop aload pop M} ifelse} {dup 5
+     get 1 eq {dup 2 get exch dup 3 get exch 6 get stringwidth pop -2 div
+     dup 0 R} {dup 6 get stringwidth pop -2 div 0 R 6 get
+     show 2 index {aload pop M neg 3 -1 roll neg R pop pop} {pop pop pop
+     pop aload pop M} ifelse }ifelse }ifelse }
+     ifelse }
+   forall} def
+/Gswidth {dup type /stringtype eq {stringwidth} {pop (n) stringwidth} ifelse} def
+/MFwidth {0 exch { dup 5 get 3 ge { 5 get 3 eq { 0 } { pop } ifelse }
+ {dup 3 get{dup dup 0 get findfont exch 1 get scalefont setfont
+     6 get Gswidth pop add} {pop} ifelse} ifelse} forall} def
+/MLshow { currentpoint stroke M
+  0 exch R
+  Blacktext {gsave 0 setgray MFshow grestore} {MFshow} ifelse } bind def
+/MRshow { currentpoint stroke M
+  exch dup MFwidth neg 3 -1 roll R
+  Blacktext {gsave 0 setgray MFshow grestore} {MFshow} ifelse } bind def
+/MCshow { currentpoint stroke M
+  exch dup MFwidth -2 div 3 -1 roll R
+  Blacktext {gsave 0 setgray MFshow grestore} {MFshow} ifelse } bind def
+/XYsave    { [( ) 1 2 true false 3 ()] } bind def
+/XYrestore { [( ) 1 2 true false 4 ()] } bind def
+Level1 SuppressPDFMark or 
+{} {
+/SDict 10 dict def
+systemdict /pdfmark known not {
+  userdict /pdfmark systemdict /cleartomark get put
+} if
+SDict begin [
+  /Title (./../output/processed/Isobaricfix_Godunov_TC2_ideal-ideal_100_51.eps)
+  /Subject (gnuplot plot)
+  /Creator (gnuplot 4.6 patchlevel 4)
+  /Author (mcc74)
+%  /Producer (gnuplot)
+%  /Keywords ()
+  /CreationDate (Wed Sep 21 16:53:23 2016)
+  /DOCINFO pdfmark
+end
+} ifelse
+end
+%%EndProlog
+%%Page: 1 1
+gnudict begin
+gsave
+doclip
+50 50 translate
+0.050 0.050 scale
+0 setgray
+newpath
+(Palatino) findfont 600 scalefont setfont
+BackgroundColor 0 lt 3 1 roll 0 lt exch 0 lt or or not {BackgroundColor C 1.000 0 0 43200.00 28800.00 BoxColFill} if
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 16320 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 16320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 17496 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 17496 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.1)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 18672 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 18672 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.2)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 19848 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 19848 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.3)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 21024 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 21024 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.4)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 22200 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 22200 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.5)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 23375 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 23375 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.6)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 24551 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 24551 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.7)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 25727 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 25727 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.8)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 26903 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 26903 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.9)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 28079 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+2580 28079 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 1)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+2940 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+6456 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+6456 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.2)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+9972 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+9972 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.4)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+13487 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+13487 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.6)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+17003 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+17003 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.8)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+20519 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+20519 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 1)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 28079 N
+0 -11759 V
+17579 0 V
+0 11759 V
+-17579 0 V
+Z stroke
+LCb setrgbcolor
+480 22199 M
+currentpoint gsave translate -270 rotate 0 0 moveto
+[ [(Palatino) 600.0 0.0 true true 0 (density)]
+] -200.0 MCshow
+grestore
+LTb
+LCb setrgbcolor
+11729 14820 M
+[ [(Palatino) 600.0 0.0 true true 0 (x)]
+] -200.0 MCshow
+LTb
+1.000 UP
+3.000 UL
+LTb
+LCb setrgbcolor
+% Begin plot #1
+6.000 UL
+LT0
+LC2 setrgbcolor
+/Palatino findfont 600 scalefont setfont
+/vshift -200 def
+2949 28079 M
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 -65 V
+17 -87 V
+18 -86 V
+17 -86 V
+18 -85 V
+18 -84 V
+17 -85 V
+18 -83 V
+17 -83 V
+18 -83 V
+18 -82 V
+17 -82 V
+18 -81 V
+17 -80 V
+18 -80 V
+17 -80 V
+18 -79 V
+stroke 4777 26688 M
+18 -79 V
+17 -78 V
+18 -78 V
+17 -77 V
+18 -77 V
+17 -76 V
+18 -76 V
+18 -76 V
+17 -74 V
+18 -75 V
+17 -74 V
+18 -73 V
+18 -74 V
+17 -72 V
+18 -72 V
+17 -72 V
+18 -71 V
+17 -71 V
+18 -71 V
+18 -70 V
+17 -69 V
+18 -69 V
+17 -69 V
+18 -68 V
+17 -68 V
+18 -67 V
+18 -67 V
+17 -67 V
+18 -66 V
+17 -66 V
+18 -65 V
+18 -65 V
+17 -64 V
+18 -64 V
+17 -64 V
+18 -63 V
+17 -63 V
+18 -62 V
+18 -62 V
+17 -62 V
+18 -61 V
+17 -61 V
+18 -60 V
+17 -60 V
+18 -60 V
+18 -59 V
+17 -59 V
+18 -58 V
+17 -58 V
+18 -58 V
+18 -57 V
+17 -57 V
+18 -57 V
+17 -56 V
+18 -56 V
+17 -55 V
+18 -55 V
+18 -55 V
+17 -54 V
+18 -54 V
+17 -54 V
+18 -53 V
+17 -53 V
+18 -53 V
+18 -52 V
+17 -52 V
+18 -51 V
+17 -51 V
+18 -51 V
+18 -51 V
+17 -50 V
+18 -50 V
+17 -49 V
+18 -49 V
+17 -49 V
+18 -48 V
+18 -48 V
+17 -48 V
+18 -48 V
+17 -47 V
+18 -47 V
+17 -46 V
+18 -46 V
+18 -46 V
+17 -45 V
+18 -46 V
+17 -44 V
+18 -45 V
+18 -44 V
+17 -44 V
+18 -44 V
+17 -43 V
+18 -43 V
+17 -43 V
+18 -42 V
+18 -42 V
+17 -42 V
+18 -42 V
+17 -41 V
+18 -41 V
+17 -40 V
+18 -41 V
+18 -40 V
+17 -39 V
+stroke 6605 20699 M
+18 -40 V
+17 -39 V
+18 -39 V
+18 -39 V
+17 -38 V
+18 -38 V
+17 -38 V
+18 -37 V
+17 -38 V
+18 -36 V
+18 -37 V
+17 -37 V
+18 -36 V
+17 -36 V
+18 -35 V
+17 -36 V
+18 -35 V
+18 -34 V
+17 -35 V
+18 -34 V
+17 -34 V
+18 -34 V
+18 -34 V
+17 -33 V
+18 -33 V
+17 -33 V
+18 -32 V
+17 -33 V
+18 -32 V
+18 -32 V
+17 -31 V
+18 -31 V
+17 -31 V
+18 -31 V
+17 -31 V
+18 -30 V
+18 -30 V
+17 -30 V
+18 -30 V
+17 -29 V
+18 -30 V
+18 -29 V
+17 -28 V
+18 -29 V
+17 -28 V
+18 -28 V
+17 -28 V
+18 -28 V
+18 -27 V
+17 -28 V
+18 -27 V
+17 -26 V
+18 -27 V
+17 -26 V
+18 -26 V
+18 -26 V
+17 -26 V
+18 -26 V
+17 -25 V
+18 -25 V
+18 -25 V
+17 -25 V
+18 -24 V
+17 -24 V
+18 -25 V
+17 -23 V
+18 -24 V
+18 -24 V
+17 -23 V
+18 -23 V
+17 -23 V
+18 -23 V
+17 -22 V
+18 -23 V
+18 -22 V
+17 -22 V
+18 -22 V
+17 -22 V
+18 -21 V
+18 -21 V
+17 -21 V
+18 -21 V
+17 -21 V
+18 -21 V
+17 -20 V
+18 -20 V
+18 -20 V
+17 -20 V
+18 -20 V
+17 -19 V
+18 -20 V
+17 -19 V
+18 -19 V
+18 -19 V
+17 -19 V
+18 -18 V
+17 -19 V
+18 -18 V
+18 -18 V
+17 -18 V
+18 -17 V
+17 -18 V
+18 -18 V
+17 -17 V
+stroke 8433 17864 M
+18 -17 V
+18 -17 V
+17 -17 V
+18 -16 V
+17 -17 V
+18 -16 V
+17 -17 V
+18 -16 V
+18 -16 V
+17 -15 V
+18 -16 V
+17 -16 V
+18 -15 V
+18 -15 V
+17 -15 V
+18 -15 V
+17 -15 V
+18 -15 V
+17 -14 V
+18 -15 V
+18 -14 V
+17 -14 V
+18 -14 V
+17 -14 V
+18 -14 V
+17 -13 V
+18 -14 V
+18 -13 V
+17 -13 V
+18 -13 V
+17 -13 V
+18 -13 V
+18 -13 V
+17 -13 V
+18 -12 V
+17 -12 V
+18 -13 V
+17 -12 V
+18 -12 V
+18 -12 V
+17 -12 V
+18 -11 V
+17 -12 V
+18 -11 V
+17 -12 V
+18 -11 V
+18 -11 V
+17 -11 V
+18 -11 V
+17 -11 V
+18 -10 V
+18 -11 V
+17 -10 V
+18 -11 V
+17 -10 V
+18 -10 V
+17 -10 V
+18 -10 V
+18 -10 V
+17 -10 V
+18 -9 V
+17 -10 V
+18 -9 V
+17 -10 V
+18 -9 V
+18 -9 V
+17 -9 V
+18 -9 V
+17 -9 V
+18 -9 V
+18 -8 V
+17 -9 V
+18 -8 V
+17 -9 V
+18 -8 V
+17 -8 V
+18 -9 V
+18 -8 V
+17 -8 V
+18 -7 V
+17 -8 V
+18 -8 V
+17 -8 V
+18 -7 V
+18 -8 V
+17 -7 V
+18 -7 V
+17 -8 V
+18 -7 V
+18 -7 V
+17 -7 V
+18 -7 V
+17 -6 V
+18 -7 V
+17 -7 V
+18 -7 V
+18 -6 V
+17 -7 V
+18 -6 V
+17 -6 V
+18 -6 V
+17 -7 V
+18 -6 V
+18 -6 V
+stroke 10262 16733 M
+17 -6 V
+18 -6 V
+17 -5 V
+18 -6 V
+18 -6 V
+17 -5 V
+18 -6 V
+17 -6 V
+18 -5 V
+17 -5 V
+18 -6 V
+18 -5 V
+17 -5 V
+18 -5 V
+17 -5 V
+18 -5 V
+17 -5 V
+18 -5 V
+18 -5 V
+17 -5 V
+18 -4 V
+17 -5 V
+18 -4 V
+18 -5 V
+17 -4 V
+18 -5 V
+17 -4 V
+18 -4 V
+17 -5 V
+18 -4 V
+18 -4 V
+17 -1 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+stroke 12090 16577 M
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 1 V
+18 4 V
+18 4 V
+17 5 V
+18 4 V
+17 4 V
+18 5 V
+17 4 V
+18 5 V
+18 4 V
+17 5 V
+18 4 V
+17 5 V
+18 5 V
+18 5 V
+17 5 V
+18 5 V
+17 5 V
+18 5 V
+17 5 V
+18 5 V
+18 6 V
+17 5 V
+18 5 V
+17 6 V
+18 6 V
+17 5 V
+18 6 V
+18 6 V
+17 5 V
+18 6 V
+17 6 V
+18 6 V
+18 6 V
+17 7 V
+18 6 V
+17 6 V
+18 6 V
+17 7 V
+18 6 V
+18 7 V
+17 7 V
+18 7 V
+17 6 V
+18 7 V
+17 7 V
+18 7 V
+18 7 V
+17 8 V
+18 7 V
+17 7 V
+18 8 V
+18 7 V
+17 8 V
+18 8 V
+17 8 V
+18 7 V
+17 8 V
+18 8 V
+18 9 V
+17 8 V
+18 8 V
+17 9 V
+18 8 V
+17 9 V
+18 8 V
+18 9 V
+17 9 V
+18 9 V
+17 9 V
+18 9 V
+18 9 V
+17 10 V
+stroke 13918 17045 M
+18 9 V
+17 10 V
+18 9 V
+17 10 V
+18 10 V
+18 10 V
+17 10 V
+18 10 V
+17 10 V
+18 11 V
+17 10 V
+18 11 V
+18 10 V
+17 11 V
+18 11 V
+17 11 V
+18 11 V
+18 11 V
+17 12 V
+18 11 V
+17 12 V
+18 11 V
+17 12 V
+18 12 V
+18 12 V
+17 12 V
+18 13 V
+17 12 V
+18 12 V
+17 13 V
+18 13 V
+18 13 V
+17 13 V
+18 13 V
+17 13 V
+18 13 V
+18 14 V
+17 13 V
+18 14 V
+17 14 V
+18 14 V
+17 14 V
+18 14 V
+18 15 V
+17 14 V
+18 15 V
+17 15 V
+18 15 V
+17 15 V
+18 15 V
+18 15 V
+17 16 V
+18 16 V
+17 15 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 17 V
+18 16 V
+17 17 V
+18 17 V
+18 17 V
+17 17 V
+18 18 V
+17 18 V
+18 17 V
+17 18 V
+18 18 V
+18 18 V
+17 19 V
+18 18 V
+17 19 V
+18 19 V
+18 19 V
+17 19 V
+18 20 V
+17 19 V
+18 20 V
+17 20 V
+18 20 V
+18 20 V
+17 20 V
+18 21 V
+17 21 V
+18 21 V
+17 21 V
+18 21 V
+18 21 V
+17 22 V
+18 22 V
+17 22 V
+18 22 V
+18 23 V
+17 22 V
+18 23 V
+17 23 V
+18 23 V
+17 23 V
+18 24 V
+18 24 V
+17 23 V
+18 25 V
+17 24 V
+stroke 15746 18711 M
+18 24 V
+17 25 V
+18 25 V
+18 25 V
+17 25 V
+18 26 V
+17 26 V
+18 26 V
+18 26 V
+17 26 V
+18 27 V
+17 26 V
+18 27 V
+17 28 V
+18 27 V
+18 28 V
+17 28 V
+18 28 V
+17 28 V
+18 29 V
+17 28 V
+18 29 V
+18 30 V
+17 29 V
+18 30 V
+17 30 V
+18 30 V
+18 30 V
+17 31 V
+18 31 V
+17 31 V
+18 31 V
+17 31 V
+18 32 V
+18 32 V
+17 33 V
+18 32 V
+17 33 V
+18 33 V
+17 33 V
+18 34 V
+18 34 V
+17 34 V
+18 34 V
+17 35 V
+18 34 V
+18 35 V
+17 36 V
+18 35 V
+17 36 V
+18 36 V
+17 37 V
+18 37 V
+18 36 V
+17 38 V
+18 37 V
+17 38 V
+18 38 V
+17 38 V
+18 39 V
+18 39 V
+17 39 V
+18 40 V
+17 39 V
+18 40 V
+18 41 V
+17 40 V
+18 41 V
+17 41 V
+18 42 V
+17 42 V
+18 42 V
+18 42 V
+17 43 V
+18 43 V
+17 43 V
+18 44 V
+17 44 V
+18 44 V
+18 45 V
+17 44 V
+18 46 V
+17 45 V
+18 46 V
+18 46 V
+17 46 V
+18 47 V
+17 47 V
+18 48 V
+17 48 V
+18 48 V
+18 48 V
+17 49 V
+18 49 V
+17 49 V
+18 50 V
+17 50 V
+18 51 V
+18 51 V
+17 51 V
+18 51 V
+17 52 V
+18 52 V
+18 53 V
+stroke 17575 22582 M
+17 53 V
+18 53 V
+17 54 V
+18 54 V
+17 54 V
+18 55 V
+18 55 V
+17 55 V
+18 56 V
+17 56 V
+18 57 V
+17 57 V
+18 57 V
+18 58 V
+17 58 V
+18 58 V
+17 59 V
+18 59 V
+18 60 V
+17 60 V
+18 60 V
+17 61 V
+18 61 V
+17 62 V
+18 62 V
+18 62 V
+17 63 V
+18 63 V
+17 64 V
+18 64 V
+17 64 V
+18 65 V
+18 65 V
+17 66 V
+18 66 V
+17 67 V
+18 67 V
+18 67 V
+17 68 V
+18 68 V
+17 69 V
+18 69 V
+17 69 V
+18 70 V
+18 71 V
+17 71 V
+18 71 V
+17 72 V
+18 72 V
+17 72 V
+18 74 V
+18 73 V
+17 74 V
+18 75 V
+17 74 V
+18 76 V
+18 76 V
+17 76 V
+18 77 V
+17 77 V
+18 78 V
+17 78 V
+18 79 V
+18 79 V
+17 80 V
+18 80 V
+17 80 V
+18 81 V
+17 82 V
+18 82 V
+18 83 V
+17 83 V
+18 83 V
+17 85 V
+18 84 V
+18 85 V
+17 86 V
+18 86 V
+17 87 V
+18 65 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+stroke 19403 28079 M
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+% End plot #1
+% Begin plot #2
+4.000 UP
+stroke
+3.000 UL
+LT1
+LC0 setrgbcolor
+/Palatino findfont 600 scalefont setfont
+2940 28079 M
+88 0 V
+176 -1 V
+175 -6 V
+176 -29 V
+176 -82 V
+176 -169 V
+176 -269 V
+175 -359 V
+176 -425 V
+176 -468 V
+176 -491 V
+176 -499 V
+175 -499 V
+176 -493 V
+176 -482 V
+176 -469 V
+176 -454 V
+175 -438 V
+176 -421 V
+176 -403 V
+176 -385 V
+175 -366 V
+176 -348 V
+176 -329 V
+176 -309 V
+176 -290 V
+175 -271 V
+176 -251 V
+176 -233 V
+176 -214 V
+176 -196 V
+175 -179 V
+176 -163 V
+176 -146 V
+176 -133 V
+176 -118 V
+175 -106 V
+176 -95 V
+176 -84 V
+176 -74 V
+175 -66 V
+176 -58 V
+176 -51 V
+176 -44 V
+176 -38 V
+175 -32 V
+176 -23 V
+176 -16 V
+176 -8 V
+176 -3 V
+175 0 V
+176 3 V
+176 8 V
+176 16 V
+176 23 V
+175 32 V
+176 38 V
+176 44 V
+176 51 V
+176 58 V
+175 66 V
+176 74 V
+176 84 V
+176 95 V
+175 106 V
+176 118 V
+176 133 V
+176 146 V
+176 163 V
+175 179 V
+176 196 V
+176 214 V
+176 233 V
+176 251 V
+175 271 V
+176 290 V
+176 309 V
+176 329 V
+176 348 V
+175 366 V
+176 385 V
+176 403 V
+176 421 V
+175 438 V
+176 454 V
+176 469 V
+176 482 V
+176 493 V
+175 499 V
+176 499 V
+176 491 V
+176 468 V
+176 425 V
+175 359 V
+176 269 V
+176 169 V
+176 82 V
+176 29 V
+175 6 V
+176 1 V
+88 0 V
+3028 28079 Box
+3204 28078 Box
+3379 28072 Box
+3555 28043 Box
+3731 27961 Box
+3907 27792 Box
+4083 27523 Box
+4258 27164 Box
+4434 26739 Box
+4610 26271 Box
+4786 25780 Box
+4962 25281 Box
+5137 24782 Box
+5313 24289 Box
+5489 23807 Box
+5665 23338 Box
+5841 22884 Box
+6016 22446 Box
+6192 22025 Box
+6368 21622 Box
+6544 21237 Box
+6719 20871 Box
+6895 20523 Box
+7071 20194 Box
+7247 19885 Box
+7423 19595 Box
+7598 19324 Box
+7774 19073 Box
+7950 18840 Box
+8126 18626 Box
+8302 18430 Box
+8477 18251 Box
+8653 18088 Box
+8829 17942 Box
+9005 17809 Box
+9181 17691 Box
+9356 17585 Box
+9532 17490 Box
+9708 17406 Box
+9884 17332 Box
+10059 17266 Box
+10235 17208 Box
+10411 17157 Box
+10587 17113 Box
+10763 17075 Box
+10938 17043 Box
+11114 17020 Box
+11290 17004 Box
+11466 16996 Box
+11642 16993 Box
+11817 16993 Box
+11993 16996 Box
+12169 17004 Box
+12345 17020 Box
+12521 17043 Box
+12696 17075 Box
+12872 17113 Box
+13048 17157 Box
+13224 17208 Box
+13400 17266 Box
+13575 17332 Box
+13751 17406 Box
+13927 17490 Box
+14103 17585 Box
+14278 17691 Box
+14454 17809 Box
+14630 17942 Box
+14806 18088 Box
+14982 18251 Box
+15157 18430 Box
+15333 18626 Box
+15509 18840 Box
+15685 19073 Box
+15861 19324 Box
+16036 19595 Box
+16212 19885 Box
+16388 20194 Box
+16564 20523 Box
+16740 20871 Box
+16915 21237 Box
+17091 21622 Box
+17267 22025 Box
+17443 22446 Box
+17618 22884 Box
+17794 23338 Box
+17970 23807 Box
+18146 24289 Box
+18322 24782 Box
+18497 25281 Box
+18673 25780 Box
+18849 26271 Box
+19025 26739 Box
+19201 27164 Box
+19376 27523 Box
+19552 27792 Box
+19728 27961 Box
+19904 28043 Box
+20080 28072 Box
+20255 28078 Box
+20431 28079 Box
+% End plot #2
+3.000 UL
+LTb
+LCb setrgbcolor
+2940 28079 N
+0 -11759 V
+17579 0 V
+0 11759 V
+-17579 0 V
+Z stroke
+1.000 UP
+3.000 UL
+LTb
+LCb setrgbcolor
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 16320 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 16320 M
+[ [(Palatino) 600.0 0.0 true true 0 (-2)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 17790 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 17790 M
+[ [(Palatino) 600.0 0.0 true true 0 (-1.5)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 19260 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 19260 M
+[ [(Palatino) 600.0 0.0 true true 0 (-1)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 20730 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 20730 M
+[ [(Palatino) 600.0 0.0 true true 0 (-0.5)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 22200 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 22200 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 23669 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 23669 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.5)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 25139 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 25139 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 1)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 26609 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 26609 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 1.5)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 28079 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 28079 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 2)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+24540 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+28056 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+28056 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.2)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+31572 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+31572 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.4)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+35087 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+35087 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.6)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+38603 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+38603 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.8)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+42119 16320 M
+0 63 V
+0 11696 R
+0 -63 V
+stroke
+42119 15720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 1)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 28079 N
+0 -11759 V
+17579 0 V
+0 11759 V
+-17579 0 V
+Z stroke
+LCb setrgbcolor
+22080 22199 M
+currentpoint gsave translate -270 rotate 0 0 moveto
+[ [(Palatino) 600.0 0.0 true true 0 (velocity)]
+] -200.0 MCshow
+grestore
+LTb
+LCb setrgbcolor
+33329 14820 M
+[ [(Palatino) 600.0 0.0 true true 0 (x)]
+] -200.0 MCshow
+LTb
+1.000 UP
+3.000 UL
+LTb
+LCb setrgbcolor
+% Begin plot #1
+6.000 UL
+LT0
+LC2 setrgbcolor
+/Palatino findfont 600 scalefont setfont
+24549 16320 M
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 12 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+stroke 26377 16594 M
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+stroke 28205 18292 M
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+stroke 30033 19991 M
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+stroke 31862 21689 M
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 5 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+stroke 33690 22200 M
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 4 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+stroke 35518 23379 M
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+stroke 37346 25078 M
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+stroke 39175 26777 M
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 16 V
+17 16 V
+18 17 V
+18 16 V
+17 16 V
+18 17 V
+17 16 V
+18 16 V
+18 17 V
+17 16 V
+18 16 V
+17 17 V
+18 12 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+stroke 41003 28079 M
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+17 0 V
+18 0 V
+18 0 V
+17 0 V
+% End plot #1
+% Begin plot #2
+4.000 UP
+stroke
+3.000 UL
+LT1
+LC0 setrgbcolor
+/Palatino findfont 600 scalefont setfont
+24540 16320 M
+88 0 V
+176 0 V
+175 1 V
+176 6 V
+176 15 V
+176 32 V
+176 51 V
+175 70 V
+176 86 V
+176 96 V
+176 105 V
+176 112 V
+175 115 V
+176 120 V
+176 121 V
+176 124 V
+176 126 V
+175 127 V
+176 129 V
+176 129 V
+176 130 V
+175 131 V
+176 132 V
+176 131 V
+176 132 V
+176 132 V
+175 132 V
+176 132 V
+176 131 V
+176 130 V
+176 130 V
+175 128 V
+176 128 V
+176 126 V
+176 126 V
+176 125 V
+175 124 V
+176 125 V
+176 125 V
+176 126 V
+175 129 V
+176 133 V
+176 138 V
+176 144 V
+176 151 V
+175 161 V
+176 176 V
+176 190 V
+176 202 V
+176 209 V
+175 211 V
+176 209 V
+176 202 V
+176 190 V
+176 176 V
+175 161 V
+176 151 V
+176 144 V
+176 138 V
+176 133 V
+175 129 V
+176 126 V
+176 125 V
+176 125 V
+175 124 V
+176 125 V
+176 126 V
+176 126 V
+176 128 V
+175 128 V
+176 130 V
+176 130 V
+176 131 V
+176 132 V
+175 132 V
+176 132 V
+176 132 V
+176 131 V
+176 132 V
+175 131 V
+176 130 V
+176 129 V
+176 129 V
+175 127 V
+176 126 V
+176 124 V
+176 121 V
+176 120 V
+175 115 V
+176 112 V
+176 105 V
+176 96 V
+176 86 V
+175 70 V
+176 51 V
+176 32 V
+176 15 V
+176 6 V
+175 1 V
+176 0 V
+88 0 V
+24628 16320 Box
+24804 16320 Box
+24979 16321 Box
+25155 16327 Box
+25331 16342 Box
+25507 16374 Box
+25683 16425 Box
+25858 16495 Box
+26034 16581 Box
+26210 16677 Box
+26386 16782 Box
+26562 16894 Box
+26737 17009 Box
+26913 17129 Box
+27089 17250 Box
+27265 17374 Box
+27441 17500 Box
+27616 17627 Box
+27792 17756 Box
+27968 17885 Box
+28144 18015 Box
+28319 18146 Box
+28495 18278 Box
+28671 18409 Box
+28847 18541 Box
+29023 18673 Box
+29198 18805 Box
+29374 18937 Box
+29550 19068 Box
+29726 19198 Box
+29902 19328 Box
+30077 19456 Box
+30253 19584 Box
+30429 19710 Box
+30605 19836 Box
+30781 19961 Box
+30956 20085 Box
+31132 20210 Box
+31308 20335 Box
+31484 20461 Box
+31659 20590 Box
+31835 20723 Box
+32011 20861 Box
+32187 21005 Box
+32363 21156 Box
+32538 21317 Box
+32714 21493 Box
+32890 21683 Box
+33066 21885 Box
+33242 22094 Box
+33417 22305 Box
+33593 22514 Box
+33769 22716 Box
+33945 22906 Box
+34121 23082 Box
+34296 23243 Box
+34472 23394 Box
+34648 23538 Box
+34824 23676 Box
+35000 23809 Box
+35175 23938 Box
+35351 24064 Box
+35527 24189 Box
+35703 24314 Box
+35878 24438 Box
+36054 24563 Box
+36230 24689 Box
+36406 24815 Box
+36582 24943 Box
+36757 25071 Box
+36933 25201 Box
+37109 25331 Box
+37285 25462 Box
+37461 25594 Box
+37636 25726 Box
+37812 25858 Box
+37988 25990 Box
+38164 26121 Box
+38340 26253 Box
+38515 26384 Box
+38691 26514 Box
+38867 26643 Box
+39043 26772 Box
+39218 26899 Box
+39394 27025 Box
+39570 27149 Box
+39746 27270 Box
+39922 27390 Box
+40097 27505 Box
+40273 27617 Box
+40449 27722 Box
+40625 27818 Box
+40801 27904 Box
+40976 27974 Box
+41152 28025 Box
+41328 28057 Box
+41504 28072 Box
+41680 28078 Box
+41855 28079 Box
+42031 28079 Box
+% End plot #2
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 28079 N
+0 -11759 V
+17579 0 V
+0 11759 V
+-17579 0 V
+Z stroke
+1.000 UP
+3.000 UL
+LTb
+LCb setrgbcolor
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 1920 M
+63 0 V
+17156 0 R
+-63 0 V
+stroke
+2940 1920 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 3390 M
+63 0 V
+17156 0 R
+-63 0 V
+stroke
+2940 3390 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.05)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 4860 M
+63 0 V
+17156 0 R
+-63 0 V
+stroke
+2940 4860 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.1)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 6330 M
+63 0 V
+17156 0 R
+-63 0 V
+stroke
+2940 6330 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.15)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 7800 M
+63 0 V
+17156 0 R
+-63 0 V
+stroke
+2940 7800 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.2)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 9270 M
+63 0 V
+17156 0 R
+-63 0 V
+stroke
+2940 9270 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.25)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 10740 M
+63 0 V
+17156 0 R
+-63 0 V
+stroke
+2940 10740 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.3)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 12210 M
+63 0 V
+17156 0 R
+-63 0 V
+stroke
+2940 12210 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.35)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 13680 M
+63 0 V
+17156 0 R
+-63 0 V
+stroke
+2940 13680 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.4)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+3300 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+6744 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+6744 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.2)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+10188 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+10188 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.4)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+13631 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+13631 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.6)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+17075 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+17075 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.8)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+20519 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+20519 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 1)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 13680 N
+0 -11760 V
+17219 0 V
+0 11760 V
+-17219 0 V
+Z stroke
+LCb setrgbcolor
+480 7800 M
+currentpoint gsave translate -270 rotate 0 0 moveto
+[ [(Palatino) 600.0 0.0 true true 0 (pressure)]
+] -200.0 MCshow
+grestore
+LTb
+LCb setrgbcolor
+11909 420 M
+[ [(Palatino) 600.0 0.0 true true 0 (x)]
+] -200.0 MCshow
+LTb
+1.000 UP
+3.000 UL
+LTb
+LCb setrgbcolor
+% Begin plot #1
+6.000 UL
+LT0
+LC2 setrgbcolor
+/Palatino findfont 600 scalefont setfont
+3309 13680 M
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 -91 V
+17 -121 V
+17 -120 V
+18 -119 V
+17 -117 V
+17 -117 V
+17 -116 V
+17 -114 V
+18 -114 V
+17 -112 V
+17 -112 V
+17 -110 V
+18 -110 V
+17 -108 V
+17 -108 V
+17 -106 V
+17 -106 V
+stroke 5099 11779 M
+18 -104 V
+17 -104 V
+17 -103 V
+17 -101 V
+17 -101 V
+18 -100 V
+17 -99 V
+17 -98 V
+17 -97 V
+18 -97 V
+17 -95 V
+17 -95 V
+17 -93 V
+17 -93 V
+18 -92 V
+17 -91 V
+17 -90 V
+17 -90 V
+18 -88 V
+17 -88 V
+17 -87 V
+17 -86 V
+17 -85 V
+18 -85 V
+17 -83 V
+17 -83 V
+17 -82 V
+18 -81 V
+17 -81 V
+17 -80 V
+17 -79 V
+17 -78 V
+18 -77 V
+17 -77 V
+17 -76 V
+17 -76 V
+17 -74 V
+18 -74 V
+17 -73 V
+17 -72 V
+17 -72 V
+18 -71 V
+17 -71 V
+17 -69 V
+17 -69 V
+17 -69 V
+18 -67 V
+17 -67 V
+17 -66 V
+17 -66 V
+18 -65 V
+17 -65 V
+17 -63 V
+17 -63 V
+17 -63 V
+18 -62 V
+17 -61 V
+17 -61 V
+17 -60 V
+18 -59 V
+17 -59 V
+17 -58 V
+17 -58 V
+17 -57 V
+18 -57 V
+17 -55 V
+17 -56 V
+17 -55 V
+17 -54 V
+18 -54 V
+17 -53 V
+17 -52 V
+17 -53 V
+18 -51 V
+17 -51 V
+17 -51 V
+17 -50 V
+17 -49 V
+18 -49 V
+17 -48 V
+17 -48 V
+17 -48 V
+18 -47 V
+17 -46 V
+17 -46 V
+17 -46 V
+17 -45 V
+18 -44 V
+17 -45 V
+17 -43 V
+17 -43 V
+18 -43 V
+17 -42 V
+17 -42 V
+17 -41 V
+17 -41 V
+18 -41 V
+17 -40 V
+17 -40 V
+17 -39 V
+18 -39 V
+17 -38 V
+17 -38 V
+17 -38 V
+stroke 6890 4869 M
+17 -37 V
+18 -36 V
+17 -37 V
+17 -36 V
+17 -35 V
+17 -35 V
+18 -35 V
+17 -35 V
+17 -34 V
+17 -33 V
+18 -34 V
+17 -33 V
+17 -32 V
+17 -32 V
+17 -32 V
+18 -32 V
+17 -31 V
+17 -31 V
+17 -30 V
+18 -30 V
+17 -30 V
+17 -29 V
+17 -30 V
+17 -28 V
+18 -29 V
+17 -28 V
+17 -28 V
+17 -27 V
+18 -27 V
+17 -27 V
+17 -27 V
+17 -26 V
+17 -26 V
+18 -26 V
+17 -25 V
+17 -25 V
+17 -25 V
+17 -24 V
+18 -25 V
+17 -24 V
+17 -23 V
+17 -24 V
+18 -23 V
+17 -23 V
+17 -22 V
+17 -23 V
+17 -22 V
+18 -21 V
+17 -22 V
+17 -21 V
+17 -21 V
+18 -21 V
+17 -20 V
+17 -21 V
+17 -20 V
+17 -20 V
+18 -19 V
+17 -19 V
+17 -20 V
+17 -18 V
+18 -19 V
+17 -18 V
+17 -19 V
+17 -18 V
+17 -17 V
+18 -18 V
+17 -17 V
+17 -17 V
+17 -17 V
+17 -17 V
+18 -16 V
+17 -17 V
+17 -16 V
+17 -16 V
+18 -15 V
+17 -16 V
+17 -15 V
+17 -15 V
+17 -15 V
+18 -15 V
+17 -14 V
+17 -15 V
+17 -14 V
+18 -14 V
+17 -13 V
+17 -14 V
+17 -14 V
+17 -13 V
+18 -13 V
+17 -13 V
+17 -13 V
+17 -12 V
+18 -13 V
+17 -12 V
+17 -12 V
+17 -12 V
+17 -12 V
+18 -12 V
+17 -11 V
+17 -11 V
+17 -12 V
+17 -11 V
+18 -11 V
+17 -10 V
+stroke 8681 2606 M
+17 -11 V
+17 -11 V
+18 -10 V
+17 -10 V
+17 -10 V
+17 -10 V
+17 -10 V
+18 -10 V
+17 -9 V
+17 -9 V
+17 -10 V
+18 -9 V
+17 -9 V
+17 -9 V
+17 -9 V
+17 -8 V
+18 -9 V
+17 -8 V
+17 -9 V
+17 -8 V
+18 -8 V
+17 -8 V
+17 -8 V
+17 -7 V
+17 -8 V
+18 -8 V
+17 -7 V
+17 -7 V
+17 -7 V
+18 -8 V
+17 -7 V
+17 -7 V
+17 -6 V
+17 -7 V
+18 -7 V
+17 -6 V
+17 -7 V
+17 -6 V
+17 -6 V
+18 -6 V
+17 -6 V
+17 -6 V
+17 -6 V
+18 -6 V
+17 -6 V
+17 -5 V
+17 -6 V
+17 -5 V
+18 -6 V
+17 -5 V
+17 -5 V
+17 -5 V
+18 -6 V
+17 -5 V
+17 -4 V
+17 -5 V
+17 -5 V
+18 -5 V
+17 -4 V
+17 -5 V
+17 -4 V
+18 -5 V
+17 -4 V
+17 -4 V
+17 -5 V
+17 -4 V
+18 -4 V
+17 -4 V
+17 -4 V
+17 -4 V
+17 -4 V
+18 -3 V
+17 -4 V
+17 -4 V
+17 -3 V
+18 -4 V
+17 -3 V
+17 -4 V
+17 -3 V
+17 -4 V
+18 -3 V
+17 -3 V
+17 -3 V
+17 -3 V
+18 -3 V
+17 -3 V
+17 -3 V
+17 -3 V
+17 -3 V
+18 -3 V
+17 -3 V
+17 -2 V
+17 -3 V
+18 -3 V
+17 -2 V
+17 -3 V
+17 -2 V
+17 -3 V
+18 -2 V
+17 -3 V
+17 -2 V
+17 -2 V
+17 -2 V
+18 -3 V
+stroke 10472 2028 M
+17 -2 V
+17 -2 V
+17 -2 V
+18 -2 V
+17 -2 V
+17 -2 V
+17 -2 V
+17 -2 V
+18 -2 V
+17 -2 V
+17 -2 V
+17 -1 V
+18 -2 V
+17 -2 V
+17 -2 V
+17 -1 V
+17 -2 V
+18 -2 V
+17 -1 V
+17 -2 V
+17 -1 V
+18 -2 V
+17 -1 V
+17 -2 V
+17 -1 V
+17 -1 V
+18 -2 V
+17 -1 V
+17 -1 V
+17 -2 V
+18 -1 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+stroke 12262 1976 M
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 1 V
+17 2 V
+17 1 V
+17 1 V
+18 2 V
+17 1 V
+17 1 V
+17 2 V
+17 1 V
+18 2 V
+17 1 V
+17 2 V
+17 1 V
+18 2 V
+17 2 V
+17 1 V
+17 2 V
+17 2 V
+18 2 V
+17 1 V
+17 2 V
+17 2 V
+18 2 V
+17 2 V
+17 2 V
+17 2 V
+17 2 V
+18 2 V
+17 2 V
+17 2 V
+17 2 V
+18 3 V
+17 2 V
+17 2 V
+17 2 V
+17 3 V
+18 2 V
+17 3 V
+17 2 V
+17 3 V
+17 2 V
+18 3 V
+17 3 V
+17 2 V
+17 3 V
+18 3 V
+17 3 V
+17 3 V
+17 3 V
+17 3 V
+18 3 V
+17 3 V
+17 3 V
+17 3 V
+18 3 V
+17 4 V
+17 3 V
+17 4 V
+17 3 V
+18 4 V
+17 3 V
+17 4 V
+17 4 V
+18 3 V
+17 4 V
+17 4 V
+17 4 V
+17 4 V
+18 4 V
+17 4 V
+17 5 V
+17 4 V
+stroke 14053 2158 M
+17 4 V
+18 5 V
+17 4 V
+17 5 V
+17 4 V
+18 5 V
+17 5 V
+17 5 V
+17 4 V
+17 5 V
+18 6 V
+17 5 V
+17 5 V
+17 5 V
+18 6 V
+17 5 V
+17 6 V
+17 5 V
+17 6 V
+18 6 V
+17 6 V
+17 6 V
+17 6 V
+18 6 V
+17 6 V
+17 6 V
+17 7 V
+17 6 V
+18 7 V
+17 7 V
+17 6 V
+17 7 V
+17 7 V
+18 8 V
+17 7 V
+17 7 V
+17 7 V
+18 8 V
+17 8 V
+17 7 V
+17 8 V
+17 8 V
+18 8 V
+17 8 V
+17 9 V
+17 8 V
+18 9 V
+17 8 V
+17 9 V
+17 9 V
+17 9 V
+18 9 V
+17 10 V
+17 9 V
+17 9 V
+18 10 V
+17 10 V
+17 10 V
+17 10 V
+17 10 V
+18 10 V
+17 11 V
+17 11 V
+17 10 V
+18 11 V
+17 11 V
+17 12 V
+17 11 V
+17 11 V
+18 12 V
+17 12 V
+17 12 V
+17 12 V
+17 12 V
+18 13 V
+17 12 V
+17 13 V
+17 13 V
+18 13 V
+17 13 V
+17 14 V
+17 14 V
+17 13 V
+18 14 V
+17 14 V
+17 15 V
+17 14 V
+18 15 V
+17 15 V
+17 15 V
+17 15 V
+17 16 V
+18 15 V
+17 16 V
+17 16 V
+17 17 V
+18 16 V
+17 17 V
+17 17 V
+17 17 V
+17 17 V
+18 18 V
+17 17 V
+17 18 V
+stroke 15844 3184 M
+17 19 V
+17 18 V
+18 19 V
+17 18 V
+17 20 V
+17 19 V
+18 19 V
+17 20 V
+17 20 V
+17 21 V
+17 20 V
+18 21 V
+17 21 V
+17 21 V
+17 22 V
+18 21 V
+17 22 V
+17 23 V
+17 22 V
+17 23 V
+18 23 V
+17 24 V
+17 23 V
+17 24 V
+18 25 V
+17 24 V
+17 25 V
+17 25 V
+17 25 V
+18 26 V
+17 26 V
+17 26 V
+17 27 V
+17 27 V
+18 27 V
+17 27 V
+17 28 V
+17 28 V
+18 29 V
+17 28 V
+17 30 V
+17 29 V
+17 30 V
+18 30 V
+17 30 V
+17 31 V
+17 31 V
+18 32 V
+17 32 V
+17 32 V
+17 32 V
+17 33 V
+18 34 V
+17 33 V
+17 34 V
+17 35 V
+18 35 V
+17 35 V
+17 35 V
+17 36 V
+17 37 V
+18 36 V
+17 37 V
+17 38 V
+17 38 V
+17 38 V
+18 39 V
+17 39 V
+17 40 V
+17 40 V
+18 41 V
+17 41 V
+17 41 V
+17 42 V
+17 42 V
+18 43 V
+17 43 V
+17 43 V
+17 45 V
+18 44 V
+17 45 V
+17 46 V
+17 46 V
+17 46 V
+18 47 V
+17 48 V
+17 48 V
+17 48 V
+18 49 V
+17 49 V
+17 50 V
+17 51 V
+17 51 V
+18 51 V
+17 53 V
+17 52 V
+17 53 V
+18 54 V
+17 54 V
+17 55 V
+17 56 V
+17 55 V
+18 57 V
+17 57 V
+stroke 17635 6787 M
+17 58 V
+17 58 V
+17 59 V
+18 59 V
+17 60 V
+17 61 V
+17 61 V
+18 62 V
+17 63 V
+17 63 V
+17 63 V
+17 65 V
+18 65 V
+17 66 V
+17 66 V
+17 67 V
+18 67 V
+17 69 V
+17 69 V
+17 69 V
+17 71 V
+18 71 V
+17 72 V
+17 72 V
+17 73 V
+18 74 V
+17 74 V
+17 76 V
+17 76 V
+17 77 V
+18 77 V
+17 78 V
+17 79 V
+17 80 V
+17 81 V
+18 81 V
+17 82 V
+17 83 V
+17 83 V
+18 85 V
+17 85 V
+17 86 V
+17 87 V
+17 88 V
+18 88 V
+17 90 V
+17 90 V
+17 91 V
+18 92 V
+17 93 V
+17 93 V
+17 95 V
+17 95 V
+18 97 V
+17 97 V
+17 98 V
+17 99 V
+18 100 V
+17 101 V
+17 101 V
+17 103 V
+17 104 V
+18 104 V
+17 106 V
+17 106 V
+17 108 V
+17 108 V
+18 110 V
+17 110 V
+17 112 V
+17 112 V
+18 114 V
+17 114 V
+17 116 V
+17 117 V
+17 117 V
+18 119 V
+17 120 V
+17 121 V
+17 91 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+stroke 19426 13680 M
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+18 0 V
+17 0 V
+17 0 V
+17 0 V
+17 0 V
+% End plot #1
+% Begin plot #2
+4.000 UP
+stroke
+3.000 UL
+LT1
+LC0 setrgbcolor
+/Palatino findfont 600 scalefont setfont
+3300 13680 M
+86 0 V
+172 -1 V
+172 -9 V
+173 -40 V
+172 -115 V
+172 -233 V
+172 -369 V
+172 -486 V
+173 -567 V
+172 -611 V
+172 -628 V
+172 -625 V
+172 -609 V
+173 -586 V
+172 -557 V
+172 -527 V
+172 -494 V
+172 -463 V
+173 -431 V
+172 -400 V
+172 -370 V
+172 -341 V
+172 -313 V
+172 -286 V
+173 -262 V
+172 -239 V
+172 -216 V
+172 -195 V
+172 -177 V
+173 -159 V
+172 -142 V
+172 -128 V
+172 -114 V
+172 -101 V
+173 -91 V
+172 -80 V
+172 -72 V
+172 -63 V
+172 -57 V
+173 -49 V
+172 -44 V
+172 -39 V
+172 -33 V
+172 -29 V
+172 -24 V
+173 -19 V
+172 -14 V
+172 -9 V
+172 -5 V
+172 -2 V
+173 0 V
+172 2 V
+172 5 V
+172 9 V
+172 14 V
+173 19 V
+172 24 V
+172 29 V
+172 33 V
+172 39 V
+172 44 V
+173 49 V
+172 57 V
+172 63 V
+172 72 V
+172 80 V
+173 91 V
+172 101 V
+172 114 V
+172 128 V
+172 142 V
+173 159 V
+172 177 V
+172 195 V
+172 216 V
+172 239 V
+173 262 V
+172 286 V
+172 313 V
+172 341 V
+172 370 V
+172 400 V
+173 431 V
+172 463 V
+172 494 V
+172 527 V
+172 557 V
+173 586 V
+172 609 V
+172 625 V
+172 628 V
+172 611 V
+173 567 V
+172 486 V
+172 369 V
+172 233 V
+172 115 V
+173 40 V
+172 9 V
+172 1 V
+86 0 V
+3386 13680 Box
+3558 13679 Box
+3730 13670 Box
+3903 13630 Box
+4075 13515 Box
+4247 13282 Box
+4419 12913 Box
+4591 12427 Box
+4764 11860 Box
+4936 11249 Box
+5108 10621 Box
+5280 9996 Box
+5452 9387 Box
+5625 8801 Box
+5797 8244 Box
+5969 7717 Box
+6141 7223 Box
+6313 6760 Box
+6486 6329 Box
+6658 5929 Box
+6830 5559 Box
+7002 5218 Box
+7174 4905 Box
+7346 4619 Box
+7519 4357 Box
+7691 4118 Box
+7863 3902 Box
+8035 3707 Box
+8207 3530 Box
+8380 3371 Box
+8552 3229 Box
+8724 3101 Box
+8896 2987 Box
+9068 2886 Box
+9241 2795 Box
+9413 2715 Box
+9585 2643 Box
+9757 2580 Box
+9929 2523 Box
+10102 2474 Box
+10274 2430 Box
+10446 2391 Box
+10618 2358 Box
+10790 2329 Box
+10962 2305 Box
+11135 2286 Box
+11307 2272 Box
+11479 2263 Box
+11651 2258 Box
+11823 2256 Box
+11996 2256 Box
+12168 2258 Box
+12340 2263 Box
+12512 2272 Box
+12684 2286 Box
+12857 2305 Box
+13029 2329 Box
+13201 2358 Box
+13373 2391 Box
+13545 2430 Box
+13717 2474 Box
+13890 2523 Box
+14062 2580 Box
+14234 2643 Box
+14406 2715 Box
+14578 2795 Box
+14751 2886 Box
+14923 2987 Box
+15095 3101 Box
+15267 3229 Box
+15439 3371 Box
+15612 3530 Box
+15784 3707 Box
+15956 3902 Box
+16128 4118 Box
+16300 4357 Box
+16473 4619 Box
+16645 4905 Box
+16817 5218 Box
+16989 5559 Box
+17161 5929 Box
+17333 6329 Box
+17506 6760 Box
+17678 7223 Box
+17850 7717 Box
+18022 8244 Box
+18194 8801 Box
+18367 9387 Box
+18539 9996 Box
+18711 10621 Box
+18883 11249 Box
+19055 11860 Box
+19228 12427 Box
+19400 12913 Box
+19572 13282 Box
+19744 13515 Box
+19916 13630 Box
+20089 13670 Box
+20261 13679 Box
+20433 13680 Box
+% End plot #2
+3.000 UL
+LTb
+LCb setrgbcolor
+3300 13680 N
+0 -11760 V
+17219 0 V
+0 11760 V
+-17219 0 V
+Z stroke
+1.000 UP
+3.000 UL
+LTb
+LCb setrgbcolor
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 1920 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 1920 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.4)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 3880 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 3880 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.5)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 5840 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 5840 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.6)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 7800 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 7800 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.7)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 9760 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 9760 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.8)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 11720 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 11720 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.9)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 13680 M
+63 0 V
+17516 0 R
+-63 0 V
+stroke
+24180 13680 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 1)]
+] -200.0 MRshow
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+24540 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+28056 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+28056 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.2)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+31572 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+31572 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.4)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+35087 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+35087 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.6)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+38603 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+38603 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 0.8)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+42119 1920 M
+0 63 V
+0 11697 R
+0 -63 V
+stroke
+42119 1320 M
+[ [(Palatino) 600.0 0.0 true true 0 ( 1)]
+] -200.0 MCshow
+3.000 UL
+LTb
+LCb setrgbcolor
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 13680 N
+0 -11760 V
+17579 0 V
+0 11760 V
+-17579 0 V
+Z stroke
+LCb setrgbcolor
+22080 7800 M
+currentpoint gsave translate -270 rotate 0 0 moveto
+[ [(Palatino) 600.0 0.0 true true 0 (specific internal energy)]
+] -200.0 MCshow
+grestore
+LTb
+LCb setrgbcolor
+33329 420 M
+[ [(Palatino) 600.0 0.0 true true 0 (x)]
+] -200.0 MCshow
+LTb
+1.000 UP
+3.000 UL
+LTb
+LCb setrgbcolor
+% Begin plot #1
+6.000 UL
+LT0
+LC2 setrgbcolor
+% End plot #1
+% Begin plot #2
+4.000 UP
+3.000 UL
+LT1
+LC0 setrgbcolor
+/Palatino findfont 600 scalefont setfont
+24540 13680 M
+88 0 V
+176 -1 V
+175 -4 V
+176 -19 V
+176 -54 V
+176 -112 V
+176 -179 V
+175 -242 V
+176 -291 V
+176 -326 V
+176 -348 V
+176 -361 V
+175 -369 V
+176 -371 V
+176 -369 V
+176 -364 V
+176 -358 V
+175 -349 V
+176 -339 V
+176 -326 V
+176 -313 V
+175 -300 V
+176 -285 V
+176 -270 V
+176 -254 V
+176 -240 V
+175 -226 V
+176 -211 V
+176 -198 V
+176 -187 V
+176 -176 V
+175 -168 V
+176 -161 V
+176 -156 V
+176 -155 V
+176 -154 V
+175 -156 V
+176 -158 V
+176 -162 V
+176 -164 V
+175 -163 V
+176 -158 V
+176 -149 V
+176 -136 V
+176 -117 V
+175 -92 V
+176 -57 V
+176 -26 V
+176 -10 V
+176 -17 V
+175 0 V
+176 17 V
+176 10 V
+176 26 V
+176 57 V
+175 92 V
+176 117 V
+176 136 V
+176 149 V
+176 158 V
+175 163 V
+176 164 V
+176 162 V
+176 158 V
+175 156 V
+176 154 V
+176 155 V
+176 156 V
+176 161 V
+175 168 V
+176 176 V
+176 187 V
+176 198 V
+176 211 V
+175 226 V
+176 240 V
+176 254 V
+176 270 V
+176 285 V
+175 300 V
+176 313 V
+176 326 V
+176 339 V
+175 349 V
+176 358 V
+176 364 V
+176 369 V
+176 371 V
+175 369 V
+176 361 V
+176 348 V
+176 326 V
+176 291 V
+175 242 V
+176 179 V
+176 112 V
+176 54 V
+176 19 V
+175 4 V
+176 1 V
+88 0 V
+24628 13680 Box
+24804 13679 Box
+24979 13675 Box
+25155 13656 Box
+25331 13602 Box
+25507 13490 Box
+25683 13311 Box
+25858 13069 Box
+26034 12778 Box
+26210 12452 Box
+26386 12104 Box
+26562 11743 Box
+26737 11374 Box
+26913 11003 Box
+27089 10634 Box
+27265 10270 Box
+27441 9912 Box
+27616 9563 Box
+27792 9224 Box
+27968 8898 Box
+28144 8585 Box
+28319 8285 Box
+28495 8000 Box
+28671 7730 Box
+28847 7476 Box
+29023 7236 Box
+29198 7010 Box
+29374 6799 Box
+29550 6601 Box
+29726 6414 Box
+29902 6238 Box
+30077 6070 Box
+30253 5909 Box
+30429 5753 Box
+30605 5598 Box
+30781 5444 Box
+30956 5288 Box
+31132 5130 Box
+31308 4968 Box
+31484 4804 Box
+31659 4641 Box
+31835 4483 Box
+32011 4334 Box
+32187 4198 Box
+32363 4081 Box
+32538 3989 Box
+32714 3932 Box
+32890 3906 Box
+33066 3896 Box
+33242 3879 Box
+33417 3879 Box
+33593 3896 Box
+33769 3906 Box
+33945 3932 Box
+34121 3989 Box
+34296 4081 Box
+34472 4198 Box
+34648 4334 Box
+34824 4483 Box
+35000 4641 Box
+35175 4804 Box
+35351 4968 Box
+35527 5130 Box
+35703 5288 Box
+35878 5444 Box
+36054 5598 Box
+36230 5753 Box
+36406 5909 Box
+36582 6070 Box
+36757 6238 Box
+36933 6414 Box
+37109 6601 Box
+37285 6799 Box
+37461 7010 Box
+37636 7236 Box
+37812 7476 Box
+37988 7730 Box
+38164 8000 Box
+38340 8285 Box
+38515 8585 Box
+38691 8898 Box
+38867 9224 Box
+39043 9563 Box
+39218 9912 Box
+39394 10270 Box
+39570 10634 Box
+39746 11003 Box
+39922 11374 Box
+40097 11743 Box
+40273 12104 Box
+40449 12452 Box
+40625 12778 Box
+40801 13069 Box
+40976 13311 Box
+41152 13490 Box
+41328 13602 Box
+41504 13656 Box
+41680 13675 Box
+41855 13679 Box
+42031 13680 Box
+% End plot #2
+3.000 UL
+LTb
+LCb setrgbcolor
+24540 13680 N
+0 -11760 V
+17579 0 V
+0 11760 V
+-17579 0 V
+Z stroke
+1.000 UP
+3.000 UL
+LTb
+LCb setrgbcolor
+stroke
+grestore
+end
+showpage
+%%Trailer
+%%DocumentFonts: Palatino
