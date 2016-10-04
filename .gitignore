@@ -6,4 +6,4 @@
 ./parallel_GFM
 
 # Output data
-./output/*.dat
+*.dat
