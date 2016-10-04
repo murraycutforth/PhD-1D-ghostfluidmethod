@@ -1,0 +1,9 @@
+# Compiled object files
+*.o
+./objectfiles/*
+
+# Executables
+./parallel_GFM
+
+# Output data
+./output/*.dat
