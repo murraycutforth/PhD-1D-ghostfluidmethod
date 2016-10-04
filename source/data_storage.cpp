@@ -3,6 +3,7 @@
 
 
 
+#include <sstream>
 #include <fstream>
 #include <limits>
 #include <cmath>
@@ -58,6 +59,162 @@ int arrayinfo :: cellindex (double x)
 
 
 
+void settingsfile :: read_settings_file ()
+{
+	std::ifstream infile("settings_file.txt");
+
+
+	std::string BCRchoice;
+		std::string RSchoice;
+		std::string ICchoice;
+		std::string GFMchoice;
+		std::string simchoice;
+		std::string eos1choice;
+		std::string eos2choice;
+		std::string FSchoice;
+
+
+
+	std::string line;
+	while (std::getline(infile, line))
+	{
+		std::istringstream iss(line);
+		std::string inputname;
+
+		iss >> inputname;
+
+		if (inputname == "length") iss >> length;
+
+		if (inputname == "x0") iss >> x0;
+
+		if (inputname == "dx") iss >> dx;
+
+		if (inputname == "numGC") iss >> numGC;
+
+		if (inputname == "lsnumGC") iss >> lsnumGC;
+
+		if (inputname == "lslength") iss >> lslength;
+
+		if (inputname == "lsdx") iss >> lsdx;
+
+		if (inputname == "fluid1_gamma") iss >> fluid1_gamma;
+
+		if (inputname == "fluid1_A") iss >> fluid1_A;
+
+		if (inputname == "fluid2_gamma") iss >> fluid2_gamma;
+
+		if (inputname == "fluid2_A") iss >> fluid2_A;
+
+		if (inputname == "T") iss >> T;
+
+		if (inputname == "CFL") iss >> CFL;
+		
+		if (inputname == "RS")
+		{
+			iss >> RSchoice;
+			if (RSchoice == "HLLC") RS = HLLC;
+			else if (RSchoice == "M_HLLC") RS = M_HLLC;
+			else assert(!"Invalid RS");
+		}
+	
+		if (inputname == "FS")
+		{
+			iss >> FSchoice;
+			if (FSchoice == "Godunov") FS = Godunov;
+			if (FSchoice == "MUSCL_FS") FS = MUSCL_FS;
+		}
+
+		if (inputname == "GFM")
+		{
+			iss >> GFMchoice;
+			if (GFMchoice == "Original") GFM = Original;
+			if (GFMchoice == "Isobaricfix") GFM = Isobaricfix;
+		}
+
+		if (inputname == "IC")
+		{
+			iss >> ICchoice;
+			if (ICchoice == "TC1") IC = TC1;
+			else if (ICchoice == "TC2") IC = TC2;
+			else if (ICchoice == "HuST2") IC = HuST2;
+			else assert(!"Invalid IC");
+		}
+
+		std::string lsICchoice;
+		if (inputname == "lsIC")
+		{
+			iss >> lsICchoice;
+			if (lsICchoice == "T1") lsIC = T1;
+		}
+
+		if (inputname == "eos1")
+		{
+			iss >> eos1choice;
+			if (eos1choice == "ideal") eos1 = ideal;
+		}
+
+		if (inputname == "eos2")
+		{
+			iss >> eos2choice;
+			if (eos2choice == "ideal") eos2 = ideal;
+		}
+
+		std::string BCLchoice;
+		if (inputname == "BC_L")
+		{
+			iss >> BCLchoice;
+			if (BCLchoice == "reflective") BC_L = reflective;
+			if (BCLchoice == "transmissive") BC_L = transmissive;
+		}
+		
+		if (inputname == "BC_R")
+		{
+			iss >> BCRchoice;
+			if (BCRchoice == "reflective") BC_R = reflective;
+			if (BCRchoice == "transmissive") BC_R = transmissive;
+		}
+
+		if (inputname == "sim")
+		{
+			iss >> simchoice;
+			if (simchoice == "serial_onefluid") sim = serial_onefluid;
+			if (simchoice == "serial_twofluid") sim = serial_twofluid;
+		}
+
+		if (inputname == "outputpath") iss >> outputpath;
+
+		
+
+	}
+
+	basename = outputpath + GFMchoice + "_" + FSchoice + "_" + ICchoice + "_" 
+		+ eos1choice + "-" + eos2choice + "_" + std::to_string(length) + "_";
+
+	if (simchoice == "serial_onefluid") basename = outputpath + "onefluid_" + FSchoice + "_" + ICchoice + "_" + eos1choice + "_" + std::to_string(length) + "_";
+	
+	infile.close();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -90,7 +247,8 @@ twofluid_array :: twofluid_array (arrayinfo array, std::shared_ptr<eos_base> eos
 	fluid2 (array.length + 2*array.numGC,3),
 	array	(array),
 	eos1	(eos1),
-	eos2	(eos2)
+	eos2	(eos2),
+	initial_total_cv	(3)
 {}
 
 	
@@ -203,6 +361,65 @@ void twofluid_array :: output_realfluid_to_file (std::string name, levelset_arra
 
 
 
+void twofluid_array :: output_conservation_error (std::string name, levelset_array& ls, double t)
+{
+	std::ofstream outfile;
+
+	if (t == 0.0)
+	{
+		outfile.open(name);
+	}
+	else
+	{
+		outfile.open(name, std::ios_base::app);
+	}
+
+	blitz::Array<double,1> total_cv = total_conserved_quantities(ls);
+
+	outfile << t << " " << - initial_total_cv(0) + total_cv(0)
+		<< " " << - initial_total_cv(1) + total_cv(1)
+		<< " " << - initial_total_cv(2) + total_cv(2) << std::endl;
+
+	outfile.close();
+}
+
+
+
+
+
+blitz::Array<double,1> twofluid_array :: total_conserved_quantities (levelset_array& ls)
+{
+	blitz::Array<double,1> sum (3);
+	sum = 0.0;
+
+	for (int i=array.numGC; i<array.length + array.numGC; i++)
+	{
+		if (ls(array.cellcentre_coord(i)) <= 0.0)
+		{
+			sum(all) += array.dx*fluid1(i,all);
+		}
+		else
+		{
+			sum(all) += array.dx*fluid2(i,all);
+		}
+	}
+
+	return sum;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -220,7 +437,8 @@ onefluid_array :: onefluid_array (arrayinfo array, std::shared_ptr<eos_base> eos
 :
 	fluid (array.length + array.numGC*2, 3),
 	array (array),
-	eos (eos)
+	eos (eos),
+	initial_total_cv	(3)
 {}
 
 
@@ -307,6 +525,7 @@ void onefluid_array :: output_to_file (std::string name)
 blitz::Array<double,1> onefluid_array :: total_conserved_quantities ()
 {
 	blitz::Array<double,1> sum (3);
+	sum = 0.0;
 
 	for (int i=array.numGC; i<array.length + array.numGC; i++)
 	{
@@ -314,6 +533,32 @@ blitz::Array<double,1> onefluid_array :: total_conserved_quantities ()
 	}
 
 	return sum;
+}
+
+
+
+
+void onefluid_array :: output_conservation_error (std::string name, double t)
+{
+
+	std::ofstream outfile;
+
+	if (t == 0.0)
+	{
+		outfile.open(name);
+	}
+	else
+	{
+		outfile.open(name, std::ios_base::app);
+	}
+
+	blitz::Array<double,1> total_cv = total_conserved_quantities();
+
+	outfile << t << " " << total_cv(0) - initial_total_cv(0)
+		<< " " << total_cv(1) - initial_total_cv(1)
+		<< " " << total_cv(2) - initial_total_cv(2) << std::endl;
+
+	outfile.close();
 }
 
 
@@ -365,7 +610,7 @@ double levelset_array :: linear_interpolation (double x)
 
 	// Find cell indices on L and R
 
-	int i_L = static_cast<int>((x - (array.x0 - 0.5*array.dx))/array.dx) + array.numGC - 1;
+	int i_L = static_cast<int>(floor((x - (array.x0 - 0.5*array.dx))/array.dx)) + array.numGC - 1;
 	int i_R = i_L + 1;
 	assert(i_L >= 0);
 	assert(i_R <= array.length + 2*array.numGC-1);

@@ -35,6 +35,8 @@ void ghost_fluid_method_test1();
 
 void full_idealgas_test1();
 
+void test_settingsfile();
+
 
 
 
@@ -400,8 +402,10 @@ void full_idealgas_test1()
 	initialise_twofluid(states,IC);
 
 	int num_iter = 0;
+	double t = 0.0;
 	states.output_to_file(basename + std::to_string(num_iter) + ".dat");
 	states.output_realfluid_to_file(basename + "real_" + std::to_string(num_iter) + ".dat", ls);
+	states.output_conservation_error(basename + "cv_error.dat", ls, t);
 	ls.output_to_file(baselsname + std::to_string(num_iter) + ".dat");
 
 	std::cout << "[GFM_original_GOD_HLLC_TC1] Initialisation complete" << std::endl;
@@ -409,7 +413,6 @@ void full_idealgas_test1()
 
 	// Time iterations
 
-	double t=0.0;
 	double CFL;
 
 	while (t < T)
@@ -442,6 +445,7 @@ void full_idealgas_test1()
 
 		states.output_to_file(basename + std::to_string(num_iter) + ".dat");
 		states.output_realfluid_to_file(basename + "real_" + std::to_string(num_iter) + ".dat", ls);
+		states.output_conservation_error(basename + "cv_error.dat", ls, t);
 		ls.output_to_file(baselsname + std::to_string(num_iter) + ".dat");
 
 		std::cout << "[GFM_original_GOD_HLLC_TC1] Time step number " << num_iter 
@@ -453,3 +457,11 @@ void full_idealgas_test1()
 }
 
 
+
+
+
+
+void test_settingsfile()
+{
+	
+}

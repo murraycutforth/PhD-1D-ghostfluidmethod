@@ -49,6 +49,10 @@ class eos_base {
 
 	virtual double get_gamma () =0;
 
+	virtual double get_Tau (blitz::Array<double,1> state) =0;
+
+	virtual double get_Psi (blitz::Array<double,1> state) =0;
+
 	virtual eos_type get_eos_type () =0;
 
 };
@@ -84,6 +88,10 @@ class eos_idealgas : public eos_base {
 	double specific_ie_prim (blitz::Array<double,1> primitives);
 
 	double specific_ie_prim (double rho, double u, double p);
+	
+	double get_Tau (blitz::Array<double,1> state);
+
+	double get_Psi (blitz::Array<double,1> state);
 
 	double get_gamma ();
 
@@ -91,6 +99,48 @@ class eos_idealgas : public eos_base {
 
 };
 
+
+
+
+class eos_tait : public eos_base {
+
+	public:
+
+	double gamma;
+	double rho_0;
+	double B;
+	double A;
+
+
+	eos_tait (double gamma, double rho_0, double B, double A);
+
+
+
+
+	double a (blitz::Array<double,1> state);
+
+	double p (blitz::Array<double,1> state);
+
+	double E (blitz::Array<double,1> primitives);
+
+	double E (double rho, double u, double p);	
+
+	double rho_pS (double p, double S);
+
+	double S_prho (double p, double rho);
+
+	double specific_ie_prim (blitz::Array<double,1> primitives);
+
+	double specific_ie_prim (double rho, double u, double p);
+	
+	double get_Tau (blitz::Array<double,1> state);
+
+	double get_Psi (blitz::Array<double,1> state);
+
+	double get_gamma ();
+
+	eos_type get_eos_type ();
+};
 
 
 #endif

@@ -44,6 +44,15 @@ bool is_state_physical (blitz::Array<double,1> state)
 
 
 
+
+
+
+
+
+
+
+
+
 double eos_idealgas :: a (blitz::Array<double,1> state)
 {
 	return sqrt(gamma * p(state) / state(0));
@@ -111,6 +120,21 @@ double eos_idealgas :: specific_ie_prim (double rho, double u, double p)
 
 
 
+double eos_idealgas :: get_Tau (blitz::Array<double,1> state)
+{
+	return (gamma - 1.0);
+}
+
+
+
+double eos_idealgas :: get_Psi (blitz::Array<double,1> state)
+{
+	return (gamma - 1.0)*specific_ie_cv(state);
+}
+
+
+
+
 double eos_idealgas :: get_gamma ()
 {
 	return gamma;
@@ -122,3 +146,17 @@ eos_type eos_idealgas :: get_eos_type ()
 {
 	return ideal;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
