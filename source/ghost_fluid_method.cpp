@@ -5,6 +5,7 @@
 
 
 #include <cassert>
+#include <cmath>
 
 
 
@@ -635,13 +636,13 @@ void rGFM :: set_ghost_cells (	twofluid_array& states,
 
 			// Iterate through extension velocity array - filling with closest velocity
 
-			extension_interface_velocity = 0.0;
+			extension_interface_velocity = -1e100;
 
-			for (int k=i; k<=ls.array.length+2*ls.array.numGC-1; k++)
+			for (int k=i; k<=ls.array.length+2*ls.array.numGC-2; k++)
 			{
 				double thisgradphi = (ls.phi(k+1)-ls.phi(k))/ls.array.dx;
 
-				if (std::copysign(1.0,gradphi) == std::copysign(1.0,thisgradphi))
+				if (std::copysign(1.0,gradphi) == std::copysign(1.0,thisgradphi) || fabs(thisgradphi) < 1e-10)
 				{
 					extension_interface_velocity(k) = u_I;
 				}
@@ -650,11 +651,15 @@ void rGFM :: set_ghost_cells (	twofluid_array& states,
 			{
 				double thisgradphi = (ls.phi(k+1) - ls.phi(k))/ls.array.dx;
 
-				if (std::copysign(1.0,gradphi) == std::copysign(1.0,thisgradphi))
+				if (std::copysign(1.0,gradphi) == std::copysign(1.0,thisgradphi) || fabs(thisgradphi) < 1e-10)
 				{
 					extension_interface_velocity(k) = u_I;
 				}
 			}
+
+			// Finally copy value across to rightmost cell (which is undefined so far)
+
+			extension_interface_velocity(ls.array.length+2*ls.array.numGC-1) = extension_interface_velocity(ls.array.length+2*ls.array.numGC-2);
 
 
 			// Iterate to the left until the gradient of phi changes sign (setting ghost states)
@@ -731,6 +736,12 @@ void rGFM :: set_ghost_cells (	twofluid_array& states,
 				}
 			}
 		}
+	}
+
+
+	for (int k=0; k<=ls.array.length+2*ls.array.numGC-1; k++)
+	{
+		assert(extension_interface_velocity(k) != -1e100);
 	}
 }
 

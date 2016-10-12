@@ -17,15 +17,15 @@ class eos_base;
 
 
 
-enum RS_type {HLLC, M_HLLC};
+enum RS_type {HLLC, M_HLLC, exact_idealgas};
 
 enum FS_type {Godunov, MUSCL_FS};
 
-enum GFM_type {Original, Isobaricfix};
+enum GFM_type {Original, Isobaricfix, Real};
 
-enum IC_type {TC1, TC2, HuST2};
+enum IC_type {TC1, TC2, HuST2, rGFMTC1, rGFMTC3};
 
-enum ls_IC_type {T1};
+enum ls_IC_type {T1, T2};
 
 enum eos_type {ideal, tait};
 
@@ -47,9 +47,9 @@ struct settingsfile {
 	double lsdx;
 
 	double fluid1_gamma;
-	double fluid1_A;
+	double fluid1_B;
 	double fluid2_gamma;
-	double fluid2_A;
+	double fluid2_B;
 
 	double T;
 	double CFL;

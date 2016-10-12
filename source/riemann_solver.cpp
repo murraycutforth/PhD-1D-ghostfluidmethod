@@ -1,6 +1,7 @@
 #include "riemann_solver.hpp"
 #include "flow_solver.hpp"
 #include "eos.hpp"
+#include "exact_RS_idealgas.hpp"
 
 
 
@@ -318,9 +319,125 @@ void M_HLLC_riemann_solver :: solve_rp_forinterfaceboundary (	blitz::Array<doubl
 	u_star = (p_R-p_L+rho_L*u_L*(S_L-u_L)-rho_R*u_R*(S_R-u_R))/(rho_L*(S_L-u_L)-rho_R*(S_R-u_R));
 
 	p_star = p_L + rho_L*(u_L - S_L)*(u_L - u_star);
+	
 
-	rho_star_L = rho_L*(u_L - S_L)/(u_star - S_L);
+	// The following gives unsatisfactory results!
+	//rho_star_L = rho_L*(u_L - S_L)/(u_star - S_L);
+	//
+	//rho_star_R = rho_R*(u_R - S_R)/(u_star - S_R);
 
-	rho_star_R = rho_R*(u_R - S_R)/(u_star - S_R);
 
+	// Instead try finding exact solution for density using approximate u_star and p_star
+
+	if (p_star > p_R)
+	{
+		// Right shock
+
+		rho_star_R = eosR->postshock_density(p_star, p_R, rho_R);
+	}
+	else
+	{
+		// Right rarefaction wave
+
+		rho_star_R = eosR->postrarefaction_density(p_star, p_R, rho_R);
+	}
+	
+	if (p_star > p_L)
+	{
+		// Left shock
+
+		rho_star_L = eosL->postshock_density(p_star, p_L, rho_L);
+	}
+	else
+	{
+		// Left rarefaction wave
+
+		rho_star_L = eosL->postrarefaction_density(p_star, p_L, rho_L);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void exact_riemann_solver_idealgas :: solve_rp (	blitz::Array<double,1> Lstate,
+			blitz::Array<double,1> Rstate,
+			blitz::Array<double,1> flux,
+			double& S_star,
+			std::shared_ptr<eos_base> eos)
+{
+	assert(eos->get_eos_type() == ideal);
+
+	blitz::Array<double,1> Lprimitives (3);
+	blitz::Array<double,1> Rprimitives (3);
+
+	Lprimitives(0) = Lstate(0);
+	Lprimitives(1) = Lstate(1)/Lstate(0);
+	Lprimitives(2) = eos->p(Lstate);
+
+	Rprimitives(0) = Rstate(0);
+	Rprimitives(1) = Rstate(1)/Rstate(0);
+	Rprimitives(2) = eos->p(Rstate);
+
+	exact_rs_idealgas RS (eos->get_gamma(), eos->get_gamma());
+	RS.solve_RP(Lprimitives,Rprimitives);
+
+	blitz::Array<double,1> soln (3);
+	soln = RS.sample_solution(0.0);
+	double E = eos->E(soln);
+
+	S_star = RS.S_STAR;
+	flux = euler_flux(soln(0), soln(1), soln(2), E);
+}
+	
+
+
+
+
+
+void exact_riemann_solver_idealgas :: solve_rp_forinterfaceboundary (	blitz::Array<double,1> Lstate,
+						blitz::Array<double,1> Rstate,
+						double& p_star,
+						double& u_star,
+						double& rho_star_L,
+						double& rho_star_R,
+						std::shared_ptr<eos_base> eosL,
+						std::shared_ptr<eos_base> eosR )
+{
+	assert(eosL->get_eos_type() == ideal);
+	assert(eosR->get_eos_type() == ideal);
+
+	blitz::Array<double,1> Lprimitives (3);
+	blitz::Array<double,1> Rprimitives (3);
+
+	Lprimitives(0) = Lstate(0);
+	Lprimitives(1) = Lstate(1)/Lstate(0);
+	Lprimitives(2) = eosL->p(Lstate);
+
+	Rprimitives(0) = Rstate(0);
+	Rprimitives(1) = Rstate(1)/Rstate(0);
+	Rprimitives(2) = eosR->p(Rstate);
+
+	exact_rs_idealgas RS (eosL->get_gamma(), eosR->get_gamma());
+	RS.solve_RP(Lprimitives,Rprimitives);
+	
+	p_star = RS.P_STAR;
+	u_star = RS.S_STAR;
+	rho_star_L = RS.W_STAR_L(0);
+	rho_star_R = RS.W_STAR_R(0);
+
+	std::cout << "p_star = " << p_star << std::endl;
+	std::cout << "u_star = " << u_star << std::endl;
+	std::cout << "rho_star_L = " << rho_star_L << std::endl;
+	std::cout << "rho_star_R = " << rho_star_R << std::endl;
 }

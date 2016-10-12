@@ -18,11 +18,13 @@ TARGET := parallel_GFM
 # Code Lists
 SOURCES := $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
+EXTOBJS := ../exact_riemann_solver/exact_RS_idealgas.o
 
 # Folder Lists
 INCDIRS := include
 INCLIST := -I include
 BUILDLIST := $(BUILDDIR)
+EXTINCLIST := -I ../exact_riemann_solver/
 
 # Shared Compiler Flags
 OPLEVEL := 
@@ -34,13 +36,13 @@ TESTERFLAGS :=
 $(TARGET): $(OBJECTS)
 	@mkdir -p $(BUILDLIST)
 	@echo "Linking..."
-	@echo "  Linking $(TARGET)"; $(CC) $^ $(OPLEVEL) -o $(TARGET)
+	@echo "  Linking $(TARGET)"; $(CC) $^ $(EXTOBJS) $(OPLEVEL) -o $(TARGET)
 	@echo "Success."
 
 # Compilation Step
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(BUILDLIST)	
-	@echo "Compiling $<..."; $(CC) $(CFLAGS) $(INC) -o $@ $<
+	@echo "Compiling $<..."; $(CC) $(CFLAGS) $(INC) $(EXTINCLIST) -o $@ $<
 
 # Test Environment
 tester:

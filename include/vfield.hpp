@@ -5,6 +5,7 @@
 
 #include "data_storage.hpp"
 #include "flow_solver.hpp"
+#include "ghost_fluid_method.hpp"
 
 
 
@@ -72,5 +73,26 @@ class vfield_starstate : public vfield_base {
 
 	double get_u (double x);
 };
+
+
+
+
+
+
+class vfield_mixedRPsolution : public vfield_base {
+
+	public:
+
+	std::shared_ptr<ghost_fluid_method_base> GFM;
+	levelset_array& ls;
+
+
+	vfield_mixedRPsolution (std::shared_ptr<ghost_fluid_method_base> GFM, levelset_array& ls);
+
+	double get_u (double x);
+};
+
+
+
 
 #endif

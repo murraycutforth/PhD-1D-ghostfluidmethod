@@ -53,6 +53,10 @@ class eos_base {
 
 	virtual double get_Psi (blitz::Array<double,1> state) =0;
 
+	virtual double postshock_density (double P_star, double P_K, double rho_K) =0;
+
+	virtual double postrarefaction_density (double P_star, double P_K, double rho_K) =0;
+
 	virtual eos_type get_eos_type () =0;
 
 };
@@ -94,6 +98,10 @@ class eos_idealgas : public eos_base {
 	double get_Psi (blitz::Array<double,1> state);
 
 	double get_gamma ();
+	
+	double postshock_density (double P_star, double P_K, double rho_K);
+
+	double postrarefaction_density (double P_star, double P_K, double rho_K);
 
 	eos_type get_eos_type ();
 
@@ -107,12 +115,10 @@ class eos_tait : public eos_base {
 	public:
 
 	double gamma;
-	double rho_0;
 	double B;
-	double A;
 
 
-	eos_tait (double gamma, double rho_0, double B, double A);
+	eos_tait (double gamma, double B);
 
 
 
@@ -138,6 +144,10 @@ class eos_tait : public eos_base {
 	double get_Psi (blitz::Array<double,1> state);
 
 	double get_gamma ();
+
+	double postshock_density (double P_star, double P_K, double rho_K);
+
+	double postrarefaction_density (double P_star, double P_K, double rho_K);
 
 	eos_type get_eos_type ();
 };

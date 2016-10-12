@@ -37,6 +37,8 @@ void full_idealgas_test1();
 
 void test_settingsfile();
 
+void test_M_HLLC_solution ();
+
 
 
 
@@ -46,7 +48,8 @@ int main()
 	//onefluid_testcase2_godunov_HLLC();
 	//levelsetadvection_test1();
 	//ghost_fluid_method_test1();
-	full_idealgas_test1();
+	//full_idealgas_test1();
+	test_M_HLLC_solution();
 }
 
 
@@ -300,7 +303,7 @@ void ghost_fluid_method_test1()
 
 	// Objects used for this test
 
-	std::shared_ptr<ghost_fluid_method_base> GFM = std::make_shared<original_GFM>();
+	std::shared_ptr<ghost_fluid_method_base> GFM = std::make_shared<original_GFM>(lsarray);
 
 	levelset_array ls (lsarray);
 
@@ -378,7 +381,7 @@ void full_idealgas_test1()
 
 	// Objects used for this test
 
-	std::shared_ptr<ghost_fluid_method_base> GFM = std::make_shared<isobaric_fix_GFM>();
+	std::shared_ptr<ghost_fluid_method_base> GFM = std::make_shared<isobaric_fix_GFM>(lsarray);
 
 	levelset_array ls (lsarray);
 	levelset_array newls (lsarray);
@@ -464,4 +467,58 @@ void full_idealgas_test1()
 void test_settingsfile()
 {
 	
+}
+
+
+
+
+
+
+
+
+
+void test_M_HLLC_solution()
+{
+	// Set up left and right fluid states
+
+	 blitz::Array<double,1> leftprimitives (3);
+	 leftprimitives(0) = 1.0;
+	 leftprimitives(1) = 0.0;
+	 leftprimitives(2) = 1.0;
+
+	blitz::Array<double,1> rightprimitives (3);
+	rightprimitives(0) = 0.125;
+	rightprimitives(1) = 0.0;
+	rightprimitives(2) = 0.1;
+
+
+	// Set up left and right eos
+
+	std::shared_ptr<eos_base> eosL = std::make_shared<eos_idealgas>(1.4);
+	std::shared_ptr<eos_base> eosR = std::make_shared<eos_idealgas>(1.4);
+
+        blitz::Array<double,1> leftstate (3);
+	leftstate(0) = leftprimitives(0);
+        leftstate(1) = leftprimitives(0)*leftprimitives(1);
+        leftstate(2) = eosL->E(leftprimitives);
+							
+        blitz::Array<double,1> rightstate (3);
+        rightstate(0) = rightprimitives(0);
+        rightstate(1) = rightprimitives(0)*rightprimitives(1);
+        rightstate(2) = eosR->E(rightprimitives);
+							
+
+	// Call RS for interface state
+	
+	std::shared_ptr<riemann_solver_base> RS = std::make_shared<M_HLLC_riemann_solver>();
+	double p_star, u_star, rho_star_L, rho_star_R;
+	RS->solve_rp_forinterfaceboundary(leftstate, rightstate, p_star, u_star, rho_star_L, rho_star_R, eosL, eosR);
+
+	
+	// Output
+
+	std::cout << "p_star = " << p_star << std::endl;
+	std::cout << "u_star = " << u_star << std::endl;
+	std::cout << "rho_star_L = " << rho_star_L << std::endl;
+	std::cout << "rho_star_R = " << rho_star_R << std::endl;
 }

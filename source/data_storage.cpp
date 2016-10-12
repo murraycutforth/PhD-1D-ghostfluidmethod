@@ -99,11 +99,11 @@ void settingsfile :: read_settings_file ()
 
 		if (inputname == "fluid1_gamma") iss >> fluid1_gamma;
 
-		if (inputname == "fluid1_A") iss >> fluid1_A;
+		if (inputname == "fluid1_B") iss >> fluid1_B;
 
 		if (inputname == "fluid2_gamma") iss >> fluid2_gamma;
 
-		if (inputname == "fluid2_A") iss >> fluid2_A;
+		if (inputname == "fluid2_B") iss >> fluid2_B;
 
 		if (inputname == "T") iss >> T;
 
@@ -114,6 +114,7 @@ void settingsfile :: read_settings_file ()
 			iss >> RSchoice;
 			if (RSchoice == "HLLC") RS = HLLC;
 			else if (RSchoice == "M_HLLC") RS = M_HLLC;
+			else if (RSchoice == "exact_idealgas") RS = exact_idealgas;
 			else assert(!"Invalid RS");
 		}
 	
@@ -128,7 +129,9 @@ void settingsfile :: read_settings_file ()
 		{
 			iss >> GFMchoice;
 			if (GFMchoice == "Original") GFM = Original;
-			if (GFMchoice == "Isobaricfix") GFM = Isobaricfix;
+			else if (GFMchoice == "Isobaricfix") GFM = Isobaricfix;
+			else if (GFMchoice == "Real") GFM = Real;
+			else assert(!"Invalid GFM");
 		}
 
 		if (inputname == "IC")
@@ -137,6 +140,8 @@ void settingsfile :: read_settings_file ()
 			if (ICchoice == "TC1") IC = TC1;
 			else if (ICchoice == "TC2") IC = TC2;
 			else if (ICchoice == "HuST2") IC = HuST2;
+			else if (ICchoice == "rGFMTC1") IC = rGFMTC1;
+			else if (ICchoice == "rGFMTC3") IC = rGFMTC3;
 			else assert(!"Invalid IC");
 		}
 
@@ -145,6 +150,8 @@ void settingsfile :: read_settings_file ()
 		{
 			iss >> lsICchoice;
 			if (lsICchoice == "T1") lsIC = T1;
+			else if (lsICchoice == "T2") lsIC = T2;
+			else assert(!"Invalid lsIC");
 		}
 
 		if (inputname == "eos1")

@@ -168,3 +168,46 @@ double vfield_starstate :: get_u (double x)
 
 	assert(false);
 }
+
+
+
+
+
+
+
+
+
+
+vfield_mixedRPsolution :: vfield_mixedRPsolution (std::shared_ptr<ghost_fluid_method_base> GFM, levelset_array& ls)
+:
+	GFM (GFM),
+	ls (ls)
+{}
+
+
+
+double vfield_mixedRPsolution :: get_u (double x)
+{
+	// Linear interpolation between the extension velocity field points stored in GFM
+
+	assert(GFM->extension_interface_velocity.extent(blitz::firstDim) == ls.array.length+2*ls.array.numGC);
+
+
+	// Find cell indices on L and R
+
+	int i_L = static_cast<int>(floor((x - (ls.array.x0 - 0.5*ls.array.dx))/ls.array.dx)) + ls.array.numGC - 1;
+	int i_R = i_L + 1;
+	assert(i_L >= 0);
+	assert(i_R <= ls.array.length + 2*ls.array.numGC-1);
+
+
+	// Linear interpolation between values
+
+	double t = x - ls.array.cellcentre_coord(i_L);
+	if (fabs(t) < 1e-10) t = 0.0;
+	if (fabs(t - ls.array.dx) < 1e-10) t = ls.array.dx;
+	assert(t >= 0.0);
+	assert(t <= ls.array.dx);
+
+	return GFM->extension_interface_velocity(i_L) + (t/ls.array.dx)*(GFM->extension_interface_velocity(i_R) - GFM->extension_interface_velocity(i_L));
+}

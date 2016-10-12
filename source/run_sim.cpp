@@ -137,13 +137,14 @@ void serial_twofluid_sim :: run_sim (settingsfile SF)
 	levelset_array newls (lsarray);
 	
 	std::shared_ptr<ghost_fluid_method_base> GFM;
-	if (SF.GFM == Original) GFM = std::make_shared<original_GFM>(statearray);
-	else if (SF.GFM == Isobaricfix) GFM = std::make_shared<isobaric_fix_GFM>(statearray);
-	else if (SF.GFM == Real) GFM = std::make_shared<rGFM>(statearray);
+	if (SF.GFM == Original) GFM = std::make_shared<original_GFM>(lsarray);
+	else if (SF.GFM == Isobaricfix) GFM = std::make_shared<isobaric_fix_GFM>(lsarray);
+	else if (SF.GFM == Real) GFM = std::make_shared<rGFM>(lsarray);
 	
 	std::shared_ptr<riemann_solver_base> RS;
 	if (SF.RS == HLLC) RS = std::make_shared<HLLC_riemann_solver_idealgas>();
 	else if (SF.RS == M_HLLC) RS = std::make_shared<M_HLLC_riemann_solver>();
+	else if (SF.RS == exact_idealgas) RS = std::make_shared<exact_riemann_solver_idealgas>();
 
 	std::shared_ptr<flow_solver_base> FS;
 	if (SF.FS == Godunov) FS = std::make_shared<godunov>(RS);
@@ -151,7 +152,15 @@ void serial_twofluid_sim :: run_sim (settingsfile SF)
 	
 
 	// NOt part of settings file yet
-	std::shared_ptr<vfield_base> vfield = std::make_shared<vfield_starstate>(FS, ls, statearray);
+	std::shared_ptr<vfield_base> vfield;
+	if (SF.GFM == Real)
+	{
+		vfield = std::make_shared<vfield_mixedRPsolution>(GFM, ls);
+	}
+	else
+	{
+		vfield = std::make_shared<vfield_starstate>(FS, ls, statearray);
+	}
 	std::shared_ptr<levelset_advection_base> lsadvection = std::make_shared<levelset_advection_firstorderup>();
 
 

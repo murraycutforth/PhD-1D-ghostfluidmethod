@@ -99,4 +99,27 @@ class M_HLLC_riemann_solver : public riemann_solver_base {
 
 
 
+class exact_riemann_solver_idealgas : public riemann_solver_base {
+
+	public:
+
+	void solve_rp (	blitz::Array<double,1> Lstate,
+			blitz::Array<double,1> Rstate,
+			blitz::Array<double,1> flux,
+			double& S_star,
+			std::shared_ptr<eos_base> eos);
+	
+	void solve_rp_forinterfaceboundary (	blitz::Array<double,1> Lstate,
+						blitz::Array<double,1> Rstate,
+						double& p_star,
+						double& u_star,
+						double& rho_star_L,
+						double& rho_star_R,
+						std::shared_ptr<eos_base> eosL,
+						std::shared_ptr<eos_base> eosR );
+};
+
+
+
+
 #endif
