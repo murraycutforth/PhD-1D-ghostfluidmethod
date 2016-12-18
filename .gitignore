@@ -3,7 +3,7 @@
 ./objectfiles/*
 
 # Executables
-./1D_GFM.exe
+1D_GFM.exe
 
 # Output data
 *.dat
