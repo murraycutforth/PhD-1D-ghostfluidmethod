@@ -2,76 +2,13 @@
 #define DATA_STORAGE
 
 
-
-
-class eos_base;
-
-
-
+#include "input.hpp"
 #include <blitz/array.h>
 #include <memory>
 #include <string>
 
 
-
-
-
-
-enum RS_type {HLLC, M_HLLC, exact_idealgas};
-
-enum FS_type {Godunov, MUSCL_FS};
-
-enum GFM_type {Original, Isobaricfix, Real};
-
-enum IC_type {TC1, TC2, HuST2, rGFMTC1, rGFMTC3};
-
-enum ls_IC_type {T1, T2};
-
-enum eos_type {ideal, tait};
-
-enum BC_type {reflective, transmissive, nothing};
-
-enum sim_type {serial_onefluid, serial_twofluid};
-
-
-
-struct settingsfile {
-
-	int length;
-	double x0;
-	double dx;
-	int numGC;
-
-	int lsnumGC;
-	int lslength;
-	double lsdx;
-
-	double fluid1_gamma;
-	double fluid1_B;
-	double fluid2_gamma;
-	double fluid2_B;
-
-	double T;
-	double CFL;
-
-	RS_type RS;
-	FS_type FS;
-	GFM_type GFM;
-	IC_type IC;
-	ls_IC_type lsIC;
-	eos_type eos1;
-	eos_type eos2;
-	BC_type BC_L;
-	BC_type BC_R;
-
-	sim_type sim;
-
-	std::string outputpath;
-	std::string basename;
-
-	void read_settings_file ();
-};
-
+class eos_base;
 
 
 
@@ -88,72 +25,32 @@ struct arrayinfo {
 	int cellindex (double x);
 };
 
-
 bool operator==(const arrayinfo& rhs, const arrayinfo& lhs);
 
 
 
-
-class levelset_array;
-
-
-
-
-class twofluid_array {
+class fluid_state_array {
 
 	public:
-
-	blitz::Array<double,2> fluid1;
-	blitz::Array<double,2> fluid2;
+	
 	arrayinfo array;
-	std::shared_ptr<eos_base> eos1;
-	std::shared_ptr<eos_base> eos2;
-	blitz::Array<double,1> initial_total_cv;
-
-
-	twofluid_array (arrayinfo array, std::shared_ptr<eos_base> eos1, std::shared_ptr<eos_base> eos2);
+	blitz::Array<double,2> CV;
+	std::shared_ptr<eos_base> eos;
 	
 
+	fluid_state_array (arrayinfo array, std::shared_ptr<eos_base> eos);
+
+	fluid_state_array (const fluid_state_array& other);
+	
+
+	fluid_state_array copy ();
+	
 	void apply_BCs ();
 
 	void output_to_file (std::string name);
 
-	void output_realfluid_to_file (std::string name, levelset_array& ls);
-
-	void output_conservation_error (std::string name, levelset_array& ls, double t);
-
-	blitz::Array<double,1> total_conserved_quantities (levelset_array& ls);
-
-};
-
-
-
-
-
-class onefluid_array {
-
-	public:
-
-	blitz::Array<double,2> fluid;
-	arrayinfo array;
-	std::shared_ptr<eos_base> eos;
-	blitz::Array<double,1> initial_total_cv;
-
-
-	onefluid_array (arrayinfo array, std::shared_ptr<eos_base> eos);
-
-	onefluid_array (blitz::Array<double,2>& fluid, arrayinfo array, std::shared_ptr<eos_base> eos);
-
-
-	void apply_BCs();
-
-	void output_to_file (std::string name);
-
-	void output_conservation_error (std::string name, double t);
-
 	blitz::Array<double,1> total_conserved_quantities ();
 };
-
 
 
 
@@ -161,14 +58,14 @@ class levelset_array {
 
 	public:
 
-	blitz::Array<double,1> phi;
 	arrayinfo array;
-
+	blitz::Array<double,1> phi;
 
 	
 	levelset_array (arrayinfo array);
+	
+	levelset_array (const levelset_array& other);
 
-	double operator() (double x);
 
 	double linear_interpolation (double x);
 

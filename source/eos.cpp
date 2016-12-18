@@ -1,7 +1,4 @@
 #include "eos.hpp"
-
-
-
 #include <cmath>
 
 

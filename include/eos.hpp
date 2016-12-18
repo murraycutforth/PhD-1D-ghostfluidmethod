@@ -1,17 +1,9 @@
 #ifndef EOS
 #define EOS
 
-
-
 #include "data_storage.hpp"
-
-
-
 #include <blitz/array.h>
 #include <memory>
-
-
-
 
 
 double specific_ie_cv (blitz::Array<double,1> state);
@@ -19,16 +11,11 @@ double specific_ie_cv (blitz::Array<double,1> state);
 bool is_state_physical (blitz::Array<double,1> state);
 
 
-
-
-
 class eos_base {
 
 	public:
 
-
 	eos_base ();
-
 
 
 	virtual double a (blitz::Array<double,1> state) =0;
@@ -58,7 +45,6 @@ class eos_base {
 	virtual double postrarefaction_density (double P_star, double P_K, double rho_K) =0;
 
 	virtual eos_type get_eos_type () =0;
-
 };
 
 
@@ -71,10 +57,7 @@ class eos_idealgas : public eos_base {
 
 	double gamma;
 
-
-
 	eos_idealgas (double gamma);
-
 
 
 	double a (blitz::Array<double,1> state);
@@ -104,7 +87,6 @@ class eos_idealgas : public eos_base {
 	double postrarefaction_density (double P_star, double P_K, double rho_K);
 
 	eos_type get_eos_type ();
-
 };
 
 
@@ -117,10 +99,7 @@ class eos_tait : public eos_base {
 	double gamma;
 	double B;
 
-
 	eos_tait (double gamma, double B);
-
-
 
 
 	double a (blitz::Array<double,1> state);

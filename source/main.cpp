@@ -1,12 +1,17 @@
+/*
+ * 	DESCRIPTION:	Main function for 1D ghost fluid code. After reading settings file, the main function
+ *			decides to run a simulation in either single fluid, or full level set - ghost fluid
+ *			two fluid mode.
+ *
+ */
+
+
 #include "data_storage.hpp"
 #include "run_sim.hpp"
-
-
-
+#include "input.hpp"
 #include <iostream>
 #include <cassert>
 #include <memory>
-
 
 
 int main()
@@ -22,14 +27,14 @@ int main()
 
 	std::shared_ptr<sim_base> sim;
 
-	if (SF.sim == serial_onefluid)
+	if (SF.sim == onefluid)
 	{
-		sim = std::make_shared<serial_onefluid_sim>();
+		sim = std::make_shared<onefluid_sim>();
 	}
-	else if (SF.sim == serial_twofluid)
-	{
-		sim = std::make_shared<serial_twofluid_sim>();
-	}
+	//else if (SF.sim == twofluid)
+	//{
+	//	sim = std::make_shared<twofluid_sim>();
+	//}
 	else
 	{
 		assert(!"Invalid sim type");

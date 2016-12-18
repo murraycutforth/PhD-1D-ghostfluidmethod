@@ -1,8 +1,8 @@
 #
 # Makefile
-# parallel_GFM
+# 1D_GFM
 #
-# Based on the file at http://hiltmon.com/
+# Based on the makefile at http://hiltmon.com/
 #
 
 # Compiler
@@ -13,7 +13,7 @@ SRCDIR := source
 BUILDDIR := objectfiles
 
 # Target
-TARGET := parallel_GFM
+TARGET := 1D_GFM.exe
 
 # Code Lists
 SOURCES := $(shell find $(SRCDIR) -type f -name *.cpp)
@@ -28,7 +28,7 @@ EXTINCLIST := -I ../exact_riemann_solver/
 
 # Shared Compiler Flags
 OPLEVEL := 
-CFLAGS := -Wall -c -g -std=c++0x $(OPLEVEL)
+CFLAGS := -Wall -c -g -std=c++11 $(OPLEVEL)
 INC := $(INCLIST)
 TESTERFLAGS :=
 
