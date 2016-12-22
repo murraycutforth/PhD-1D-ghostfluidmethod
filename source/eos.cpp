@@ -156,9 +156,9 @@ double eos_idealgas :: postrarefaction_density (double P_star, double P_K, doubl
 }
 
 
-eos_type eos_idealgas :: get_eos_type ()
+std::string eos_idealgas :: get_eos_type ()
 {
-	return ideal;
+	return "ideal";
 }
 
 
@@ -286,9 +286,9 @@ double eos_tait :: postrarefaction_density (double P_star, double P_K, double rh
 
 
 
-eos_type eos_tait :: get_eos_type ()
+std::string eos_tait :: get_eos_type ()
 {
-	return tait;
+	return "tait";
 }
 
 

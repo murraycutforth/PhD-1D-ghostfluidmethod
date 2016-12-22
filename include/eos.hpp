@@ -4,6 +4,7 @@
 #include "data_storage.hpp"
 #include <blitz/array.h>
 #include <memory>
+#include <string>
 
 
 double specific_ie_cv (blitz::Array<double,1> state);
@@ -44,7 +45,7 @@ class eos_base {
 
 	virtual double postrarefaction_density (double P_star, double P_K, double rho_K) =0;
 
-	virtual eos_type get_eos_type () =0;
+	virtual std::string get_eos_type () =0;
 };
 
 
@@ -86,7 +87,7 @@ class eos_idealgas : public eos_base {
 
 	double postrarefaction_density (double P_star, double P_K, double rho_K);
 
-	eos_type get_eos_type ();
+	std::string get_eos_type ();
 };
 
 
@@ -128,7 +129,7 @@ class eos_tait : public eos_base {
 
 	double postrarefaction_density (double P_star, double P_K, double rho_K);
 
-	eos_type get_eos_type ();
+	std::string get_eos_type ();
 };
 
 

@@ -16,6 +16,7 @@
 #include "eos.hpp"
 #include "exact_RS_idealgas.hpp"
 #include <cassert>
+#include <string>
 #include <cmath>
 #include <algorithm>
 
@@ -39,7 +40,7 @@ void HLLC_RS_idealgas ::  solve_rp (
 
 	assert(is_state_physical(Lstate));
 	assert(is_state_physical(Rstate));
-	assert(eos->get_eos_type() == ideal);
+	assert(eos->get_eos_type() == "ideal");
 
 
 	// Recover the primitive variables
@@ -142,7 +143,7 @@ void exact_RS_idealgas :: solve_rp (
 	 * 	An exact Riemann solver for ideal gas. Flux across x/t=0 characteristic returned.
 	 */
 
-	assert(eos->get_eos_type() == ideal);
+	assert(eos->get_eos_type() == "ideal");
 	assert(is_state_physical(Lstate));
 	assert(is_state_physical(Rstate));
 
@@ -321,8 +322,8 @@ void exact_RS_multi_idealgas :: solve_rp_forinterfaceboundary (
 	 *	ideal gas equation of state.
 	 */
 
-	assert(eosL->get_eos_type() == ideal);
-	assert(eosR->get_eos_type() == ideal);
+	assert(eosL->get_eos_type() == "ideal");
+	assert(eosR->get_eos_type() == "ideal");
 
 	blitz::Array<double,1> Lprimitives (3);
 	blitz::Array<double,1> Rprimitives (3);

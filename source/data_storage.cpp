@@ -92,19 +92,16 @@ void fluid_state_array :: apply_BCs()
 
 	for (int i=0; i<array.numGC; i++)
 	{
-		if (array.leftBC == transmissive)
+		if (array.leftBC == "transmissive")
 		{
 			CV(i,all) = CV(2*array.numGC - 1 - i,all);
 		}
-		else if (array.leftBC == reflective)
+		else if (array.leftBC == "reflective")
 		{
 			CV(i,all) = CV(2*array.numGC - 1 - i,all);
 			CV(i,1) = -CV(i,1);
 		}
-		else if (array.leftBC == nothing)
-		{
-		}
-		else
+		else if (array.leftBC != "nothing")
 		{
 			assert(!"Invalid BC type");
 		}
@@ -112,19 +109,16 @@ void fluid_state_array :: apply_BCs()
 	
 	for (int i=0; i<array.numGC; i++)
 	{
-		if (array.rightBC == transmissive)
+		if (array.rightBC == "transmissive")
 		{
 			CV(array.length + 2*array.numGC - 1 - i,all) = CV(array.length + i,all);
 		}
-		else if (array.rightBC == reflective)
+		else if (array.rightBC == "reflective")
 		{
 			CV(array.length + 2*array.numGC - 1 - i,all) = CV(array.length + i,all);
 			CV(array.length + 2*array.numGC - 1 - i,1) = -CV(array.length + 2*array.numGC - 1 - i,1);
 		}
-		else if (array.rightBC == nothing)
-		{
-		}
-		else
+		else if (array.rightBC != "nothing")
 		{
 			assert(!"Invalid BC type");
 		}
@@ -218,18 +212,16 @@ void levelset_array :: apply_BCs ()
 
 	for (int i=0; i<array.numGC; i++)
 	{
-		if (array.leftBC == transmissive)
+		if (array.leftBC == "transmissive")
 		{
-			phi(i) = phi(array.numGC);
+			double diff = phi(array.numGC+1) - phi(array.numGC);
+			phi(i) = phi(array.numGC) - (array.numGC - i)*diff;
 		}
-		else if (array.leftBC == reflective)
+		else if (array.leftBC == "reflective")
 		{
 			phi(i) = phi(2*array.numGC - 1 - i);
 		}
-		else if (array.leftBC == nothing)
-		{
-		}
-		else
+		else if (array.leftBC == "nothing")
 		{
 			assert(!"Invalid BC type");
 		}
@@ -237,18 +229,16 @@ void levelset_array :: apply_BCs ()
 	
 	for (int i=0; i<array.numGC; i++)
 	{
-		if (array.rightBC == transmissive)
+		if (array.rightBC == "transmissive")
 		{
-			phi(array.length + 2*array.numGC - 1 - i) = phi(array.length + array.numGC - 1);
+			double diff = phi(array.length + array.numGC - 1) - phi(array.length + array.numGC - 2);
+			phi(array.length + 2*array.numGC - 1 - i) = phi(array.length + array.numGC - 1) + (i - (array.length + array.numGC -1))*diff;
 		}
-		else if (array.rightBC == reflective)
+		else if (array.rightBC == "reflective")
 		{
 			phi(array.length + 2*array.numGC - 1 - i) = phi(array.length + i);
 		}
-		else if (array.rightBC == nothing)
-		{
-		}
-		else
+		else if (array.rightBC != "nothing")
 		{
 			assert(!"Invalid BC type");
 		}

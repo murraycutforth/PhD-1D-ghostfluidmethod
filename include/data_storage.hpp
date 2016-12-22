@@ -18,8 +18,8 @@ struct arrayinfo {
 	double x0;
 	double dx;
 	int numGC;
-	BC_type leftBC;
-	BC_type rightBC;
+	std::string leftBC;
+	std::string rightBC;
 
 	double cellcentre_coord (int i);
 	int cellindex (double x);

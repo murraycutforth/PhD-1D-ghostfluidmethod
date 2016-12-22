@@ -12,6 +12,7 @@
 #include <iostream>
 #include <cassert>
 #include <memory>
+#include <string>
 
 
 int main()
@@ -27,11 +28,11 @@ int main()
 
 	std::shared_ptr<sim_base> sim;
 
-	if (SF.sim == onefluid)
+	if (SF.sim == "onefluid")
 	{
 		sim = std::make_shared<onefluid_sim>();
 	}
-	//else if (SF.sim == twofluid)
+	//else if (SF.sim == "twofluid")
 	//{
 	//	sim = std::make_shared<twofluid_sim>();
 	//}

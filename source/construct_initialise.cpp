@@ -6,6 +6,7 @@
 
 #include "construct_initialise.hpp"
 #include <cassert>
+#include <string>
 
 #define all blitz::Range::all()
 
@@ -24,15 +25,15 @@ fluid_state_array construct_initialise_onefluid (
 	 *	in a single fluid simulation.
 	 */
 	
-	if (SF.eos1 == ideal) eos = std::make_shared<eos_idealgas>(SF.fluid1_gamma);
+	if (SF.eos1 == "ideal") eos = std::make_shared<eos_idealgas>(SF.fluid1_gamma);
 	else assert(!"Invalid eos1");
 
-	if (SF.RS_pure == HLLC_idealgas) RS = std::make_shared<HLLC_RS_idealgas>();
-	else if (SF.RS_pure == exact_idealgas) RS = std::make_shared<exact_RS_idealgas>();
+	if (SF.RS_pure == "HLLC_idealgas") RS = std::make_shared<HLLC_RS_idealgas>();
+	else if (SF.RS_pure == "Exact_idealgas") RS = std::make_shared<exact_RS_idealgas>();
 	else assert(!"Invalid RS_pure");
 
-	if (SF.FS == Godunov) FS = std::make_shared<godunov>(RS);
-	else if (SF.FS == MUSCL_FS) FS = std::make_shared<MUSCL>(RS);
+	if (SF.FS == "Godunov") FS = std::make_shared<godunov>(RS);
+	else if (SF.FS == "MUSCL") FS = std::make_shared<MUSCL>(RS);
 	else assert(!"Invalid FS");
 
 	arrayinfo array;
@@ -44,7 +45,7 @@ fluid_state_array construct_initialise_onefluid (
 
 	// Use IC_type to set domain size
 	
-	if (SF.IC == TTC1 || SF.IC == TTC2 || SF.IC == TTC3 || SF.IC == TTC4 || SF.IC == TTC5)
+	if (SF.IC == "TTC1" || SF.IC == "TTC2" || SF.IC == "TTC3" || SF.IC == "TTC4" || SF.IC == "TTC5")
 	{
 		array.x0 = 0.0;
 		array.dx = 1.0/array.length;
@@ -56,7 +57,7 @@ fluid_state_array construct_initialise_onefluid (
 
 	// Use IC_type to set initial values of fluid state
 
-	if (SF.IC == TTC1)
+	if (SF.IC == "TTC1")
 	{
 		SF.T = 0.25;
 
@@ -74,7 +75,7 @@ fluid_state_array construct_initialise_onefluid (
 
 		set_piecewiseconstant_ICs ( leftprimitives, rightprimitives, discontinuitylocation, statearr);
 	}
-	else if (SF.IC == TTC2)
+	else if (SF.IC == "TTC2")
 	{
 		blitz::Array<double,1> leftprimitives (3);
 		leftprimitives(0) = 1.0;
