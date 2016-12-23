@@ -1,6 +1,6 @@
 # The ghost fluid method for two-material flow governed by the one dimensional compressible Euler equations
 
-Murray Cutforth, Scientific Computing Group, University of Cambridge
+*Murray Cutforth, Scientific Computing Group, University of Cambridge*
 
 
 
@@ -17,35 +17,35 @@ These instructions will get you a copy of the project compiled on your local mac
 
 Choose your directory and run:
 
-  `git clone https://github.com/murraycutforth/exact_riemann_solver_idealgas.git`
-  `git clone https://github.com/murraycutforth/1D_Euler_GFM.git`
-  `cd 1D_Euler_GFM`
-  `make`
+  `git clone https://github.com/murraycutforth/exact_riemann_solver_idealgas.git`  
+  `git clone https://github.com/murraycutforth/1D_Euler_GFM.git`  
+  `cd 1D_Euler_GFM`  
+  `make`  
 
 ## Running a simulation
 
 Simulation options are specified in 'settings_file.txt' before running 1D_Euler_GFM.exe. The following
 options are available:
 
-  length [integer above 0] {number of real cells in domain}
-  numGC [integer greater than 0] {number of ghost cells on each end of the domain for boundary conditions}
-  lsnumGC [integer greater than 0] {number of boundary ghost cells for level set grid}
-  lslength [integer greater than 0] {number of grid points for level set grid}
-  fluid1_gamma [double] {EOS parameter}
-  fluid1_A [double] {EOS parameter}
-  fluid2_gamma [double] {EOS parameter}
-  fluid2_A [double] {EOS parameter}
-  RS [HLLC | M_HLLC] {Riemann solver. HLLC for ideal gas using PVRS pressure based wave speeds, or M_HLLC for general EOS using  Roe-average state wave speed estimate}
-  FS [Godunov | MUSCL_FS] {Flow solver. Godunov's first order method, or the second order MUSCL-Hancock method with minbee slope limiter}
-  GFM [Original | Isobaricfix | Real] {Ghost fluid method. Original method, Original method with isobaric fix, real ghost fluid method [Wang, 2009]}
-  IC [TC1 | TC2 | HuST2] {Test case. TC1 = Sod shock tube with 8x density ratio and 10x pressure ratio, x0=0.5. TC2 = two rarefaction test case, x0=0.5. HuST2 = Second shock tube test from Hu2009, 1xdensity ration, 2500x pressure ratio, gamma_R=1.667}
-  eos 1 [ideal | tait]
-  eos 2 [ideal | tait]
-  BC_L [transmissive | reflective | nothing] {Left boundary condition}
-  BC_R [transmissive | reflective | nothing] {Right boundary condition}
-  CFL [double between 0 and 1] {CFL number for time step size}
-  sim [onefluid | twofluid] {switches between different modes}
-  outputpath [string] {simulation output is sent here}
+* length [integer] *number of real cells in domain*
+* numGC [integer] *number of ghost cells on each end of the domain*
+* lsnumGC [integer] *number of boundary ghost cells for level set grid*
+* lslength [integer] *number of grid points for level set grid*
+* fluid1_gamma [double] *EOS parameter*
+* fluid1_A [double] *EOS parameter*
+* fluid2_gamma [double] *EOS parameter*
+* fluid2_A [double] *EOS parameter}
+* RS_pure [HLLC_idealgas | Exact_idealgas] *Riemann solver used for single-material Riemann problem in flow solver*
+* FS [Godunov | MUSCL] *Flow solver for single-material Euler equations*
+* GFM [Original | Isobaricfix | Real] *Ghost fluid method*
+* IC [TTC1 | TTC2 | TTC3 | TTC4 | TTC5] *Test case. TTC1-5 are initial conditions for the five test cases from Toro.*
+* eos 1 [ideal] *Equation of state*
+* eos 2 [ideal] *Equation of state*
+* BC_L [transmissive | reflective | nothing] *Left boundary condition*
+* BC_R [transmissive | reflective | nothing] *Right boundary condition*
+* CFL [double between 0 and 1] *CFL number for time step size*
+* sim [onefluid | twofluid] *Switch between single fluid simulation and full multimaterial ghost fluid simulation*
+* outputpath [string] *Simulation output is sent here*
 
 ## Visualising the results
 
