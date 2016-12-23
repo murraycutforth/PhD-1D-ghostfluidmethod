@@ -77,6 +77,8 @@ fluid_state_array construct_initialise_onefluid (
 	}
 	else if (SF.IC == "TTC2")
 	{
+		SF.T = 0.15;
+
 		blitz::Array<double,1> leftprimitives (3);
 		leftprimitives(0) = 1.0;
 		leftprimitives(1) = -2.0;
@@ -86,6 +88,60 @@ fluid_state_array construct_initialise_onefluid (
 		rightprimitives(0) = 1.0;
 		rightprimitives(1) = 2.0;
 		rightprimitives(2) = 0.4;
+
+		double discontinuitylocation = 0.5;
+
+		set_piecewiseconstant_ICs ( leftprimitives, rightprimitives, discontinuitylocation, statearr);
+	}
+	else if (SF.IC == "TTC3")
+	{
+		SF.T = 0.012;
+
+		blitz::Array<double,1> leftprimitives (3);
+		leftprimitives(0) = 1.0;
+		leftprimitives(1) = 0.0;
+		leftprimitives(2) = 1000.0;
+
+		blitz::Array<double,1> rightprimitives (3);
+		rightprimitives(0) = 1.0;
+		rightprimitives(1) = 0.0;
+		rightprimitives(2) = 0.01;
+
+		double discontinuitylocation = 0.5;
+
+		set_piecewiseconstant_ICs ( leftprimitives, rightprimitives, discontinuitylocation, statearr);
+	}
+	else if (SF.IC == "TTC4")
+	{
+		SF.T = 0.035;
+
+		blitz::Array<double,1> leftprimitives (3);
+		leftprimitives(0) = 1.0;
+		leftprimitives(1) = 0.0;
+		leftprimitives(2) = 0.01;
+
+		blitz::Array<double,1> rightprimitives (3);
+		rightprimitives(0) = 1.0;
+		rightprimitives(1) = 0.0;
+		rightprimitives(2) = 100.0;
+
+		double discontinuitylocation = 0.5;
+
+		set_piecewiseconstant_ICs ( leftprimitives, rightprimitives, discontinuitylocation, statearr);
+	}
+	else if (SF.IC == "TTC5")
+	{
+		SF.T = 0.035;
+
+		blitz::Array<double,1> leftprimitives (3);
+		leftprimitives(0) = 5.99924;
+		leftprimitives(1) = 19.5975;
+		leftprimitives(2) = 460.894;
+
+		blitz::Array<double,1> rightprimitives (3);
+		rightprimitives(0) = 5.99242;
+		rightprimitives(1) = -6.19633;
+		rightprimitives(2) = 46.0950;
 
 		double discontinuitylocation = 0.5;
 

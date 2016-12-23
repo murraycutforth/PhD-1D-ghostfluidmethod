@@ -65,10 +65,10 @@ void settingsfile :: read_settings_file ()
 
 	}
 
-	basename = outputpath + GFM + "_" + FS + "_" + IC + "_" 
+	basename = outputpath + GFM + "_" + FS + "_" + RS_pure + "_" + RS_mixed + "_" + IC + "_" 
 		+ eos1 + "-" + eos2 + "_" + std::to_string(length) + "_";
 
-	if (sim == "onefluid") basename = outputpath + "onefluid_" + FS + "_" + IC + "_" + eos1 + "_" + std::to_string(length) + "_";
+	if (sim == "onefluid") basename = outputpath + "onefluid_" + FS + "_" + RS_pure + "_" + IC + "_" + eos1 + "_" + std::to_string(length) + "_";
 	
 	infile.close();
 }

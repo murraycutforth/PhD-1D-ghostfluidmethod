@@ -13,7 +13,7 @@ SRCDIR := source
 BUILDDIR := objectfiles
 
 # Target
-TARGET := 1D_GFM.exe
+TARGET := 1D_Euler_GFM.exe
 
 # Code Lists
 SOURCES := $(shell find $(SRCDIR) -type f -name *.cpp)

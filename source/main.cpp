@@ -43,7 +43,7 @@ int main()
 
 	sim->run_sim(SF);
 
-	std::cout << "parallel_GFM code complete!" << std::endl;
+	std::cout << "Simulation complete!" << std::endl;
 	
 	return 0;
 }

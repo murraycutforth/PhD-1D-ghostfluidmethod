@@ -2,11 +2,11 @@ filein=$1
 fileout=$2
 
 gnuplot <<- EOF
-	set terminal png font 'arial,30' size 3000,2000
+	set terminal png enhanced font 'Palatino,30' size 3000,2000
 	set output '$fileout'
-	set border lw 3
+	set border lw 5
 	unset key
-	set multiplot layout 2,2
+	set multiplot layout 2,2 title "$filein" noenhanced
 	
 	set xlabel 'x'
 	set ylabel 'density'

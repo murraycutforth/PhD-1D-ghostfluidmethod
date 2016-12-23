@@ -175,12 +175,21 @@ void MUSCL :: single_fluid_update (fluid_state_array& oldstate, fluid_state_arra
 		R_BEV_L = oldstate.CV(i,all) - 0.5*slope_R;
 		R_BEV_R = oldstate.CV(i,all) + 0.5*slope_R;
 
-
+		
 		// Evolve states by half a time step
 
 		L_BEV_R_evolved = L_BEV_R + 0.5*(dtodx)*(euler_flux(L_BEV_L, oldstate.eos) - euler_flux(L_BEV_R, oldstate.eos));
 
 		R_BEV_L_evolved = R_BEV_L + 0.5*(dtodx)*(euler_flux(R_BEV_L, oldstate.eos) - euler_flux(R_BEV_R, oldstate.eos));
+
+
+		// If any states are unphysical, revert to zero slope
+
+		if ((!is_state_physical(L_BEV_R_evolved)) || (!is_state_physical(R_BEV_L_evolved)))
+		{
+			L_BEV_R_evolved = oldstate.CV(i-1,all);
+			R_BEV_L_evolved = oldstate.CV(i,all);
+		}
 
 
 		// Update using conventional Riemann problem solution
@@ -189,6 +198,22 @@ void MUSCL :: single_fluid_update (fluid_state_array& oldstate, fluid_state_arra
 		
 		newstate.CV(i-1, all) -= dtodx*flux;
 		newstate.CV(i, all) += dtodx*flux;
+
+		
+		// If any new states are unphysical, repeat with zero slope
+
+		if ((!is_state_physical(newstate.CV(i-1,all))) || (!is_state_physical(newstate.CV(i,all))))
+		{
+			newstate.CV(i-1,all) += dtodx*flux;
+			newstate.CV(i,all) -= dtodx*flux;
+			
+			L_BEV_R_evolved = oldstate.CV(i-1,all);
+			R_BEV_L_evolved = oldstate.CV(i,all);
+		
+			rs->solve_rp(L_BEV_R_evolved, R_BEV_L_evolved, flux, oldstate.eos);
+			newstate.CV(i-1, all) -= dtodx*flux;
+			newstate.CV(i, all) += dtodx*flux;
+		}
 	}
 }
 

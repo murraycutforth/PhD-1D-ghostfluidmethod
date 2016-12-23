@@ -61,6 +61,7 @@ void onefluid_sim :: run_sim (settingsfile SF)
 		std::cout << "[" << SF.basename << "] Time step " << numsteps << " complete. t = " << t << std::endl;
 	}
 	
+	statearr.output_to_file(SF.basename + "final.dat");
 	std::cout << "[" << SF.basename << "] Simulation complete." << std::endl;
 }
 
