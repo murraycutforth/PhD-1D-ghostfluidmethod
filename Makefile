@@ -18,13 +18,13 @@ TARGET := 1D_GFM.exe
 # Code Lists
 SOURCES := $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
-EXTOBJS := ../exact_riemann_solver/exact_RS_idealgas.o
+EXTOBJS := ../exact_riemann_solver_idealgas/exact_RS_idealgas.o
 
 # Folder Lists
 INCDIRS := include
 INCLIST := -I include
 BUILDLIST := $(BUILDDIR)
-EXTINCLIST := -I ../exact_riemann_solver/
+EXTINCLIST := -I ../exact_riemann_solver_idealgas/
 
 # Shared Compiler Flags
 OPLEVEL := 
