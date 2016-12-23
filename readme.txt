@@ -1,22 +1,41 @@
-This file describes the runtime options available in settings_file.txt. 
+# Project Title
 
-This is a project by Murray Cutforth, Scientific Computing Group, University of Cambridge.
+The ghost fluid method for two-material flow governed by the one dimensional compressible Euler equations
 
-======================================================================================================================
+## Author
+
+Murray Cutforth, Scientific Computing Group, University of Cambridge
+
+## Getting Started
+
+These instructions will get you a copy of the project compiled on your local machine.
+
+### Prerequisites
+
+* The Blitz++ library - available at https://sourceforge.net/projects/blitz/
+* Gnuplot - Run 'sudo apt-get install gnuplot'
+
+### Installing
+
+Choose your directory and run:
+
+  git clone https://github.com/murraycutforth/exact_riemann_solver_idealgas.git
+  git clone https://github.com/murraycutforth/1D_Euler_GFM.git
+  cd 1D_Euler_GFM
+  make
+
+## Running a simulation
+
+Simulation options are specified in 'settings_file.txt' before running 1D_Euler_GFM.exe. The following
+options are available:
 
 length [integer above 0] {number of real cells in domain}
-
-x0 [double] {coordinate of left edge of domain}
-
-dx [double greater than 0] {width of each cell}
 
 numGC [integer greater than 0] {number of ghost cells on each end of the domain for boundary conditions}
 
 lsnumGC [integer greater than 0] {number of boundary ghost cells for level set grid}
 
 lslength [integer greater than 0] {number of grid points for level set grid}
-
-lsdx [double greater than 0] {length between level set grid points}
 
 fluid1_gamma [double] {EOS parameter}
 
@@ -34,8 +53,6 @@ GFM [Original | Isobaricfix | Real] {Ghost fluid method. Original method, Origin
 
 IC [TC1 | TC2 | HuST2] {Test case. TC1 = Sod shock tube with 8x density ratio and 10x pressure ratio, x0=0.5. TC2 = two rarefaction test case, x0=0.5. HuST2 = Second shock tube test from Hu2009, 1xdensity ration, 2500x pressure ratio, gamma_R=1.667}
 
-lsIC [T1] {Initial conditions for level set. T1 places the zero contour at x=0.5, with fluid 1 to the right}
-
 eos 1 [ideal | tait]
 
 eos 2 [ideal | tait]
@@ -44,10 +61,17 @@ BC_L [transmissive | reflective | nothing] {Left boundary condition}
 
 BC_R [transmissive | reflective | nothing] {Right boundary condition}
 
-T [double greater than 0] {end time of simulation}
-
 CFL [double between 0 and 1] {CFL number for time step size}
 
 sim [serial_onefluid | serial_twofluid] {switches between different modes}
 
 outputpath [string] {simulation output is sent here}
+
+## Visualising the results
+
+## Citations
+
+* Toro, Eleuterio F. Riemann solvers and numerical methods for fluid dynamics: a practical introduction. Springer Science & Business Media, 2013.
+* Fedkiw, Ronald P., et al. "A non-oscillatory Eulerian approach to interfaces in multimaterial flows (the ghost fluid method)." Journal of computational physics 152.2 (1999): 457-492.
+* Hu, X. Y., N. A. Adams, and Gianluca Iaccarino. "On the HLLC Riemann solver for interface interaction in compressible multi-fluid flow." Journal of Computational Physics 228.17 (2009): 6572-6589.
+
