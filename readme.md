@@ -50,6 +50,9 @@ options are available:
 
 ## Visualising the results
 
+Some examples of the output are available in the results folder. This currently contains:
+* Single fluid results from all five of Toro's test cases using Godunov's method over a range of difference resolutions
+
 ## Citations
 
 * Toro, Eleuterio F. Riemann solvers and numerical methods for fluid dynamics: a practical introduction. Springer Science & Business Media, 2013.
