@@ -7,7 +7,7 @@
  *			represents a finite difference grid, where the value of the level set field is
  *			stored at every grid point.
  *
- *	TODO:		(Medium priority) Implement periodic boundary conditions in both classes
+ *	TODO:		(Medium priority) Implement periodic boundary conditions in both classes - DONE (needs testing)
  *			(High priority) Implement linear extrapolation of level set in transmissive and reflective BCs
  *
  */
@@ -15,6 +15,7 @@
 
 #include "data_storage.hpp"
 #include "eos.hpp"
+#include "misc.hpp"
 #include <fstream>
 #include <limits>
 #include <cmath>

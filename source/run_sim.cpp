@@ -14,6 +14,7 @@
 #include "flow_solver.hpp"
 #include "riemann_solver.hpp"
 #include "construct_initialise.hpp"
+#include "error.hpp"
 #include <iostream>
 #include <cassert>
 #include <memory>
@@ -44,6 +45,7 @@ void onefluid_sim :: run_sim (settingsfile SF)
 
 	std::cout << "[" << SF.basename << "] Initialisation complete. Beginning time iterations.." << std::endl;
 
+
 	while (t < SF.T)
 	{
 		CFL = (numsteps < 5) ? std::min(SF.CFL, 0.2) : SF.CFL;
@@ -56,12 +58,16 @@ void onefluid_sim :: run_sim (settingsfile SF)
 		
 		numsteps++;
 		t += dt;
-		statearr.output_to_file(SF.basename + std::to_string(numsteps) + ".dat");
+		if (SF.output) statearr.output_to_file(SF.basename + std::to_string(numsteps) + ".dat");
 		
 		std::cout << "[" << SF.basename << "] Time step " << numsteps << " complete. t = " << t << std::endl;
 	}
+
+	
 	
 	statearr.output_to_file(SF.basename + "final.dat");
+	output_errornorms_to_file(statearr, SF);
+
 	std::cout << "[" << SF.basename << "] Simulation complete." << std::endl;
 }
 

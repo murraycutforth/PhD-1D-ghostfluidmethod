@@ -12,13 +12,6 @@
 class singlefluid_RS_base;
 
 
-
-blitz::Array<double,1> euler_flux (double rho, double u, double P, double E);
-
-blitz::Array<double,1> euler_flux (blitz::Array<double,1> cv, std::shared_ptr<eos_base> eos);
-
-
-
 class flow_solver_base {
 
 	public:

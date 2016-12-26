@@ -20,6 +20,7 @@ struct settingsfile {
 	double fluid2_B;
 	double T;
 	double CFL;
+	bool output;
 	std::string RS_pure;
 	std::string RS_mixed;
 	std::string FS;

@@ -40,6 +40,8 @@ void settingsfile :: read_settings_file ()
 		if (inputname == "fluid2_B") iss >> fluid2_B;
 
 		if (inputname == "CFL") iss >> CFL;
+
+		if (inputname == "output") iss >> output;
 		
 		if (inputname == "RS_pure") iss >> RS_pure; 
 

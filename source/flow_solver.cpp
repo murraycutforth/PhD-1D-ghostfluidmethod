@@ -7,59 +7,12 @@
  */
 
 #include "flow_solver.hpp"
+#include "misc.hpp"
 #include "eos.hpp"
 #include "riemann_solver.hpp"
 
 
 #define all blitz::Range::all()
-
-
-blitz::Array<double,1> euler_flux (
-	
-	double rho, 
-	double u, 
-	double P, 
-	double E
-)
-{
-	/*
-	 *	Compute Euler flux given value of all density, velocity, pressure and total energy
-	 */
-
-	blitz::Array<double,1> flux (3);
-
-	flux(0) = rho*u;
-	flux(1) = rho*u*u + P;
-	flux(2) = u*(E+P);
-
-	return flux;
-}
-	
-
-blitz::Array<double,1> euler_flux (
-	
-	blitz::Array<double,1> cv, 
-	std::shared_ptr<eos_base> eos
-)
-{
-	/*
-	 *	Compute Euler flux given conserved variables and fluid EOS
-	 */
-
-	blitz::Array<double,1> flux (3);
-
-	double P = eos->p(cv);
-	double u = cv(1)/cv(0); 
-
-	flux(0) = cv(1);
-	flux(1) = cv(1)*u + P;
-	flux(2) = u*(cv(2)+P);
-
-	return flux;
-}
-
-
-
 
 
 flow_solver_base :: flow_solver_base (std::shared_ptr<singlefluid_RS_base> rs)

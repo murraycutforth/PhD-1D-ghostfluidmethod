@@ -1,23 +1,19 @@
 /*
- * This file is used to randomly test things as I go, and as a result it's a total mess. Unless you're me, 
- * you might not want to read any further.
+ *	DESCRIPTION:	This file contains a number of tests for various bits of the code.
+ *			It can be compiled by running 'make tester'.
+ * 
  */
 
 
 
 #include "data_storage.hpp"
 #include "eos.hpp"
-#include "initial_conditions.hpp"
-#include "timestep.hpp"
+#include "construct_initialise.hpp"
 #include "flow_solver.hpp"
 #include "riemann_solver.hpp"
 #include "vfield.hpp"
 #include "levelset_advection.hpp"
 #include "ghost_fluid_method.hpp"
-
-
-
-
 #include <memory>
 #include <iostream>
 
@@ -26,8 +22,6 @@
 
 
 
-void onefluid_testcase1_godunov_HLLC();
-void onefluid_testcase2_godunov_HLLC();
 
 void levelsetadvection_test1();
 
@@ -51,153 +45,6 @@ int main()
 	//full_idealgas_test1();
 	test_M_HLLC_solution();
 }
-
-
-
-
-
-
-
-
-void onefluid_testcase1_godunov_HLLC ()
-{
-
-	// Simulation parameters
-
-	arrayinfo array;
-	array.length = 200;
-	array.x0 = 0.0;
-	array.dx = 0.005;
-	array.numGC = 5;
-	array.leftBC = reflective;
-	array.rightBC = reflective;
-	double gamma = 1.4;
-	IC_type IC = TC1;
-	double T = 2.0;
-	double CFL0 = 0.8;
-	
-
-	// Create objects
-
-	std::shared_ptr<eos_base> eos = std::make_shared<eos_idealgas>(gamma);
-	
-	onefluid_array state (array, eos);
-	onefluid_array newstate (array, eos);
-
-	std::shared_ptr<riemann_solver_base> RS = std::make_shared<HLLC_riemann_solver_idealgas>();
-	std::shared_ptr<flow_solver_base> FS = std::make_shared<godunov>(RS);
-
-	
-	// Initial conditions
-
-	initialise_onefluid(state,IC);
-	state.apply_BCs();
-	int num_iter = 0;
-	std::string basename ="./test/testoutput/onefluid_TC1_GOD_HLLC_";
-	state.output_to_file(basename + std::to_string(num_iter) + ".dat");
-
-	std::cout << "[onefluid_TC1_GOD_HLLC] Initialisation complete" << std::endl;
-
-
-	// Time iterations
-
-	double t=0.0;
-	double CFL;
-
-	while (t < T)
-	{
-		if (num_iter <= 5) CFL = 0.2;
-		else CFL = CFL0;
-		double dt = compute_dt_serial_onefluid(CFL, state, T, t);
-
-		FS->single_fluid_update(state, newstate, dt);
-
-		state.fluid = newstate.fluid;
-		state.apply_BCs();
-
-		num_iter++;
-		t += dt;
-		state.output_to_file(basename + std::to_string(num_iter) + ".dat");
-
-		std::cout << "[onefluid_TC1_GOD_HLLC] Time step " << num_iter << " complete. t = " 
-			<< t << ". Total mass = " << (state.total_conserved_quantities())(0) << std::endl;
-	}
-	std::cout << "[onefluid_TC1_GOD_HLLC] Test complete!" << std::endl;
-}
-
-
-
-
-
-
-
-
-void onefluid_testcase2_godunov_HLLC ()
-{
-
-	// Simulation parameters
-
-	arrayinfo array;
-	array.length = 1000;
-	array.x0 = 0.0;
-	array.dx = 0.001;
-	array.numGC = 1;
-	array.leftBC = transmissive;
-	array.rightBC = transmissive;
-	double gamma = 1.4;
-	IC_type IC = TC2;
-	double T = 0.15;
-	double CFL0 = 0.8;
-	
-
-	// Create objects
-
-	std::shared_ptr<eos_base> eos = std::make_shared<eos_idealgas>(gamma);
-	
-	onefluid_array state (array, eos);
-	onefluid_array newstate (array, eos);
-
-	std::shared_ptr<riemann_solver_base> RS = std::make_shared<HLLC_riemann_solver_idealgas>();
-	std::shared_ptr<flow_solver_base> FS = std::make_shared<godunov>(RS);
-
-	
-	// Initial conditions
-
-	initialise_onefluid(state,IC);
-	state.apply_BCs();
-	int num_iter = 0;
-	std::string basename ="./test/testoutput/onefluid_TC2_GOD_HLLC_";
-	state.output_to_file(basename + std::to_string(num_iter) + ".dat");
-
-	std::cout << "[onefluid_TC1_GOD_HLLC] Initialisation complete" << std::endl;
-
-
-	// Time iterations
-
-	double t=0.0;
-	double CFL;
-
-	while (t < T)
-	{
-		if (num_iter <= 5) CFL = 0.2;
-		else CFL = CFL0;
-		double dt = compute_dt_serial_onefluid(CFL, state, T, t);
-
-		FS->single_fluid_update(state, newstate, dt);
-
-		state.fluid = newstate.fluid;
-		state.apply_BCs();
-
-		num_iter++;
-		t += dt;
-		state.output_to_file(basename + std::to_string(num_iter) + ".dat");
-
-		std::cout << "[onefluid_TC1_GOD_HLLC] Time step " << num_iter << " complete. t = " 
-			<< t << ". Total mass = " << (state.total_conserved_quantities())(0) << std::endl;
-	}
-	std::cout << "[onefluid_TC1_GOD_HLLC] Test complete!" << std::endl;
-}
-
 
 
 

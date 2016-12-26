@@ -1,7 +1,7 @@
-length 100
+length 1280
 numGC 2
 lsnumGC 2
-lslength 100
+lslength 1280
 fluid1_gamma 1.4
 fluid1_B 3309
 fluid2_gamma 1.4
@@ -16,5 +16,6 @@ eos2 ideal
 BC_L transmissive
 BC_R transmissive
 CFL 0.8
+output 0
 sim onefluid
 outputpath ./output/

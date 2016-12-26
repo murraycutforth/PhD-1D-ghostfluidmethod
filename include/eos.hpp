@@ -7,11 +7,6 @@
 #include <string>
 
 
-double specific_ie_cv (blitz::Array<double,1> state);
-
-bool is_state_physical (blitz::Array<double,1> state);
-
-
 class eos_base {
 
 	public:

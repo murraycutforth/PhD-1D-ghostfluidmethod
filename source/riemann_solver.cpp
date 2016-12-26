@@ -15,6 +15,7 @@
 #include "flow_solver.hpp"
 #include "eos.hpp"
 #include "exact_RS_idealgas.hpp"
+#include "misc.hpp"
 #include <cassert>
 #include <string>
 #include <cmath>

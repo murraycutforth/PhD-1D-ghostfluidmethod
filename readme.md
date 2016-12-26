@@ -44,6 +44,7 @@ options are available:
 * BC_L [transmissive | reflective | nothing] *Left boundary condition*
 * BC_R [transmissive | reflective | nothing] *Right boundary condition*
 * CFL [double between 0 and 1] *CFL number for time step size*
+* output [0 | 1] *Turn output after every time step off or on*
 * sim [onefluid | twofluid] *Switch between single fluid simulation and full multimaterial ghost fluid simulation*
 * outputpath [string] *Simulation output is sent here*
 
