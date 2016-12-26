@@ -13,7 +13,7 @@ These instructions will get you a copy of the project compiled on your local mac
 * The Blitz++ library - available at https://sourceforge.net/projects/blitz/
 * Gnuplot - run `sudo apt-get install gnuplot`
 
-### Installing
+### Compilation
 
 Choose your directory and run:
 
@@ -51,7 +51,7 @@ options are available:
 ## Visualising the results
 
 Some examples of the output are available in the results folder. This currently contains:
-* Single fluid results from all five of Toro's test cases using Godunov's method over a range of difference resolutions
+* Single fluid results from all five of Toro's test cases using Godunov's method over a range of different resolutions
 
 ## Citations
 
