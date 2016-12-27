@@ -51,7 +51,9 @@ options are available:
 ## Visualising the results
 
 Some examples of the output are available in the results folder. This currently contains:
-* Single fluid results from all five of Toro's test cases using Godunov's method over a range of different resolutions
+* Single fluid results from all five of Toro's test cases using Godunov/MUSCL-Hancock method over a range of different resolutions
+* Single fluid results from Gaussian density profile advection test case using Godunov/MUSCL-Hancock method over a range of different resolutions
+* Convergence studies for single fluid methods
 
 ## Citations
 
