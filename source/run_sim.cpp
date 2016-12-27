@@ -87,7 +87,7 @@ double onefluid_sim :: compute_dt (
 	 *	Compute largest stable time step using fluid velocity
 	 */
 
-	double maxu;
+	double maxu = 0.0;
 
 	for (int i=state.array.numGC; i<state.array.length + state.array.numGC; i++)
 	{

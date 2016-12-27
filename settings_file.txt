@@ -10,11 +10,11 @@ RS_pure Exact_idealgas
 RS_mixed exact_idealgas
 FS Godunov
 GFM Real
-IC TTC5
+IC GDA
 eos1 ideal
 eos2 ideal
-BC_L transmissive
-BC_R transmissive
+BC_L periodic
+BC_R periodic
 CFL 0.8
 output 0
 sim onefluid

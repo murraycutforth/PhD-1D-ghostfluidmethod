@@ -102,6 +102,10 @@ void fluid_state_array :: apply_BCs()
 			CV(i,all) = CV(2*array.numGC - 1 - i,all);
 			CV(i,1) = -CV(i,1);
 		}
+		else if (array.leftBC == "periodic")
+		{
+			CV(i,all) = CV(i+array.length,all);
+		}
 		else if (array.leftBC != "nothing")
 		{
 			assert(!"Invalid BC type");
@@ -118,6 +122,10 @@ void fluid_state_array :: apply_BCs()
 		{
 			CV(array.length + 2*array.numGC - 1 - i,all) = CV(array.length + i,all);
 			CV(array.length + 2*array.numGC - 1 - i,1) = -CV(array.length + 2*array.numGC - 1 - i,1);
+		}
+		else if (array.rightBC == "periodic")
+		{
+			CV(array.length + 2*array.numGC - 1 - i,all) = CV(2*array.numGC - 1 - i,all);
 		}
 		else if (array.rightBC != "nothing")
 		{

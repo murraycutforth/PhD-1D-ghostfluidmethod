@@ -81,6 +81,28 @@ blitz::Array<double,2> get_cellwise_error (
 		rightprimitives(2) = 46.0950;
 		discontinuitylocation = 0.5;
 	}
+	else if (SF.IC == "GDA")
+	{
+		
+		double u = 1.0;
+		double p = 0.0001;
+		double mu = 0.5;
+		double A = 1000.0;
+		double sigma = 0.1;
+
+		for (int i=0; i<fluid1.array.length; i++)
+		{
+			int fluidcellind = i + fluid1.array.numGC;
+			double x = fluid1.array.cellcentre_coord(fluidcellind);
+			double exactrho = gaussian_function(A,mu,sigma,x);
+
+			cellwise_error(i,0) = fabs(exactrho - fluid1.CV(fluidcellind,0));
+			cellwise_error(i,1) = fabs(u - (fluid1.CV(fluidcellind,1)/fluid1.CV(fluidcellind,0)));
+			cellwise_error(i,2) = fabs(p - fluid1.eos->p(fluid1.CV(fluidcellind,blitz::Range::all())));
+		}
+
+		return cellwise_error;		
+	}
 	else
 	{
 		assert(!"Invalid IC in error function");

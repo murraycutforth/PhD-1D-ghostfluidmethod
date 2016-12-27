@@ -5,6 +5,7 @@
  */
 
 #include "construct_initialise.hpp"
+#include "misc.hpp"
 #include <cassert>
 #include <string>
 
@@ -45,7 +46,7 @@ fluid_state_array construct_initialise_onefluid (
 
 	// Use IC_type to set domain size
 	
-	if (SF.IC == "TTC1" || SF.IC == "TTC2" || SF.IC == "TTC3" || SF.IC == "TTC4" || SF.IC == "TTC5")
+	if (SF.IC == "TTC1" || SF.IC == "TTC2" || SF.IC == "TTC3" || SF.IC == "TTC4" || SF.IC == "TTC5" || SF.IC == "GDA")
 	{
 		array.x0 = 0.0;
 		array.dx = 1.0/array.length;
@@ -146,6 +147,32 @@ fluid_state_array construct_initialise_onefluid (
 		double discontinuitylocation = 0.5;
 
 		set_piecewiseconstant_ICs ( leftprimitives, rightprimitives, discontinuitylocation, statearr);
+	}
+	else if (SF.IC == "GDA")
+	{
+		/*
+		 *	GDA stands for Gaussian density advection.
+		 */
+
+		SF.T = 10.0;
+		assert(SF.BC_R == "periodic");
+		assert(SF.BC_L == "periodic");
+		double u = 1.0;
+		double p = 0.0001;
+		double mu = 0.5;
+		double A = 1000.0;
+		double sigma = 0.1;
+
+		for (int i=array.numGC; i<array.length+array.numGC; i++)
+		{
+			double x = array.cellcentre_coord(i);
+			double rho = gaussian_function(A,mu,sigma,x);
+			statearr.CV(i,0) = rho;
+			statearr.CV(i,1) = rho*u;
+			statearr.CV(i,2) = statearr.eos->E(rho,u,p);
+		}
+		
+		statearr.apply_BCs();
 	}
 	else
 	{

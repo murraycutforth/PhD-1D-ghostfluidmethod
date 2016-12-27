@@ -12,6 +12,7 @@ gnuplot <<- EOF
 	set logscale y
 	set tics nomirror
 	set xlabel 'Number of grid cells'
+	set xrange [7:1500]
 	plot x**(-1) w l lw 3 title "First order convergence", "./../output/onefluid_Godunov_Exact_idealgas_${IC}_${eos}_collatedfinalerrors.dat" w p pt 7 ps 5 title "Godunov's method with exact riemann solver", "./../output/onefluid_Godunov_HLLC_idealgas_${IC}_${eos}_collatedfinalerrors.dat" w p pt 7 ps 5 title "Godunov's method with HLLC riemann solver", "./../output/onefluid_MUSCL_HLLC_idealgas_${IC}_${eos}_collatedfinalerrors.dat" w p pt 7 ps 5 title "MUSCL-Hancock method with HLLC riemann solver"
 
 EOF

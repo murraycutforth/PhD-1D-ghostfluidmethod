@@ -5,22 +5,18 @@
  */
 
 
-
 #include "data_storage.hpp"
+#include "misc.hpp"
+#include "input.hpp"
+#include "error.hpp"
 #include "eos.hpp"
 #include "construct_initialise.hpp"
 #include "flow_solver.hpp"
 #include "riemann_solver.hpp"
-#include "vfield.hpp"
-#include "levelset_advection.hpp"
-#include "ghost_fluid_method.hpp"
 #include <memory>
+#include <fstream>
+#include <string>
 #include <iostream>
-
-
-
-
-
 
 
 void levelsetadvection_test1();
@@ -33,17 +29,42 @@ void test_settingsfile();
 
 void test_M_HLLC_solution ();
 
+void output_GDA_exactsolution ();
 
 
 
 int main()
 {
-	//onefluid_testcase1_godunov_HLLC();
-	//onefluid_testcase2_godunov_HLLC();
-	//levelsetadvection_test1();
-	//ghost_fluid_method_test1();
-	//full_idealgas_test1();
-	test_M_HLLC_solution();
+	output_GDA_exactsolution();	
+}
+
+
+
+void output_GDA_exactsolution ()
+{
+	/*
+	 *	Store the exact solution to the Gaussian density advection test
+	 */
+	
+	std::string filename = "../output/GDA.dat";
+	std::shared_ptr<eos_base> eos = std::make_shared<eos_idealgas>(1.4);
+	std::ofstream outfile;
+	outfile.open(filename);
+
+	int N = 10000;
+	double u = 1.0;
+	double p = 0.0001;
+	double mu = 0.5;
+	double A = 1000.0;
+	double sigma = 0.1;
+
+	for (int i=0; i<=N; i++)
+	{
+		double x = i*(1.0/N);
+		double rho = gaussian_function(A,mu,sigma,x);
+		double specificie = eos->specific_ie_prim(rho,u,p);
+		outfile << x << " " << rho << " " << u << " " << p << " " << specificie << std::endl;
+	}
 }
 
 
@@ -51,7 +72,7 @@ int main()
 
 
 
-
+/* OLD TEST CODE - NEED TO REDO
 
 void levelsetadvection_test1 ()
 {
@@ -368,4 +389,4 @@ void test_M_HLLC_solution()
 	std::cout << "u_star = " << u_star << std::endl;
 	std::cout << "rho_star_L = " << rho_star_L << std::endl;
 	std::cout << "rho_star_R = " << rho_star_R << std::endl;
-}
+}*/

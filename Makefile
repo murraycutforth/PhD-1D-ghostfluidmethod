@@ -47,7 +47,7 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 # Test Environment
 tester:
 	@echo "Compiling maintest..."; $(CC) $(CFLAGS) $(TESTERFLAGS) $(INC) -o test/maintest.o test/maintest.cpp
-	@echo "Linking maintest..."; $(CC) $(filter-out $(BUILDDIR)/main.o,$(OBJECTS)) test/maintest.o $(OPLEVEL) $(TESTERFLAGS) -o test/maintest
+	@echo "Linking maintest..."; $(CC) $(filter-out $(BUILDDIR)/main.o,$(OBJECTS)) test/maintest.o $(OPLEVEL) $(EXTOBJS) $(TESTERFLAGS) -o test/maintest
 	@echo "Success."
 
 clean:

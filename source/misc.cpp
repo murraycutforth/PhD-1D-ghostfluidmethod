@@ -5,6 +5,7 @@
 
 
 #include "misc.hpp"
+#include <cmath>
 
 
 blitz::Array<double,1> euler_flux (
@@ -63,4 +64,10 @@ double specific_ie_cv (blitz::Array<double,1> state)
 bool is_state_physical (blitz::Array<double,1> state)
 {
 	return (state(0) > 0.0) && (specific_ie_cv(state) > 0.0);
+}
+
+
+double gaussian_function (double A, double mu, double sigma, double x)
+{
+	return A*std::exp(-((x-mu)*(x-mu))/(2.0*sigma*sigma));
 }
