@@ -27,7 +27,7 @@ BUILDLIST := $(BUILDDIR)
 EXTINCLIST := -I ../exact_riemann_solver_idealgas/
 
 # Shared Compiler Flags
-OPLEVEL := 
+OPLEVEL := -O3
 CFLAGS := -Wall -c -g -std=c++11 $(OPLEVEL)
 INC := $(INCLIST)
 TESTERFLAGS :=

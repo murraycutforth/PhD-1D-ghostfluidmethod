@@ -92,14 +92,14 @@ blitz::Array<double,2> get_cellwise_error (
 	
 	for (int i=0; i<fluid1.array.length; i++)
 	{
-		int materialcellind = i + fluid1.array.numGC;
-		double x = fluid1.array.cellcentre_coord(materialcellind);
+		int fluidcellind = i + fluid1.array.numGC;
+		double x = fluid1.array.cellcentre_coord(fluidcellind);
 		double xot = (x - discontinuitylocation)/SF.T;
 		soln = RS.sample_solution(xot);
 
-		cellwise_error(i,0) = fabs(soln(0) - fluid1.CV(materialcellind,0));
-		cellwise_error(i,1) = fabs(soln(1) - (fluid1.CV(materialcellind,1)/fluid1.CV(materialcellind,0)));
-		cellwise_error(i,2) = fabs(soln(2) - fluid1.eos->p(fluid1.CV(materialcellind,blitz::Range::all())));
+		cellwise_error(i,0) = fabs(soln(0) - fluid1.CV(fluidcellind,0));
+		cellwise_error(i,1) = fabs(soln(1) - (fluid1.CV(fluidcellind,1)/fluid1.CV(fluidcellind,0)));
+		cellwise_error(i,2) = fabs(soln(2) - fluid1.eos->p(fluid1.CV(fluidcellind,blitz::Range::all())));
 	}
 	
 	return cellwise_error;
@@ -143,7 +143,7 @@ void output_errornorms_to_file (
 )
 {
 	/*
-	 *	Store the L1 and Linf error in one file
+	 *	Store the L1 and Linf error in density in one file
 	 */
 	
 	std::ofstream outfile;
@@ -154,4 +154,28 @@ void output_errornorms_to_file (
 	get_density_errornorms(cellwise_error, L1err, Linferr);
 	
 	outfile << SF.length << " " << L1err << " " << Linferr << std::endl;
+}
+
+
+void output_cellwise_error (
+
+	fluid_state_array& fluid1,
+	settingsfile& SF
+)
+{
+	/*
+	 *	Store the cellwise error in file
+	 */
+
+	std::ofstream outfile;
+	outfile.open(SF.basename + "cellwiseerror.dat");
+
+	blitz::Array<double,2> cellwise_error (get_cellwise_error(fluid1,SF));
+
+	for (int i=0; i<SF.length; i++)
+	{
+		int fluidcellind = i + fluid1.array.numGC;
+		double x = fluid1.array.cellcentre_coord(fluidcellind);
+		outfile << x << " " << cellwise_error(i,0) << " " << cellwise_error(i,1) << " " << cellwise_error(i,2) << std::endl;
+	}
 }

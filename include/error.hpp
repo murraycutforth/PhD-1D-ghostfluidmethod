@@ -29,4 +29,10 @@ void output_errornorms_to_file (
 );
 	
 
+void output_cellwise_error (
+
+	fluid_state_array& fluid1,
+	settingsfile& SF
+);
+
 #endif

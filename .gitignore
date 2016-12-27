@@ -6,6 +6,5 @@
 1D_Euler_GFM.exe
 
 # Output data
-*.dat
-output/videoframes/*
+output/*
 test/testoutput/*

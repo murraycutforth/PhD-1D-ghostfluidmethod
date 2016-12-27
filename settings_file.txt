@@ -6,9 +6,9 @@ fluid1_gamma 1.4
 fluid1_B 3309
 fluid2_gamma 1.4
 fluid2_B 0.0
-RS_pure HLLC_idealgas
+RS_pure Exact_idealgas
 RS_mixed exact_idealgas
-FS MUSCL
+FS Godunov
 GFM Real
 IC TTC5
 eos1 ideal
