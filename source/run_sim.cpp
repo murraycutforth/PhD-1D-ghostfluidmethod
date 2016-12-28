@@ -156,3 +156,82 @@ void twofluid_sim :: run_sim (settingsfile SF)
 
 	std::cout << "[" << SF.basename << "] Simulation complete." << std::endl;
 }
+
+
+
+double twofluid_sim :: compute_dt (
+	
+	double CFL, 
+	double T, 
+	double t, 
+	fluid_state_array& state1, 
+	fluid_state_array& state2, 
+	levelset_array& ls
+)
+{
+	/*
+	 *	Compute the largest stable time step in the two fluid sim
+	 *	by looking at real velocities
+	 */
+	
+	double maxu = 0.0;
+
+	for (int i=state1.array.numGC; i<state1.array.length + state1.array.numGC; i++)
+	{
+		double u1 = fabs(state1.CV(i,1)/state1.CV(i,0)) + state1.eos->a(state1.CV(i,blitz::Range::all()));
+		double u2 = fabs(state2.CV(i,1)/state2.CV(i,0)) + state2.eos->a(state2.CV(i,blitz::Range::all()));
+		
+		if (ls.linear_interpolation(state1.array.cellcentre_coord(i)) <= 0.0)
+		{
+			maxu = std::max(maxu, u1);
+		}
+		else
+		{
+			maxu = std::max(maxu, u2);
+		}
+	}
+
+	double dt = CFL*state1.array.dx/maxu;
+
+	if (t + dt > T) dt = T - t;
+
+	return dt;
+}
+
+
+void twofluid_sim :: output_endoftimestep (
+
+	int numsteps, 
+	settingsfile& SF, 
+	fluid_state_array& state1, 
+	fluid_state_array& state2, 
+	levelset_array& ls
+)
+{
+	/*
+	 *	All outputs to be perfomed upon completion of time step
+	 */
+	
+	state1.output_to_file(SF.basename + "fluid1_" + std::to_string(numsteps) + ".dat");
+	state2.output_to_file(SF.basename + "fluid2_" + std::to_string(numsteps) + ".dat");
+	ls.output_to_file(SF.basename + "ls_" + std::to_string(numsteps) + ".dat");
+}
+	
+
+void twofluid_sim :: output_endofsimulation (
+
+	int numsteps, 
+	settingsfile& SF, 
+	fluid_state_array& state1, 
+	fluid_state_array& state2, 
+	levelset_array& ls
+)
+{
+	/*
+	 *	All outputs to be performed upon completion of simulation
+	 */
+
+	state1.output_to_file(SF.basename + "fluid1_final.dat");
+	state2.output_to_file(SF.basename + "fluid2_final.dat");
+	ls.output_to_file(SF.basename + "ls_final.dat");
+}

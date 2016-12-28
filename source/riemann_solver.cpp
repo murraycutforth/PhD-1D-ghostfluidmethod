@@ -290,7 +290,7 @@ void M_HLLC_RS :: solve_rp_forinterfaceboundary (
 
 
 
-double M_HLLC_riemann_solver :: mu (double fL, double fR, double rhoL, double rhoR)
+double M_HLLC_RS :: mu (double fL, double fR, double rhoL, double rhoR)
 {
 	/*
 	 *	Averaging used for many quantities so that U-property is satisfied

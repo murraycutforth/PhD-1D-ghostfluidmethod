@@ -259,13 +259,13 @@ void construct_initialise_twofluid (
 	else if (SF.RS_mixed == "Exact_idealgas") RS_mixed = std::make_shared<exact_RS_multi_idealgas>();
 	else assert(!"Invalid RS_mixed");
 
-	if (SF.FS == "Godunov") FS = std::make_shared<godunov>(RS);
-	else if (SF.FS == "MUSCL") FS = std::make_shared<MUSCL>(RS);
+	if (SF.FS == "Godunov") FS = std::make_shared<godunov>(RS_pure);
+	else if (SF.FS == "MUSCL") FS = std::make_shared<MUSCL>(RS_pure);
 	else assert(!"Invalid FS");
 
-	//if (SF.GFM == "OriginalGFM") GFM = std::make_shared<>();
+	if (SF.GFM == "OriginalGFM") GFM = std::make_shared<Original_GFM>(ls.array);
 	//else if (SF.GFM == "R-GFM") GFM = std::make_shared<>();
-	//else assert(!"Invalid GFM");
+	else assert(!"Invalid GFM");
 
 	arrayinfo array;
 	array.length = SF.length;
@@ -315,7 +315,7 @@ void construct_initialise_twofluid (
 
 		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr1);
 		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr2);
-		set singlediscontinuity_ls_IC (discontinuitylocation, parity, ls);
+		set_singlediscontinuity_ls_IC (discontinuitylocation, parity, ls);
 	}
 	else
 	{

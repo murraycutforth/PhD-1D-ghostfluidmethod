@@ -6,6 +6,7 @@
 #include "eos.hpp"
 #include "flow_solver.hpp"
 #include "riemann_solver.hpp"
+#include "ghost_fluid_method.hpp"
 #include "data_storage.hpp"
 #include <memory>
 #include <blitz/array.h>
