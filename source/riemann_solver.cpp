@@ -177,7 +177,7 @@ void exact_RS_idealgas :: solve_rp (
 // ========================================= RIEMANN SOLVERS FOR MIXED RIEMANN PROBLEM =====================================/
 
 
-void M_HLLC_riemann_solver :: solve_rp_forinterfaceboundary (	
+void M_HLLC_RS :: solve_rp_forinterfaceboundary (	
 
 	blitz::Array<double,1> Lstate,
 	blitz::Array<double,1> Rstate,

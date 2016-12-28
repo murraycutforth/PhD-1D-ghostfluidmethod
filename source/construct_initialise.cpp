@@ -224,3 +224,126 @@ void set_piecewiseconstant_ICs (
 
 	statearr.apply_BCs();
 }
+
+
+
+
+
+void construct_initialise_twofluid (
+	
+	settingsfile& SF, 
+	std::shared_ptr<eos_base>& eos1,
+	std::shared_ptr<eos_base>& eos2, 
+	std::shared_ptr<singlefluid_RS_base>& RS_pure,
+	std::shared_ptr<multimat_RS_base>& RS_mixed, 
+	std::shared_ptr<flow_solver_base>& FS,
+	std::shared_ptr<GFM_base>& GFM,
+	fluid_state_array& statearr1,
+	fluid_state_array& statearr2,
+	levelset_array& ls
+)
+{
+	/*
+	 *	Set up for a full ghost fluid method simulation
+	 */
+	
+	if (SF.eos1 == "ideal") eos1 = std::make_shared<eos_idealgas>(SF.fluid1_gamma);
+	else assert(!"Invalid eos1");
+	if (SF.eos2 == "ideal") eos2 = std::make_shared<eos_idealgas>(SF.fluid2_gamma);
+	else assert(!"Invalid eos2");
+	
+	if (SF.RS_pure == "HLLC_idealgas") RS_pure = std::make_shared<HLLC_RS_idealgas>();
+	else if (SF.RS_pure == "Exact_idealgas") RS_pure = std::make_shared<exact_RS_idealgas>();
+	else assert(!"Invalid RS_pure");
+	if (SF.RS_mixed == "M_HLLC") RS_mixed = std::make_shared<M_HLLC_RS>();
+	else if (SF.RS_mixed == "Exact_idealgas") RS_mixed = std::make_shared<exact_RS_multi_idealgas>();
+	else assert(!"Invalid RS_mixed");
+
+	if (SF.FS == "Godunov") FS = std::make_shared<godunov>(RS);
+	else if (SF.FS == "MUSCL") FS = std::make_shared<MUSCL>(RS);
+	else assert(!"Invalid FS");
+
+	//if (SF.GFM == "OriginalGFM") GFM = std::make_shared<>();
+	//else if (SF.GFM == "R-GFM") GFM = std::make_shared<>();
+	//else assert(!"Invalid GFM");
+
+	arrayinfo array;
+	array.length = SF.length;
+	array.numGC = SF.numGC;
+	array.leftBC = SF.BC_L;
+	array.rightBC = SF.BC_R;
+	
+	arrayinfo lsarray;
+	lsarray.length = SF.lslength;
+	lsarray.numGC = SF.lsnumGC;
+	lsarray.leftBC = SF.BC_L;
+	lsarray.rightBC = SF.BC_R;
+
+	if (SF.IC == "TTC1")
+	{
+		array.x0 = 0.0;
+		lsarray.x0 = 0.0;
+		array.dx = 1.0/array.length;
+		lsarray.dx = 1.0/lsarray.length;
+	}
+
+	statearr1.array = array;
+	statearr1.eos = eos1;
+	statearr1.CV.resize(array.length+2*array.numGC,3);
+	statearr2.array = array;
+	statearr2.eos = eos2;
+	statearr2.CV.resize(array.length+2*array.numGC,3);	
+	ls.array = lsarray;
+	ls.phi.resize(lsarray.length+2*lsarray.numGC);
+
+	if (SF.IC == "TTC1")
+	{
+		SF.T = 0.25;
+
+		blitz::Array<double,1> leftprimitives (3);
+		leftprimitives(0) = 1.0;
+		leftprimitives(1) = 0.0;
+		leftprimitives(2) = 1.0;
+
+		blitz::Array<double,1> rightprimitives (3);
+		rightprimitives(0) = 0.125;
+		rightprimitives(1) = 0.0;
+		rightprimitives(2) = 0.1;
+
+		double discontinuitylocation = 0.5;
+		int parity = 1;
+
+		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr1);
+		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr2);
+		set singlediscontinuity_ls_IC (discontinuitylocation, parity, ls);
+	}
+	else
+	{
+		assert(!"Invalid IC in SF");
+	}
+}
+		
+
+
+
+void set_singlediscontinuity_ls_IC (
+
+	double discontinuitylocation, 
+	int parity, 
+	levelset_array& ls
+)
+{
+	/*
+	 *	Set up the level set with a single interface at the specified location.
+	 *	The sign of the left hand region is given by parity.
+	 */
+
+	for (int i=ls.array.numGC; i<ls.array.numGC+ls.array.length; i++)
+	{
+		double x = ls.array.cellcentre_coord(i);
+		double f = parity*(discontinuitylocation - x);
+		ls.phi(i) = f;
+	}
+
+	ls.apply_BCs();
+}		

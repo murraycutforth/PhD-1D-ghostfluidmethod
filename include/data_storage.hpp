@@ -41,6 +41,8 @@ class fluid_state_array {
 	fluid_state_array (arrayinfo array, std::shared_ptr<eos_base> eos);
 
 	fluid_state_array (const fluid_state_array& other);
+
+	fluid_state_array ();
 	
 
 	fluid_state_array copy ();
@@ -66,6 +68,10 @@ class levelset_array {
 	
 	levelset_array (const levelset_array& other);
 
+	levelset_array ();
+
+	
+	levelset_array copy ();
 
 	double linear_interpolation (double x);
 

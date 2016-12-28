@@ -72,6 +72,14 @@ fluid_state_array :: fluid_state_array (const fluid_state_array& other)
 {}
 
 
+fluid_state_array :: fluid_state_array ()
+:
+	array 	(),
+	CV	(),
+	eos	()
+{}
+
+
 fluid_state_array fluid_state_array :: copy ()
 {
 	/*
@@ -182,6 +190,34 @@ levelset_array :: levelset_array (arrayinfo array)
 	array	(array),
 	phi	(array.length + 2*array.numGC)
 {}
+	
+
+levelset_array :: levelset_array (const levelset_array& other)
+:
+	array	(other.array),
+	phi	(other.phi)
+{}
+
+
+levelset_array :: levelset_array ()
+:
+	array 	(),
+	phi	()
+{}
+
+
+
+levelset_array levelset_array :: copy ()
+{
+	/*
+	 *	Return a copy of this object with separate storage in memory
+	 *	(since the copy constructor has reference semantics)
+	 */
+	
+	levelset_array newls (array);
+	newls.phi = phi;
+	return newls;
+}
 
 
 double levelset_array :: linear_interpolation (double x)

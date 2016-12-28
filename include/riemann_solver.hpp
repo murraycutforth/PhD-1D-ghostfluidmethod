@@ -77,7 +77,7 @@ class exact_RS_idealgas : public singlefluid_RS_base {
 
 
 
-class M_HLLC_riemann_solver : public multimat_RS_base {
+class M_HLLC_RS : public multimat_RS_base {
 
 	public:
 
