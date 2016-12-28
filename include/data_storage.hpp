@@ -46,6 +46,8 @@ class fluid_state_array {
 	
 
 	fluid_state_array copy ();
+
+	double get_u (int i);
 	
 	void apply_BCs ();
 
@@ -74,6 +76,8 @@ class levelset_array {
 	levelset_array copy ();
 
 	double linear_interpolation (double x);
+
+	void advection_step (double dt, blitz::Array<double,1> vfield);
 
 	void apply_BCs();
 

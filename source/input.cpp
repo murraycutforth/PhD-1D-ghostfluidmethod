@@ -55,7 +55,7 @@ void settingsfile :: read_settings_file ()
 
 		if (inputname == "eos1") iss >> eos1;
 
-		if (inputname == "eos2") iss >> eos1;
+		if (inputname == "eos2") iss >> eos2;
 
 		if (inputname == "BC_L") iss >> BC_L;
 		

@@ -144,6 +144,16 @@ void twofluid_sim :: run_sim (settingsfile SF)
 			// First call the GFM to set ghost cells (and extension velocity field)
 			// Now update each single material state array separately
 			// Then update level set array using extension velocity field
+
+		GFM->set_ghost_cells(statearr1, statearr2, ls, RS_mixed);
+		FS->single_fluid_update(statearr1, tempstatearr1, dt);
+		FS->single_fluid_update(statearr2, tempstatearr2, dt);
+		ls.advection_step(dt, GFM->extension_interface_velocity);
+
+		statearr1.CV = tempstatearr1.CV;
+		statearr1.apply_BCs();
+		statearr2.CV = tempstatearr2.CV;
+		statearr2.apply_BCs();
 		
 		numsteps++;
 		t += dt;

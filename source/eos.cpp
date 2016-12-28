@@ -2,7 +2,7 @@
  *	DESCRIPTION:	This file contains definitions of all functions which involve the
  *			equation of state of the material.
  *	
- *	TODO:		Comment out the functions below.
+ *	TODO:		(High priority) Implement Tait eos
  */
 
 
@@ -24,6 +24,19 @@ eos_idealgas :: eos_idealgas (double gamma)
 	eos_base (),
 	gamma (gamma)
 {}
+
+
+
+std::string eos_idealgas :: get_eos_type ()
+{
+	return "ideal";
+}
+
+
+double eos_idealgas :: get_gamma ()
+{
+	return gamma;
+}
 
 
 double eos_idealgas :: a (blitz::Array<double,1> state)
@@ -66,28 +79,56 @@ double eos_idealgas :: E (double rho, double u, double p)
 }
 
 
-double eos_idealgas :: rho_pS (double p, double S)
-{
-	return std::pow(p/S, 1.0/gamma);
-}
-
-
-double eos_idealgas :: S_prho (double p, double rho)
-{
-	return p/std::pow(rho,gamma);
-}
-
-
 double eos_idealgas :: specific_ie_prim (blitz::Array<double,1> primitives)
 {
+	/*
+	 *	Specific internal energy as a function of primitives
+	 */
+
 	return primitives(2)/((gamma - 1.0)*primitives(0));
 }
 
 
 double eos_idealgas :: specific_ie_prim (double rho, double u, double p)
 {
+	/*
+	 *	Specific internal energy as a function of primitives
+	 */
+
 	return p/((gamma - 1.0)*rho);
 }
+
+
+
+double eos_idealgas :: rho_constant_entropy (double p_old, double rho_old, double p_new)
+{
+	/*
+	 *	Density at pressure = p_new along isentrope from state (p_old, rho_old)
+	 */
+
+	double entropy = S(p_old, rho_old);
+	return rho(p_new, entropy);
+}
+
+double eos_idealgas :: rho (double p, double S)
+{
+	/*
+	 *	Density as a function of pressure and entropy
+	 */
+
+	return std::pow(p/S, 1.0/gamma);
+}
+
+
+double eos_idealgas :: S (double p, double rho)
+{
+	/*
+	 *	Entropy as a function of pressure and density
+	 */
+	
+	return p/std::pow(rho,gamma);
+}
+
 
 
 double eos_idealgas :: get_Tau (blitz::Array<double,1> state)
@@ -102,15 +143,11 @@ double eos_idealgas :: get_Psi (blitz::Array<double,1> state)
 }
 
 
-double eos_idealgas :: get_gamma ()
-{
-	return gamma;
-}
-
-
 double eos_idealgas :: postshock_density (double P_star, double P_K, double rho_K)
 {
-	// Use R-H conditions to find star state density shock wave
+	/* 
+	 *	Use R-H conditions to find star state density behind shock wave
+	 */
 
 	return rho_K*((P_star/P_K) + ((gamma-1.0)/(gamma+1.0)))/(1.0 + (P_star/P_K)*((gamma-1.0)/(gamma+1.0)));
 }
@@ -118,16 +155,13 @@ double eos_idealgas :: postshock_density (double P_star, double P_K, double rho_
 
 double eos_idealgas :: postrarefaction_density (double P_star, double P_K, double rho_K)
 {
-	// Use isentropic law to find star state density inside rarefaction wave
+	/* 
+	 *	Use isentropic law to find star state density behind rarefaction wave
+	 */
 
 	return rho_K*std::pow(P_star/P_K, 1.0/gamma);
 }
 
-
-std::string eos_idealgas :: get_eos_type ()
-{
-	return "ideal";
-}
 
 
 
@@ -258,11 +292,4 @@ std::string eos_tait :: get_eos_type ()
 {
 	return "tait";
 }
-
-
-
-
-
-
-
 

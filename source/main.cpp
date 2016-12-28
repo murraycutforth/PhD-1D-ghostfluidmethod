@@ -32,10 +32,10 @@ int main()
 	{
 		sim = std::make_shared<onefluid_sim>();
 	}
-	//else if (SF.sim == "twofluid")
-	//{
-	//	sim = std::make_shared<twofluid_sim>();
-	//}
+	else if (SF.sim == "twofluid")
+	{
+		sim = std::make_shared<twofluid_sim>();
+	}
 	else
 	{
 		assert(!"Invalid sim type");

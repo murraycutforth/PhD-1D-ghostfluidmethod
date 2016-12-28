@@ -93,6 +93,19 @@ fluid_state_array fluid_state_array :: copy ()
 }
 
 
+double fluid_state_array :: get_u (int i)
+{
+	/*
+	 *	Return the fluid velocity in this cell
+	 */
+
+	assert(0 <= i);
+	assert(i < array.length + 2*array.numGC);
+
+	return CV(i,1)/CV(i,0);
+}
+
+
 void fluid_state_array :: apply_BCs()
 {
 	/*
@@ -249,6 +262,46 @@ double levelset_array :: linear_interpolation (double x)
 }
 
 
+void levelset_array :: advection_step (double dt, blitz::Array<double,1> vfield)
+{
+	/*
+	 *	Solve the levelset advection equation for one time step using the
+	 *	first order upwind scheme
+	 */
+
+	assert(vfield.extent(blitz::firstDim) == phi.extent(blitz::firstDim));
+	assert(array.numGC >= 1);
+
+	static levelset_array templs ((*this).copy());
+	templs.phi = phi;
+
+	for (int i=0; i<array.length; i++)
+	{
+		int lsind = i + array.numGC;
+		double u = vfield(lsind);
+		double phi_x;
+
+		if (u > 0.0)
+		{
+			phi_x = (phi(lsind) - phi(lsind-1))/array.dx;
+		}
+		else if (u < 0.0)
+		{
+			phi_x = (phi(lsind+1) - phi(lsind))/array.dx;
+		}
+		else
+		{
+			phi_x = 0.0;
+		}
+
+		templs.phi(lsind) = phi(lsind) - dt*u*phi_x;
+	}
+
+	phi = templs.phi;
+	apply_BCs();
+}
+
+
 void levelset_array :: apply_BCs ()
 {
 	/*
@@ -277,7 +330,7 @@ void levelset_array :: apply_BCs ()
 		if (array.rightBC == "transmissive")
 		{
 			double diff = phi(array.length + array.numGC - 1) - phi(array.length + array.numGC - 2);
-			phi(array.length + 2*array.numGC - 1 - i) = phi(array.length + array.numGC - 1) + (i - (array.length + array.numGC -1))*diff;
+			phi(array.length + 2*array.numGC - 1 - i) = phi(array.length + array.numGC - 1) - (i - array.numGC)*diff;
 		}
 		else if (array.rightBC == "reflective")
 		{

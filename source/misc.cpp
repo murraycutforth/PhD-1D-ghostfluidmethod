@@ -53,6 +53,28 @@ blitz::Array<double,1> euler_flux (
 }
 
 
+blitz::Array<double,1> conserved_variables (
+
+	double rho, 
+	double u, 
+	double p, 
+	std::shared_ptr<eos_base> eos
+)
+{
+	/*
+	 *	Return vector of conserved variables given primitives
+	 */
+
+	blitz::Array<double,1> CV (3);
+
+	CV(0) = rho;
+	CV(1) = rho*u;
+	CV(2) = eos->E(rho,u,p);
+
+	return CV;
+}
+
+
 
 double specific_ie_cv (blitz::Array<double,1> state)
 {

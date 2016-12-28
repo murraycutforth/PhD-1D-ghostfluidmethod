@@ -263,10 +263,6 @@ void construct_initialise_twofluid (
 	else if (SF.FS == "MUSCL") FS = std::make_shared<MUSCL>(RS_pure);
 	else assert(!"Invalid FS");
 
-	if (SF.GFM == "OriginalGFM") GFM = std::make_shared<Original_GFM>(ls.array);
-	//else if (SF.GFM == "R-GFM") GFM = std::make_shared<>();
-	else assert(!"Invalid GFM");
-
 	arrayinfo array;
 	array.length = SF.length;
 	array.numGC = SF.numGC;
@@ -296,6 +292,10 @@ void construct_initialise_twofluid (
 	ls.array = lsarray;
 	ls.phi.resize(lsarray.length+2*lsarray.numGC);
 
+	if (SF.GFM == "OriginalGFM") GFM = std::make_shared<Original_GFM>(ls.array);
+	//else if (SF.GFM == "R-GFM") GFM = std::make_shared<>();
+	else assert(!"Invalid GFM");
+
 	if (SF.IC == "TTC1")
 	{
 		SF.T = 0.25;
@@ -311,7 +311,7 @@ void construct_initialise_twofluid (
 		rightprimitives(2) = 0.1;
 
 		double discontinuitylocation = 0.5;
-		int parity = 1;
+		int parity = -1;
 
 		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr1);
 		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr2);
