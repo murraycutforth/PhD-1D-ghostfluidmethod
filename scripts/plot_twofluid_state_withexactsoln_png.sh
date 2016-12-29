@@ -1,9 +1,9 @@
 step=$1
 N=$3
 GFM=OriginalGFM
-FS=Godunov
-RS_pure=Exact_idealgas
-RS_mixed=Exact_idealgas
+FS=MUSCL
+RS_pure=HLLC_idealgas
+RS_mixed=M_HLLC
 IC=TTC1
 eos=ideal-ideal
 fileout=./../output/${GFM}_${FS}_${RS_pure}_${RS_mixed}_${IC}_${eos}_${N}_realfluidstate.png
