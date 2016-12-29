@@ -75,12 +75,10 @@ blitz::Array<double,1> conserved_variables (
 }
 
 
-
 double specific_ie_cv (blitz::Array<double,1> state)
 {
 	return (state(2)/state(0)) - 0.5*(state(1)/state(0))*(state(1)/state(0));
 }
-
 
 
 bool is_state_physical (blitz::Array<double,1> state)
@@ -92,4 +90,15 @@ bool is_state_physical (blitz::Array<double,1> state)
 double gaussian_function (double A, double mu, double sigma, double x)
 {
 	return A*std::exp(-((x-mu)*(x-mu))/(2.0*sigma*sigma));
+}
+
+
+bool cell_local_to_interface (int i, arrayinfo& array, levelset_array& ls)
+{
+	double phi = ls.linear_interpolation(array.cellcentre_coord(i));
+	double phiR = ls.linear_interpolation(array.cellcentre_coord(i+1));
+	double phiL = ls.linear_interpolation(array.cellcentre_coord(i-1));
+
+	if (phi*phiR <= 0.0 || phi*phiL <= 0.0) return true;
+	else return false;
 }

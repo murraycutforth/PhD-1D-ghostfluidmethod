@@ -262,6 +262,25 @@ double levelset_array :: linear_interpolation (double x)
 }
 
 
+double levelset_array :: normal (double x)
+{
+	/*
+	 *	Return normalised gradient of level set field
+	 */
+
+	assert(x >= array.cellcentre_coord(1));
+	assert(x <= array.cellcentre_coord(array.length+2*array.numGC-2));
+
+	double phiR = linear_interpolation(x + 0.5*array.dx);
+	double phiL = linear_interpolation(x - 0.5*array.dx);
+	double deriv = (phiR - phiL);
+
+	if (deriv > 0.0) return 1.0;
+	else if (deriv < 0.0) return -1.0;
+	else return 0.0;
+}
+
+
 void levelset_array :: advection_step (double dt, blitz::Array<double,1> vfield)
 {
 	/*

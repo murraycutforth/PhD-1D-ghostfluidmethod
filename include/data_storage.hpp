@@ -77,6 +77,8 @@ class levelset_array {
 
 	double linear_interpolation (double x);
 
+	double normal (double x);
+
 	void advection_step (double dt, blitz::Array<double,1> vfield);
 
 	void apply_BCs();

@@ -3,6 +3,7 @@
 
 
 #include "eos.hpp"
+#include "data_storage.hpp"
 #include <blitz/array.h>
 
 
@@ -17,6 +18,8 @@ double specific_ie_cv (blitz::Array<double,1> state);
 bool is_state_physical (blitz::Array<double,1> state);
 
 double gaussian_function (double A, double mu, double sigma, double x);
+
+bool cell_local_to_interface (int i, arrayinfo& array, levelset_array& ls);
 
 
 #endif

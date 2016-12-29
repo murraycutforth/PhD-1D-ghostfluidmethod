@@ -16,6 +16,6 @@ eos2 ideal
 BC_L transmissive
 BC_R transmissive
 CFL 0.8
-output 0
+output 1
 sim twofluid
 outputpath ./output/
