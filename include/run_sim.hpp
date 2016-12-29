@@ -37,6 +37,8 @@ class twofluid_sim : public sim_base {
 	void output_endoftimestep (int numsteps, settingsfile& SF, fluid_state_array& state1, fluid_state_array& state2, levelset_array& ls);
 	
 	void output_endofsimulation (int numsteps, settingsfile& SF, fluid_state_array& state1, fluid_state_array& state2, levelset_array& ls);
+
+	void output_realfluidonly (std::string name, settingsfile& SF, fluid_state_array& state1, fluid_state_array& state2, levelset_array& ls);
 };
 
 #endif

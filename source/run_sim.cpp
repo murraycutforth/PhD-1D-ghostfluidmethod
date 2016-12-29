@@ -13,13 +13,16 @@
 #include "eos.hpp"
 #include "flow_solver.hpp"
 #include "riemann_solver.hpp"
+#include "misc.hpp"
 #include "construct_initialise.hpp"
 #include "error.hpp"
 #include <iostream>
 #include <cassert>
 #include <memory>
+#include <fstream>
 
 
+#define all blitz::Range::all()
 
 
 void onefluid_sim :: run_sim (settingsfile SF)
@@ -91,7 +94,7 @@ double onefluid_sim :: compute_dt (
 
 	for (int i=state.array.numGC; i<state.array.length + state.array.numGC; i++)
 	{
-		maxu = std::max(fabs(state.CV(i,1)/state.CV(i,0)) + state.eos->a(state.CV(i,blitz::Range::all())), maxu);
+		maxu = std::max(fabs(state.CV(i,1)/state.CV(i,0)) + state.eos->a(state.CV(i,all)), maxu);
 	}
 
 	double dt = CFL*state.array.dx/maxu;
@@ -188,8 +191,8 @@ double twofluid_sim :: compute_dt (
 
 	for (int i=state1.array.numGC; i<state1.array.length + state1.array.numGC; i++)
 	{
-		double u1 = fabs(state1.CV(i,1)/state1.CV(i,0)) + state1.eos->a(state1.CV(i,blitz::Range::all()));
-		double u2 = fabs(state2.CV(i,1)/state2.CV(i,0)) + state2.eos->a(state2.CV(i,blitz::Range::all()));
+		double u1 = fabs(state1.CV(i,1)/state1.CV(i,0)) + state1.eos->a(state1.CV(i,all));
+		double u2 = fabs(state2.CV(i,1)/state2.CV(i,0)) + state2.eos->a(state2.CV(i,all));
 		
 		if (ls.linear_interpolation(state1.array.cellcentre_coord(i)) <= 0.0)
 		{
@@ -225,6 +228,7 @@ void twofluid_sim :: output_endoftimestep (
 	state1.output_to_file(SF.basename + "fluid1_" + std::to_string(numsteps) + ".dat");
 	state2.output_to_file(SF.basename + "fluid2_" + std::to_string(numsteps) + ".dat");
 	ls.output_to_file(SF.basename + "ls_" + std::to_string(numsteps) + ".dat");
+	output_realfluidonly(std::to_string(numsteps), SF, state1, state2, ls);
 }
 	
 
@@ -244,4 +248,58 @@ void twofluid_sim :: output_endofsimulation (
 	state1.output_to_file(SF.basename + "fluid1_final.dat");
 	state2.output_to_file(SF.basename + "fluid2_final.dat");
 	ls.output_to_file(SF.basename + "ls_final.dat");
+	output_realfluidonly("final", SF, state1, state2, ls);
+
+	fluid_state_array realstate (state1.copy());
+	for (int i=state1.array.numGC; i<state1.array.length + state1.array.numGC; i++)
+	{
+		double x = state1.array.cellcentre_coord(i);
+
+		if (ls.linear_interpolation(x) <= 0.0)
+		{
+			realstate.CV(i,all) = state1.CV(i,all);
+		}
+		else
+		{
+			realstate.CV(i,all) = state2.CV(i,all);
+		}
+	}
+	output_errornorms_to_file(realstate, SF);
+	output_cellwise_error(realstate, SF);
+}
+
+
+void twofluid_sim :: output_realfluidonly (
+
+	std::string number, 
+	settingsfile& SF, 
+	fluid_state_array& state1, 
+	fluid_state_array& state2, 
+	levelset_array& ls
+)
+{
+	/*
+	 *	Output only the real fluid
+	 */
+
+	std::ofstream outfile1;
+	std::ofstream outfile2;
+	outfile1.open(SF.basename + "realfluid1_" + number + ".dat");
+	outfile2.open(SF.basename + "realfluid2_" + number + ".dat");
+
+	for (int i=state1.array.numGC; i<state1.array.length + state1.array.numGC; i++)
+	{
+		double x = state1.array.cellcentre_coord(i);
+
+		if (ls.linear_interpolation(x) <= 0.0)
+		{
+			outfile1 << x << " " << state1.CV(i,0) << " " << state1.CV(i,1)/state1.CV(i,0) << " " 
+				<< state1.CV(i,2) << " " << state1.eos->p(state1.CV(i,all)) << " " << specific_ie_cv(state1.CV(i,all)) << std::endl;
+		}
+		else
+		{
+			outfile2 << x << " " << state2.CV(i,0) << " " << state2.CV(i,1)/state2.CV(i,0) << " " 
+				<< state2.CV(i,2) << " " << state2.eos->p(state2.CV(i,all)) << " " << specific_ie_cv(state2.CV(i,all)) << std::endl;
+		}
+	}
 }
