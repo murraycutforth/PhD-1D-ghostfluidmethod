@@ -41,4 +41,21 @@ class Original_GFM : public GFM_base {
 	);
 };
 
+
+class R_GFM : public GFM_base {
+
+	public:
+
+	R_GFM (arrayinfo array);
+
+	void set_ghost_cells (
+
+		fluid_state_array& state1,
+		fluid_state_array& state2,
+		levelset_array& ls, 
+		std::shared_ptr<multimat_RS_base> RS
+	);
+};
+	
+
 #endif

@@ -293,7 +293,7 @@ void construct_initialise_twofluid (
 	ls.phi.resize(lsarray.length+2*lsarray.numGC);
 
 	if (SF.GFM == "OriginalGFM") GFM = std::make_shared<Original_GFM>(ls.array);
-	//else if (SF.GFM == "R-GFM") GFM = std::make_shared<>();
+	else if (SF.GFM == "R_GFM") GFM = std::make_shared<R_GFM>(ls.array);
 	else assert(!"Invalid GFM");
 
 	if (SF.IC == "TTC1")

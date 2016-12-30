@@ -5,7 +5,8 @@
  *			set the extension_interface_velocity which is used to advance the
  *			level set field.
  *
- *	CITATIONS:
+ *	CITATIONS:	
+ *			S Sambasivan, H Udaykumar - "Ghost fluid method for strong shock interactions Part 1: fluid - fluid interfaces" - 2009
  *
  */
 
@@ -119,3 +120,91 @@ void Original_GFM :: set_ghost_cells (
 
 
 
+R_GFM :: R_GFM (arrayinfo array)
+:
+	GFM_base	(array)
+{}
+
+
+
+void R_GFM :: set_ghost_cells (
+
+	fluid_state_array& state1,
+	fluid_state_array& state2,
+	levelset_array& ls, 
+	std::shared_ptr<multimat_RS_base> RS
+)
+{
+	/*
+	 *	Implementation of the Riemann ghost fluid method of Sambasican and Udaykumar.
+	 *	A mixed Riemann problem is solved across the interface, and the resoluting
+	 *	star states are used to populate the ghost cells, as well as the real state
+	 *	adjacent to the interface.
+	 */
+	
+	assert(ls.array.numGC >= 1);
+	assert(state1.array.numGC >= 1);
+	static fluid_state_array ghoststate1 (state1.copy());
+	static fluid_state_array ghoststate2 (state2.copy());
+	ghoststate1.CV = state1.CV;
+	ghoststate2.CV = state2.CV;
+	double p_star, u_star, rho_star_L, rho_star_R;
+
+	for (int i=state1.array.numGC; i<state1.array.numGC + state1.array.length-1; i++)
+	{
+		double phi = ls.linear_interpolation(state1.array.cellcentre_coord(i));
+		double phii = ls.linear_interpolation(state1.array.cellcentre_coord(i+1));
+
+		if (phi*phii <= 0.0)
+		{
+			if (phi <= 0.0)
+			{
+				/*
+				 *	Fluid 1 is on the left of the interface	
+				 */
+				
+				RS->solve_rp_forinterfaceboundary(
+
+					state1.CV(i,all),
+					state2.CV(i+1,all),
+					p_star,
+					u_star,
+					rho_star_L,
+					rho_star_R,
+					state1.eos,
+					state2.eos);
+
+				ghoststate1.CV(i+1,all) = conserved_variables(rho_star_L, u_star, p_star, state1.eos);
+				ghoststate2.CV(i,all) = conserved_variables(rho_star_R, u_star, p_star, state2.eos);
+			}
+			else
+			{
+				/*
+				 *	Fluid2 is on the left of the interface
+				 */
+
+				RS->solve_rp_forinterfaceboundary(
+
+					state2.CV(i,all),
+					state1.CV(i+1,all),
+					p_star,
+					u_star,
+					rho_star_L,
+					rho_star_R,
+					state2.eos,
+					state1.eos);
+
+				ghoststate2.CV(i+1,all) = conserved_variables(rho_star_L, u_star, p_star, state2.eos);
+				ghoststate1.CV(i,all) = conserved_variables(rho_star_R, u_star, p_star, state1.eos);
+			}
+			
+			extension_interface_velocity(i) = u_star;
+			extension_interface_velocity(i+1) = u_star;
+		}
+	}
+	
+	extension_advection_eqn_1D(ls, ghoststate1, ghoststate2, extension_interface_velocity);
+
+	state1.CV = ghoststate1.CV;
+	state2.CV = ghoststate2.CV;
+}

@@ -7,7 +7,7 @@ gnuplot <<- EOF
 	set terminal png enhanced font 'Palatino,35' size 2500,2500
 	set output "./../output/twofluid_${GFM}_${IC}_errorconvergence.png"
 	set border lw 5
-	set title "L1 error norm of GFM on test case: ${IC} using GFM: ${GFM}" font 'Palatino,50'
+	set title "L1 error norm of GFM on test case: ${IC} using GFM: ${GFM}" font 'Palatino,50' noenhanced
 	set logscale x
 	set logscale y
 	set tics nomirror

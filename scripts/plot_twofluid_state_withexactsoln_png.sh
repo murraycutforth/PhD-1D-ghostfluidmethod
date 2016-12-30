@@ -1,6 +1,6 @@
 step=$1
 N=$3
-GFM=OriginalGFM
+GFM=R_GFM
 FS=MUSCL
 RS_pure=HLLC_idealgas
 RS_mixed=M_HLLC

@@ -9,7 +9,7 @@ fluid2_B 0.0
 RS_pure HLLC_idealgas
 RS_mixed M_HLLC
 FS MUSCL
-GFM OriginalGFM
+GFM R_GFM
 IC TTC1
 eos1 ideal
 eos2 ideal
