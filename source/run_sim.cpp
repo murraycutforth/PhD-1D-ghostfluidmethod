@@ -143,11 +143,6 @@ void twofluid_sim :: run_sim (settingsfile SF)
 		CFL = (numsteps < 5) ? std::min(SF.CFL, 0.2) : SF.CFL;
 		dt = compute_dt(CFL, SF.T, t, statearr1, statearr2, ls);
 	
-		// Update both fluid states here..
-			// First call the GFM to set ghost cells (and extension velocity field)
-			// Now update each single material state array separately
-			// Then update level set array using extension velocity field
-
 		GFM->set_ghost_cells(statearr1, statearr2, ls, RS_mixed);
 		FS->single_fluid_update(statearr1, tempstatearr1, dt);
 		FS->single_fluid_update(statearr2, tempstatearr2, dt);

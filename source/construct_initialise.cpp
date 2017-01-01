@@ -275,7 +275,7 @@ void construct_initialise_twofluid (
 	lsarray.leftBC = SF.BC_L;
 	lsarray.rightBC = SF.BC_R;
 
-	if (SF.IC == "TTC1")
+	if (SF.IC == "TTC1" || SF.IC == "TTC2" || SF.IC == "TTC5")
 	{
 		array.x0 = 0.0;
 		lsarray.x0 = 0.0;
@@ -310,6 +310,48 @@ void construct_initialise_twofluid (
 		rightprimitives(1) = 0.0;
 		rightprimitives(2) = 0.1;
 
+		double discontinuitylocation = 0.5;
+		int parity = -1;
+
+		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr1);
+		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr2);
+		set_singlediscontinuity_ls_IC (discontinuitylocation, parity, ls);
+	}
+	else if (SF.IC == "TTC2")
+	{
+		SF.T = 0.15;
+
+		blitz::Array<double,1> leftprimitives (3);
+		leftprimitives(0) = 1.0;
+		leftprimitives(1) = -2.0;
+		leftprimitives(2) = 0.4;
+
+		blitz::Array<double,1> rightprimitives (3);
+		rightprimitives(0) = 1.0;
+		rightprimitives(1) = 2.0;
+		rightprimitives(2) = 0.4;
+
+		double discontinuitylocation = 0.5;
+		int parity = -1;
+
+		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr1);
+		set_piecewiseconstant_ICs (leftprimitives, rightprimitives, discontinuitylocation, statearr2);
+		set_singlediscontinuity_ls_IC (discontinuitylocation, parity, ls);
+	}
+	else if (SF.IC == "TTC5")
+	{
+		SF.T = 0.035;
+
+		blitz::Array<double,1> leftprimitives (3);
+		leftprimitives(0) = 5.99924;
+		leftprimitives(1) = 19.5975;
+		leftprimitives(2) = 460.894;
+
+		blitz::Array<double,1> rightprimitives (3);
+		rightprimitives(0) = 5.99242;
+		rightprimitives(1) = -6.19633;
+		rightprimitives(2) = 46.0950;
+		
 		double discontinuitylocation = 0.5;
 		int parity = -1;
 

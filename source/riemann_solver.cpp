@@ -286,6 +286,12 @@ void M_HLLC_RS :: solve_rp_forinterfaceboundary (
 
 		rho_star_L = eosL->postrarefaction_density(p_star, p_L, rho_L);
 	}
+
+
+	// Check that resulting states are physical
+
+	assert(is_state_physical(conserved_variables(rho_star_L,u_star,p_star,eosL)));
+	assert(is_state_physical(conserved_variables(rho_star_R,u_star,p_star,eosR)));
 }
 
 
@@ -344,4 +350,7 @@ void exact_RS_multi_idealgas :: solve_rp_forinterfaceboundary (
 	u_star = RS.S_STAR;
 	rho_star_L = RS.W_STAR_L(0);
 	rho_star_R = RS.W_STAR_R(0);
+	
+	assert(is_state_physical(conserved_variables(rho_star_L,u_star,p_star,eosL)));
+	assert(is_state_physical(conserved_variables(rho_star_R,u_star,p_star,eosR)));
 }
