@@ -19,8 +19,8 @@ Choose your directory and run:
 
   `git clone https://github.com/murraycutforth/exact_riemann_solver_idealgas.git`  
   `git clone https://github.com/murraycutforth/1D_Euler_GFM.git`  
-  `cd exact_riemann_solver_idealgas`
-  `g++ -c exact_RS_idealgas.cpp`
+  `cd exact_riemann_solver_idealgas`  
+  `g++ -c exact_RS_idealgas.cpp`  
   `cd ../1D_Euler_GFM`  
   `make`  
 
