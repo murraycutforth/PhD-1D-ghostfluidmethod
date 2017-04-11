@@ -22,6 +22,22 @@ void get_density_errornorms (
 );
 
 
+void get_velocity_errornorms (
+
+	blitz::Array<double,2> cellwise_error,
+	double& L1error,
+	double& Linferror
+);
+
+
+void get_pressure_errornorms (
+
+	blitz::Array<double,2> cellwise_error,
+	double& L1error,
+	double& Linferror
+);
+
+
 void output_errornorms_to_file (
 
 	fluid_state_array& fluid1,

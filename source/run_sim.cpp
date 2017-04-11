@@ -4,7 +4,6 @@
  *			initial-boundary value problem for the Euler equations, and output results
  *			to file.
  *
- *	TODO:		(High priority) Refactor the twofluid_sim code
  *
  */
 
@@ -70,7 +69,7 @@ void onefluid_sim :: run_sim (settingsfile SF)
 	
 	statearr.output_to_file(SF.basename + "final.dat");
 	output_errornorms_to_file(statearr, SF);
-	output_cellwise_error(statearr, SF);
+	//output_cellwise_error(statearr, SF);
 
 	std::cout << "[" << SF.basename << "] Simulation complete." << std::endl;
 }

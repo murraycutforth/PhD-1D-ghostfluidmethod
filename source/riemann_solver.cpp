@@ -39,8 +39,8 @@ void HLLC_RS_idealgas ::  solve_rp (
 	 *	characteristic returned.
 	 */
 
-	assert(is_state_physical(Lstate));
-	assert(is_state_physical(Rstate));
+	assert(is_state_physical(Lstate, eos));
+	assert(is_state_physical(Rstate, eos));
 	assert(eos->get_eos_type() == "ideal");
 
 
@@ -145,8 +145,8 @@ void exact_RS_idealgas :: solve_rp (
 	 */
 
 	assert(eos->get_eos_type() == "ideal");
-	assert(is_state_physical(Lstate));
-	assert(is_state_physical(Rstate));
+	assert(is_state_physical(Lstate, eos));
+	assert(is_state_physical(Rstate, eos));
 
 	blitz::Array<double,1> Lprimitives (3);
 	blitz::Array<double,1> Rprimitives (3);
@@ -163,7 +163,7 @@ void exact_RS_idealgas :: solve_rp (
 	RS.solve_RP(Lprimitives,Rprimitives);
 
 	blitz::Array<double,1> soln (3);
-	soln = RS.sample_solution(0.0);
+	soln = RS.sample_solution(Lprimitives, Rprimitives, 0.0);
 	double E = eos->E(soln);
 
 	flux = euler_flux(soln(0), soln(1), soln(2), E);
@@ -212,8 +212,8 @@ void M_HLLC_RS :: solve_rp_forinterfaceboundary (
 	double a_R = eosR->a(Rstate);
 
 
-	assert(is_state_physical(Lstate));
-	assert(is_state_physical(Rstate));
+	assert(is_state_physical(Lstate, eosL));
+	assert(is_state_physical(Rstate, eosR));
 
 
 
@@ -290,8 +290,8 @@ void M_HLLC_RS :: solve_rp_forinterfaceboundary (
 
 	// Check that resulting states are physical
 
-	assert(is_state_physical(conserved_variables(rho_star_L,u_star,p_star,eosL)));
-	assert(is_state_physical(conserved_variables(rho_star_R,u_star,p_star,eosR)));
+	assert(is_state_physical(conserved_variables(rho_star_L,u_star,p_star,eosL), eosL));
+	assert(is_state_physical(conserved_variables(rho_star_R,u_star,p_star,eosR), eosR));
 }
 
 
@@ -348,9 +348,9 @@ void exact_RS_multi_idealgas :: solve_rp_forinterfaceboundary (
 	
 	p_star = RS.P_STAR;
 	u_star = RS.S_STAR;
-	rho_star_L = RS.W_STAR_L(0);
-	rho_star_R = RS.W_STAR_R(0);
+	rho_star_L = RS.rho_star_L;
+	rho_star_R = RS.rho_star_R;
 	
-	assert(is_state_physical(conserved_variables(rho_star_L,u_star,p_star,eosL)));
-	assert(is_state_physical(conserved_variables(rho_star_R,u_star,p_star,eosR)));
+	assert(is_state_physical(conserved_variables(rho_star_L,u_star,p_star,eosL), eosL));
+	assert(is_state_physical(conserved_variables(rho_star_R,u_star,p_star,eosR), eosR));
 }

@@ -117,7 +117,7 @@ blitz::Array<double,2> get_cellwise_error (
 		int fluidcellind = i + fluid1.array.numGC;
 		double x = fluid1.array.cellcentre_coord(fluidcellind);
 		double xot = (x - discontinuitylocation)/SF.T;
-		soln = RS.sample_solution(xot);
+		soln = RS.sample_solution(leftprimitives, rightprimitives, xot);
 
 		cellwise_error(i,0) = fabs(soln(0) - fluid1.CV(fluidcellind,0));
 		cellwise_error(i,1) = fabs(soln(1) - (fluid1.CV(fluidcellind,1)/fluid1.CV(fluidcellind,0)));
@@ -158,6 +158,57 @@ void get_density_errornorms (
 
 
 
+void get_velocity_errornorms (
+
+	blitz::Array<double,2> cellwise_error,
+	double& L1error,
+	double& Linferror
+)
+{
+	double sumerr = 0.0;
+	double maxerr = 0.0;
+	int N = cellwise_error.extent(blitz::firstDim);
+	
+	for (int i=0; i<N; i++)
+	{
+		sumerr += cellwise_error(i,1);	
+		maxerr = std::max(maxerr, cellwise_error(i,1));
+	}
+	
+	L1error = sumerr/N;
+	Linferror = maxerr;
+}
+
+
+
+void get_pressure_errornorms (
+
+	blitz::Array<double,2> cellwise_error,
+	double& L1error,
+	double& Linferror
+)
+{
+	/*
+	 *	Using the array of errors of primitive variables in each cell, compute the L1 and L-infinity
+	 *	error norms of the density.
+	 */
+
+	double sumerr = 0.0;
+	double maxerr = 0.0;
+	int N = cellwise_error.extent(blitz::firstDim);
+	
+	for (int i=0; i<N; i++)
+	{
+		sumerr += cellwise_error(i,2);	
+		maxerr = std::max(maxerr, cellwise_error(i,2));
+	}
+	
+	L1error = sumerr/N;
+	Linferror = maxerr;
+}
+
+
+
 void output_errornorms_to_file (
 
 	fluid_state_array& fluid1,
@@ -168,14 +219,27 @@ void output_errornorms_to_file (
 	 *	Store the L1 and Linf error in density in one file
 	 */
 	
-	std::ofstream outfile;
-	outfile.open(SF.basename + "finalerror.dat");
+	
 
 	blitz::Array<double,2> cellwise_error (get_cellwise_error(fluid1,SF));
-	double L1err, Linferr;	
-	get_density_errornorms(cellwise_error, L1err, Linferr);
 	
-	outfile << SF.length << " " << L1err << " " << Linferr << std::endl;
+	double L1errrho, Linferrrho;	
+	get_density_errornorms(cellwise_error, L1errrho, Linferrrho);
+	std::ofstream outfile;
+	outfile.open(SF.basename + "densityerror.dat");
+	outfile << SF.length << " " << L1errrho << std::endl;
+	
+	double L1erru, Linferru;	
+	get_velocity_errornorms(cellwise_error, L1erru, Linferru);
+	std::ofstream outfile2;
+	outfile2.open(SF.basename + "velocityerror.dat");
+	outfile2 << SF.length << " " << L1erru << std::endl;
+	
+	double L1errp, Linferrp;	
+	get_pressure_errornorms(cellwise_error, L1errp, Linferrp);
+	std::ofstream outfile3;
+	outfile3.open(SF.basename + "pressureerror.dat");
+	outfile3 << SF.length << " " << L1errp << std::endl;
 }
 
 

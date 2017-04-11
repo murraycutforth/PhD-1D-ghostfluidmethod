@@ -4,15 +4,17 @@ IC=GDA
 eos=ideal
 
 gnuplot <<- EOF
-	set terminal png enhanced font 'Palatino,35' size 2500,2500
-	set output "./../output/onefluid_${IC}_${eos}_errorconvergence.png"
+	set terminal epslatex color size 9cm,9cm
+	set palette rgb 33,13,10
+	set size square
+	set output "onefluid_${IC}_${eos}_errorconvergence.tex"
 	set border lw 5
-	set title "L1 error norm convergence of single fluid methods on test case: ${IC}" font 'Palatino,50'
 	set logscale x
 	set logscale y
 	set xrange [7:1500]
 	set tics nomirror
 	set xlabel 'Number of grid cells'
-	plot 20000*x**(-1) w l lw 3 title "First order convergence", 300000*x**(-2) w l lw 3 title "Second order convergence", "./../output/onefluid_Godunov_Exact_idealgas_${IC}_${eos}_collatedfinalerrors.dat" w p pt 7 ps 5 title "Godunov's method with exact riemann solver", "./../output/onefluid_Godunov_HLLC_idealgas_${IC}_${eos}_collatedfinalerrors.dat" w p pt 7 ps 5 title "Godunov's method with HLLC riemann solver", "./../output/onefluid_MUSCL_HLLC_idealgas_${IC}_${eos}_collatedfinalerrors.dat" w p pt 7 ps 5 title "MUSCL-Hancock method with HLLC riemann solver"
+	set ylabel 'Density L1 error'
+	plot 20000*x**(-1) w l ls 1 lw 4 title '\footnotesize First order convergence', 300000*x**(-2) w l ls 1 lc 2 lw 4 title '\footnotesize Second order convergence', "./../output/onefluid_Godunov_Exact_idealgas_${IC}_${eos}_collateddensityerrors.dat" w p pt 7 ps 3 title '\footnotesize Godunov', "./../output/onefluid_MUSCL_Exact_idealgas_${IC}_${eos}_collateddensityerrors.dat" w p pt 7 ps 3 title '\footnotesize MUSCL-Hancock'
 
 EOF

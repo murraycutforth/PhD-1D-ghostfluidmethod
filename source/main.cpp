@@ -17,7 +17,7 @@
 
 int main()
 {
-	std::cout << "Beginning parallel_GFM code.." << std::endl;
+	std::cout << "Beginning 1D_GFM code.." << std::endl;
 
 	settingsfile SF;
 	SF.read_settings_file();

@@ -81,9 +81,9 @@ double specific_ie_cv (blitz::Array<double,1> state)
 }
 
 
-bool is_state_physical (blitz::Array<double,1> state)
+bool is_state_physical (blitz::Array<double,1> state, std::shared_ptr<eos_base> eos)
 {
-	return (state(0) > 0.0) && (specific_ie_cv(state) > 0.0);
+	return (state(0) > 0.0) && (eos->p(state) > 0.0);
 }
 
 

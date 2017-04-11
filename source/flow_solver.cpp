@@ -78,138 +78,134 @@ void MUSCL :: single_fluid_update (fluid_state_array& oldstate, fluid_state_arra
 	
 	
 	double dtodx = dt/oldstate.array.dx;
+	double TOL = 1e-6;
+	double rec_rho, rec_u, rec_p;
 	blitz::Array<double,1> flux (3);
-	blitz::Array<double,1> L_del_L (3);
-	blitz::Array<double,1> L_del_R (3);
-	blitz::Array<double,1> R_del_L (3);
-	blitz::Array<double,1> R_del_R (3);
-	blitz::Array<double,1> slope_L (3);
-	blitz::Array<double,1> slope_R (3);
-	blitz::Array<double,1> L_BEV_L (3);
-	blitz::Array<double,1> L_BEV_R (3);
-	blitz::Array<double,1> R_BEV_L (3);
-	blitz::Array<double,1> R_BEV_R (3);
-	blitz::Array<double,1> L_BEV_R_evolved (3);
-	blitz::Array<double,1> R_BEV_L_evolved (3);
+	blitz::Array<double,1> diff_L (3);
+	blitz::Array<double,1> diff_C (3);
+	blitz::Array<double,1> diff_R (3);
+	blitz::Array<double,1> UL_L (3);
+	blitz::Array<double,1> UL_R (3);
+	blitz::Array<double,1> UR_L (3);
+	blitz::Array<double,1> UR_R (3);
+	blitz::Array<double,1> U_L (3);
+	blitz::Array<double,1> U_R (3);
 	newstate.CV = oldstate.CV;
 
 
 	for (int i=oldstate.array.numGC; i<oldstate.array.length + oldstate.array.numGC + 1; i++)
 	{
-		// Left cell has index i-1, right cell has index i
+		/* 
+		 * 	Left cell has index i-1, right cell has index i. This iteration 
+		 * 	computes the flux across the boundary between these two cells.
+		 */
 		
-		L_del_L = oldstate.CV(i-1,all) - oldstate.CV(i-2,all);
-		L_del_R = oldstate.CV(i,all) - oldstate.CV(i-1,all);
-		R_del_L = oldstate.CV(i,all) - oldstate.CV(i-1,all);
-		R_del_R = oldstate.CV(i+1,all) - oldstate.CV(i,all);
-
-		slope_L = MUSCL_slope (	0.5, 
-					L_del_L,
-					L_del_R);
-		slope_R = MUSCL_slope (	0.5,
-					R_del_L,
-					R_del_R);
-
-
-		// Limit slopes
+		assert(is_state_physical(oldstate.CV(i-1,all), oldstate.eos));
+		assert(is_state_physical(oldstate.CV(i,all), oldstate.eos));
+		 
 		
-		double beta = 1.0;
-		for (int k=0; k<3; k++)
+		// First compute the four boundary extrapolated states with limited slopes - UL_L, UL_R, UR_L, UR_R
+		
+		diff_L = oldstate.CV(i-1,all) - oldstate.CV(i-2,all);
+		diff_C = oldstate.CV(i,all) - oldstate.CV(i-1,all);
+		diff_R = oldstate.CV(i+1,all) - oldstate.CV(i,all);
+				
+		UL_L = oldstate.CV(i-1,all) - 0.5*limited_slope(diff_L, diff_C);
+		UL_R = oldstate.CV(i-1,all) + 0.5*limited_slope(diff_L, diff_C);
+		UR_L = oldstate.CV(i,all) - 0.5*limited_slope(diff_C, diff_R);
+		UR_R = oldstate.CV(i,all) + 0.5*limited_slope(diff_C, diff_R);
+		
+		
+		// Use zero slope if the reconstructed pressure or density goes negative
+		
+		if ((!is_state_physical(UL_L, oldstate.eos)) || (!is_state_physical(UL_R, oldstate.eos)))
 		{
-			slope_L(k) = limited_slope(beta,L_del_L(k),L_del_R(k));
-			slope_R(k) = limited_slope(beta,R_del_L(k),R_del_R(k));
+			UL_L = oldstate.CV(i-1,all);
+			UL_R = oldstate.CV(i-1,all);
 		}
 		
-
-		// Construct boundary extrapolated values for both cells
-
-		L_BEV_L = oldstate.CV(i-1,all) - 0.5*slope_L;
-		L_BEV_R = oldstate.CV(i-1,all) + 0.5*slope_L;
-		R_BEV_L = oldstate.CV(i,all) - 0.5*slope_R;
-		R_BEV_R = oldstate.CV(i,all) + 0.5*slope_R;
-
-		
-		// Evolve states by half a time step
-
-		L_BEV_R_evolved = L_BEV_R + 0.5*(dtodx)*(euler_flux(L_BEV_L, oldstate.eos) - euler_flux(L_BEV_R, oldstate.eos));
-
-		R_BEV_L_evolved = R_BEV_L + 0.5*(dtodx)*(euler_flux(R_BEV_L, oldstate.eos) - euler_flux(R_BEV_R, oldstate.eos));
-
-
-		// If any states are unphysical, revert to zero slope
-
-		if ((!is_state_physical(L_BEV_R_evolved)) || (!is_state_physical(R_BEV_L_evolved)))
+		if ((!is_state_physical(UR_L, oldstate.eos)) || (!is_state_physical(UR_R, oldstate.eos)))
 		{
-			L_BEV_R_evolved = oldstate.CV(i-1,all);
-			R_BEV_L_evolved = oldstate.CV(i,all);
+			UR_L = oldstate.CV(i,all);
+			UR_R = oldstate.CV(i,all);
 		}
-
-
-		// Update using conventional Riemann problem solution
-
-		rs->solve_rp(L_BEV_R_evolved, R_BEV_L_evolved, flux, oldstate.eos);
 		
-		newstate.CV(i-1, all) -= dtodx*flux;
-		newstate.CV(i, all) += dtodx*flux;
+		
+		// Now estimate the boundary values at time t+0.5dt
+		
+		U_L = UL_R + 0.5*dtodx*(euler_flux(UL_L, oldstate.eos) - euler_flux(UL_R, oldstate.eos));
+		U_R = UR_L + 0.5*dtodx*(euler_flux(UR_L, oldstate.eos) - euler_flux(UR_R, oldstate.eos));
+		
+		
+		// Enforce a floor on the evolved pressure and density
+		
+		rec_rho = U_L(0);
+		rec_u = U_L(1)/U_L(0);
+		rec_p = oldstate.eos->p(U_L);
+		rec_rho = std::max(TOL, rec_rho);
+		rec_p = std::max(TOL, rec_p);
+		U_L = conserved_variables(rec_rho, rec_u, rec_p, oldstate.eos);
+		
+		rec_rho = U_R(0);
+		rec_u = U_R(1)/U_R(0);
+		rec_p = oldstate.eos->p(U_R);
+		rec_rho = std::max(TOL, rec_rho);
+		rec_p = std::max(TOL, rec_p);
+		U_R = conserved_variables(rec_rho, rec_u, rec_p, oldstate.eos);
+		
+		
+		// Use these as input to a Riemann problem as standard
+		 
+		rs->solve_rp(U_L, U_R, flux, oldstate.eos);
+		newstate.CV(i-1,all) -= dtodx*flux;
+		newstate.CV(i,all) += dtodx*flux;
+		 
+		 
+		 
 
 		
-		// If any new states are unphysical, repeat with zero slope
-
-		if ((!is_state_physical(newstate.CV(i-1,all))) || (!is_state_physical(newstate.CV(i,all))))
-		{
-			newstate.CV(i-1,all) += dtodx*flux;
-			newstate.CV(i,all) -= dtodx*flux;
-			
-			L_BEV_R_evolved = oldstate.CV(i-1,all);
-			R_BEV_L_evolved = oldstate.CV(i,all);
-		
-			rs->solve_rp(L_BEV_R_evolved, R_BEV_L_evolved, flux, oldstate.eos);
-			newstate.CV(i-1, all) -= dtodx*flux;
-			newstate.CV(i, all) += dtodx*flux;
-		}
+		//~ // If any new states are unphysical, repeat with zero slope
+//~ 
+		//~ if ((!is_state_physical(newstate.CV(i-1,all))) || (!is_state_physical(newstate.CV(i,all))))
+		//~ {
+			//~ newstate.CV(i-1,all) += dtodx*flux;
+			//~ newstate.CV(i,all) -= dtodx*flux;
+			//~ 
+			//~ L_BEV_R_evolved = oldstate.CV(i-1,all);
+			//~ R_BEV_L_evolved = oldstate.CV(i,all);
+		//~ 
+			//~ rs->solve_rp(L_BEV_R_evolved, R_BEV_L_evolved, flux, oldstate.eos);
+			//~ newstate.CV(i-1, all) -= dtodx*flux;
+			//~ newstate.CV(i, all) += dtodx*flux;
+		//~ }
 	}
 }
 
 
 
-blitz::Array<double,1> MUSCL :: MUSCL_slope (
 
-	double omega, 
-	blitz::Array<double,1> delU_L, 
-	blitz::Array<double,1> delU_R
+blitz::Array<double,1> MUSCL :: limited_slope (
+
+	blitz::Array<double,1> del_L, 
+	blitz::Array<double,1> del_R
 )
 {
 	/*
-	 *	Return slope of linear subcell reconstruction of conserved variables
+	 *	Limit the magnitude of the MUSCL slope reconstruction to reduce oscillations using minbee
 	 */
 
-	blitz::Array<double,1> result (3);	
-	result = 0.5*(1.0+omega)*delU_L + 0.5*(1.0*omega)*delU_R;
-	return result;
-}
-
-
-double MUSCL :: limited_slope (
-
-	double beta, 
-	double del_L, 
-	double del_R)
-{
-	/*
-	 *	Limit the magnitude of the MUSCL slope reconstruction to reduce oscillations
-	 */
-
-	double result;
-
-	if (del_R > 0.0)
+	blitz::Array<double,1> result (3);
+	
+	for (int k=0; k<3; k++)
 	{
-		result = std::max(0.0, std::min(beta*del_L, del_R));
-		result = std::max(result, std::min(del_L, beta*del_R));
-	}
-	else
-	{
-		result = std::min(0.0, std::max(beta*del_L, del_R));
-		result = std::min(result, std::max(del_L, beta*del_R));
+		if (del_R(k) > 0.0)
+		{
+			result(k) = std::max(0.0, std::min(del_L(k), del_R(k)));
+		}	
+		else
+		{
+			result(k) = std::min(0.0, std::max(del_L(k), del_R(k)));
+		}	
 	}
 
 	return result;

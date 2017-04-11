@@ -15,7 +15,7 @@ blitz::Array<double,1> conserved_variables (double rho, double u, double p, std:
 
 double specific_ie_cv (blitz::Array<double,1> state);
 
-bool is_state_physical (blitz::Array<double,1> state);
+bool is_state_physical (blitz::Array<double,1> state, std::shared_ptr<eos_base> eos);
 
 double gaussian_function (double A, double mu, double sigma, double x);
 

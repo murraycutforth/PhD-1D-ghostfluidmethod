@@ -44,9 +44,7 @@ class MUSCL : public flow_solver_base {
 
 	void single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt);
 
-	blitz::Array<double,1> MUSCL_slope (double omega, blitz::Array<double,1> delU_L, blitz::Array<double,1> delU_R);
-
-	double limited_slope (double beta, double del_L, double del_R);
+	blitz::Array<double,1> limited_slope (blitz::Array<double,1> del_L, blitz::Array<double,1> del_R);
 };
 
 
