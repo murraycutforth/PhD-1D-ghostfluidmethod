@@ -51,4 +51,30 @@ void output_cellwise_error (
 	settingsfile& SF
 );
 
+
+
+void compute_total_U_onefluid (
+
+	fluid_state_array& fluid1,
+	blitz::Array<double,1> U0
+);
+
+
+void update_total_U_onefluid (
+
+	blitz::Array<double,1> FL,
+	blitz::Array<double,1> FR,
+	blitz::Array<double,1> U,
+	double dt
+);
+
+
+void output_onefluid_conservation_errors_to_file (
+	
+	blitz::Array<double,1> Ut,
+	blitz::Array<double,1> U0,
+	double t,
+	settingsfile& SF
+);
+
 #endif

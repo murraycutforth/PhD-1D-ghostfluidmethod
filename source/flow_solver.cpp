@@ -31,7 +31,7 @@ godunov :: godunov (std::shared_ptr<singlefluid_RS_base> rs)
 
 
 
-void godunov :: single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt)
+void godunov :: single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt, blitz::Array<double,1> FL, blitz::Array<double,1> FR)
 {
 	/*
 	 * Godunov's first order accurate solver
@@ -54,6 +54,9 @@ void godunov :: single_fluid_update (fluid_state_array& oldstate, fluid_state_ar
 		
 		newstate.CV(i-1, all) -= dtodx*flux;
 		newstate.CV(i, all) += dtodx*flux;
+
+		if (i==oldstate.array.numGC) FL = flux;
+		if (i==oldstate.array.length+oldstate.array.numGC) FR = flux;
 	}	
 }
 
@@ -66,7 +69,7 @@ MUSCL :: MUSCL (std::shared_ptr<singlefluid_RS_base> rs)
 {}
 
 
-void MUSCL :: single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt)
+void MUSCL :: single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt, blitz::Array<double,1> FL, blitz::Array<double,1> FR)
 {
 	/*
 	 * The second order accurate MUSCL-Hancock solver
@@ -160,24 +163,9 @@ void MUSCL :: single_fluid_update (fluid_state_array& oldstate, fluid_state_arra
 		newstate.CV(i-1,all) -= dtodx*flux;
 		newstate.CV(i,all) += dtodx*flux;
 		 
-		 
-		 
 
-		
-		//~ // If any new states are unphysical, repeat with zero slope
-//~ 
-		//~ if ((!is_state_physical(newstate.CV(i-1,all))) || (!is_state_physical(newstate.CV(i,all))))
-		//~ {
-			//~ newstate.CV(i-1,all) += dtodx*flux;
-			//~ newstate.CV(i,all) -= dtodx*flux;
-			//~ 
-			//~ L_BEV_R_evolved = oldstate.CV(i-1,all);
-			//~ R_BEV_L_evolved = oldstate.CV(i,all);
-		//~ 
-			//~ rs->solve_rp(L_BEV_R_evolved, R_BEV_L_evolved, flux, oldstate.eos);
-			//~ newstate.CV(i-1, all) -= dtodx*flux;
-			//~ newstate.CV(i, all) += dtodx*flux;
-		//~ }
+		if (i==oldstate.array.numGC) FL = flux;
+		if (i==oldstate.array.length+oldstate.array.numGC) FR = flux;
 	}
 }
 

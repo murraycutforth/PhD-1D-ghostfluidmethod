@@ -265,3 +265,63 @@ void output_cellwise_error (
 		outfile << x << " " << cellwise_error(i,0) << " " << cellwise_error(i,1) << " " << cellwise_error(i,2) << std::endl;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+void compute_total_U_onefluid (
+
+	fluid_state_array& fluid1,
+	blitz::Array<double,1> U0
+)
+{
+	U0 = 0.0;
+
+	for (int i=fluid1.array.numGC; i<fluid1.array.length + fluid1.array.numGC; i++)
+	{
+		U0 += fluid1.array.dx * fluid1.CV(i, blitz::Range::all());
+	}
+}
+
+
+void update_total_U_onefluid (
+
+	blitz::Array<double,1> FL,
+	blitz::Array<double,1> FR,
+	blitz::Array<double,1> U,
+	double dt
+)
+{
+	U += dt*(FL - FR);
+}
+
+
+void output_onefluid_conservation_errors_to_file (
+	
+	blitz::Array<double,1> Ut,
+	blitz::Array<double,1> U0,
+	double t,
+	settingsfile& SF
+)
+{
+	std::ofstream outfile;
+
+	if (t == 0.0) outfile.open(SF.basename + "conservationerror.dat");
+	else outfile.open(SF.basename + "conservationerror.dat", std::fstream::app);
+
+	blitz::Array<double,1> relative_error (3);
+	relative_error(0) = (Ut(0) - U0(0))/U0(0);
+	relative_error(1) = (Ut(1) - U0(1))/U0(1);
+	relative_error(2) = (Ut(2) - U0(2))/U0(2);
+
+	if (fabs(U0(1)) < 2e-16) relative_error(1) = 0.0;
+
+
+	outfile << t << " " << relative_error(0) << " " << relative_error(1) << " " << relative_error(2) << std::endl;
+}

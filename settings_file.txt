@@ -1,7 +1,7 @@
-length 1280
+length 100
 numGC 2
 lsnumGC 2
-lslength 1280
+lslength 100
 fluid1_gamma 1.4
 fluid1_B 0.0
 fluid2_gamma 1.4

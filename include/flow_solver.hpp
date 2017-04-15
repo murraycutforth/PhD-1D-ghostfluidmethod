@@ -20,7 +20,7 @@ class flow_solver_base {
 
 	flow_solver_base (std::shared_ptr<singlefluid_RS_base> rs);
 
-	virtual void single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt) =0;
+	virtual void single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt, blitz::Array<double,1> FL, blitz::Array<double,1> FR) =0;
 };
 
 
@@ -31,7 +31,7 @@ class godunov : public flow_solver_base {
 
 	godunov (std::shared_ptr<singlefluid_RS_base> rs);
 
-	void single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt);
+	void single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt, blitz::Array<double,1> FL, blitz::Array<double,1> FR);
 };
 
 
@@ -42,7 +42,7 @@ class MUSCL : public flow_solver_base {
 
 	MUSCL (std::shared_ptr<singlefluid_RS_base> rs);
 
-	void single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt);
+	void single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt, blitz::Array<double,1> FL, blitz::Array<double,1> FR);
 
 	blitz::Array<double,1> limited_slope (blitz::Array<double,1> del_L, blitz::Array<double,1> del_R);
 };

@@ -1,7 +1,7 @@
 # Collate all error measurements for a given RS, FS, TC, eos, into one data file for plotting
 
 RS=Exact_idealgas
-FS=MUSCL
+FS=Godunov
 TC=( TTC1 TTC2 TTC3 TTC4 TTC5 GDA )
 
 for j in "${TC[@]}"

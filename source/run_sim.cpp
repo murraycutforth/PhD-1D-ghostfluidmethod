@@ -39,11 +39,19 @@ void onefluid_sim :: run_sim (settingsfile SF)
 	fluid_state_array statearr (construct_initialise_onefluid(SF, eos, RS, FS));
 	fluid_state_array tempstatearr (statearr.copy());
 
+	blitz::Array<double,1> FL (3);
+	blitz::Array<double,1> FR (3);
+	blitz::Array<double,1> U0 (3);
+	blitz::Array<double,1> Ut (3);
+	compute_total_U_onefluid(statearr, U0);
+	compute_total_U_onefluid(statearr, Ut);
+
 	int numsteps = 0;
 	double t = 0.0;
 	double CFL, dt;
 
 	statearr.output_to_file(SF.basename + std::to_string(numsteps) + ".dat");
+	output_onefluid_conservation_errors_to_file(Ut, U0, t, SF);
 
 	std::cout << "[" << SF.basename << "] Initialisation complete. Beginning time iterations.." << std::endl;
 
@@ -53,7 +61,7 @@ void onefluid_sim :: run_sim (settingsfile SF)
 		CFL = (numsteps < 5) ? std::min(SF.CFL, 0.2) : SF.CFL;
 		dt = compute_dt(CFL, statearr, SF.T, t);
 
-		FS->single_fluid_update(statearr, tempstatearr, dt);
+		FS->single_fluid_update(statearr, tempstatearr, dt, FL, FR);
 
 		statearr.CV = tempstatearr.CV;
 		statearr.apply_BCs();
@@ -61,6 +69,9 @@ void onefluid_sim :: run_sim (settingsfile SF)
 		numsteps++;
 		t += dt;
 		if (SF.output) statearr.output_to_file(SF.basename + std::to_string(numsteps) + ".dat");
+		update_total_U_onefluid(FL, FR, U0, dt);
+		compute_total_U_onefluid(statearr, Ut);
+		output_onefluid_conservation_errors_to_file(Ut, U0, t, SF);
 		
 		std::cout << "[" << SF.basename << "] Time step " << numsteps << " complete. t = " << t << std::endl;
 	}
@@ -69,7 +80,6 @@ void onefluid_sim :: run_sim (settingsfile SF)
 	
 	statearr.output_to_file(SF.basename + "final.dat");
 	output_errornorms_to_file(statearr, SF);
-	//output_cellwise_error(statearr, SF);
 
 	std::cout << "[" << SF.basename << "] Simulation complete." << std::endl;
 }
@@ -132,6 +142,13 @@ void twofluid_sim :: run_sim (settingsfile SF)
 	double t = 0.0;
 	double CFL, dt;
 
+	blitz::Array<double,1> FL1 (3);
+	blitz::Array<double,1> FR1 (3);
+	blitz::Array<double,1> FL2 (3);
+	blitz::Array<double,1> FR2 (3);
+	blitz::Array<double,1> U0 (3);
+	blitz::Array<double,1> Ut (3);
+
 	output_endoftimestep(0, SF, statearr1, statearr2, ls);
 
 	std::cout << "[" << SF.basename << "] Initialisation complete. Beginning time iterations.." << std::endl;
@@ -143,8 +160,8 @@ void twofluid_sim :: run_sim (settingsfile SF)
 		dt = compute_dt(CFL, SF.T, t, statearr1, statearr2, ls);
 	
 		GFM->set_ghost_cells(statearr1, statearr2, ls, RS_mixed);
-		FS->single_fluid_update(statearr1, tempstatearr1, dt);
-		FS->single_fluid_update(statearr2, tempstatearr2, dt);
+		FS->single_fluid_update(statearr1, tempstatearr1, dt, FL1, FR1);
+		FS->single_fluid_update(statearr2, tempstatearr2, dt, FL2, FR2);
 		ls.advection_step(dt, GFM->extension_interface_velocity);
 
 		statearr1.CV = tempstatearr1.CV;
