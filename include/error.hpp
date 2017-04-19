@@ -69,12 +69,35 @@ void update_total_U_onefluid (
 );
 
 
-void output_onefluid_conservation_errors_to_file (
+void output_conservation_errors_to_file (
 	
 	blitz::Array<double,1> Ut,
 	blitz::Array<double,1> U0,
 	double t,
 	settingsfile& SF
 );
+
+
+void compute_total_U_twofluid (
+
+	fluid_state_array& fluid1,
+	fluid_state_array& fluid2,
+	levelset_array& ls, 
+	blitz::Array<double,1> U0
+);
+
+void update_total_U_twofluid (
+
+	blitz::Array<double,1> FL1,
+	blitz::Array<double,1> FR1,
+	blitz::Array<double,1> FL2,
+	blitz::Array<double,1> FR2,
+	levelset_array& ls,
+	blitz::Array<double,1> U,
+	double dt,
+	fluid_state_array& fluid1
+);
+
+
 
 #endif

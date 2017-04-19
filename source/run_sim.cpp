@@ -51,7 +51,7 @@ void onefluid_sim :: run_sim (settingsfile SF)
 	double CFL, dt;
 
 	statearr.output_to_file(SF.basename + std::to_string(numsteps) + ".dat");
-	output_onefluid_conservation_errors_to_file(Ut, U0, t, SF);
+	output_conservation_errors_to_file(Ut, U0, t, SF);
 
 	std::cout << "[" << SF.basename << "] Initialisation complete. Beginning time iterations.." << std::endl;
 
@@ -71,7 +71,7 @@ void onefluid_sim :: run_sim (settingsfile SF)
 		if (SF.output) statearr.output_to_file(SF.basename + std::to_string(numsteps) + ".dat");
 		update_total_U_onefluid(FL, FR, U0, dt);
 		compute_total_U_onefluid(statearr, Ut);
-		output_onefluid_conservation_errors_to_file(Ut, U0, t, SF);
+		output_conservation_errors_to_file(Ut, U0, t, SF);
 		
 		std::cout << "[" << SF.basename << "] Time step " << numsteps << " complete. t = " << t << std::endl;
 	}
@@ -148,8 +148,11 @@ void twofluid_sim :: run_sim (settingsfile SF)
 	blitz::Array<double,1> FR2 (3);
 	blitz::Array<double,1> U0 (3);
 	blitz::Array<double,1> Ut (3);
+	compute_total_U_twofluid(statearr1, statearr2, ls, U0);
+	compute_total_U_twofluid(statearr1, statearr2, ls, Ut);
 
 	output_endoftimestep(0, SF, statearr1, statearr2, ls);
+	output_conservation_errors_to_file(Ut, U0, t, SF);
 
 	std::cout << "[" << SF.basename << "] Initialisation complete. Beginning time iterations.." << std::endl;
 
@@ -172,6 +175,9 @@ void twofluid_sim :: run_sim (settingsfile SF)
 		numsteps++;
 		t += dt;
 		if (SF.output) output_endoftimestep(numsteps, SF, statearr1, statearr2, ls);
+		update_total_U_twofluid(FL1, FR1, FL2, FR2, ls, U0, dt, statearr1);
+		compute_total_U_twofluid(statearr1, statearr2, ls, Ut);
+		output_conservation_errors_to_file(Ut, U0, t, SF);
 		
 		std::cout << "[" << SF.basename << "] Time step " << numsteps << " complete. t = " << t << std::endl;
 	}
