@@ -47,7 +47,9 @@ void Original_GFM :: set_ghost_cells (
 	/*
 	 *	Implementation of the original ghost fluid method. The ghost states are populated
 	 *	by copying pressure and velocity from the real cell in that position, and extrapolating
-	 *	the entropy across the interface.
+	 *	the entropy across the interface. The isobaric fix is incorporated - extrapolating the
+	 * 	entropy from a real cell away from the interface over to the interfacial real state
+	 * 	as well as the ghost states.
 	 */
 
 	assert(ls.array.numGC >= 1);
@@ -59,8 +61,10 @@ void Original_GFM :: set_ghost_cells (
 
 	for (int i=state1.array.numGC; i<state1.array.numGC + state1.array.length-1; i++)
 	{
+		double fm = ls.linear_interpolation(state1.array.cellcentre_coord(i-1));
 		double fi = ls.linear_interpolation(state1.array.cellcentre_coord(i));
 		double fii = ls.linear_interpolation(state1.array.cellcentre_coord(i+1));
+		double fiii = ls.linear_interpolation(state1.array.cellcentre_coord(i+2));
 
 		if (fi*fii <= 0.0)
 		{
@@ -70,22 +74,64 @@ void Original_GFM :: set_ghost_cells (
 			{
 				/* 
 				 *	Set ghost fluid 2 in cell i, and ghost fluid 1 in cell i+1.
-				 *	Extrapolate constant entropy across interface to compute ghost density.
+				 * 	The fluid 2 entropy is extrapolated from cell i+2 into cell i+1 and i.
+				 * 	The fluid 1 entropy is extrapolated from cell i-1 into cell i and i+1.
 				 */
 
 				double u2 = state1.get_u(i);
 				double p2 = state1.eos->p(state1.CV(i,all));
+				
 				double u1 = state2.get_u(i+1);
 				double p1 = state2.eos->p(state2.CV(i+1,all));
-				double rho2 = state2.eos->rho_constant_entropy(p1, state2.CV(i+1,0), p2);
-				double rho1 = state1.eos->rho_constant_entropy(p2, state1.CV(i,0), p1);
+				
+				double ref_rho1, ref_p1, ref_rho2, ref_p2;
+				
+				if (fiii > 0.0)
+				{
+					ref_rho2 = state2.CV(i+2,0);
+					ref_p2 = state2.eos->p(state2.CV(i+2,all));
+				}
+				else
+				{
+					ref_rho2 = state2.CV(i+1,0);
+					ref_p2 = state2.eos->p(state2.CV(i+1,all));
+				}
+				
+				if (fm <= 0.0)
+				{
+					ref_rho1 = state1.CV(i-1,0);
+					ref_p1 = state1.eos->p(state1.CV(i-1,all));
+				}
+				else
+				{
+					ref_rho1 = state1.CV(i,0);
+					ref_p1 = state1.eos->p(state1.CV(i,all));
+				}
+				
+				double rho2 = state2.eos->rho_constant_entropy(ref_p2, ref_rho2, p2);
+				double rho1 = state1.eos->rho_constant_entropy(ref_p1, ref_rho1, p1);
+				
+				
+				// Set new ghost states
 
 				ghoststate2.CV(i,all) = conserved_variables(rho2,u2,p2,state2.eos);
 				ghoststate1.CV(i+1,all) = conserved_variables(rho1,u1,p1,state1.eos);
-				ustar = 0.5*(state1.get_u(i) + state2.get_u(i+1));
+				
+				
+				// Set real fluid densities using extrapolated entropy (isobaric fix)
+				
+				ghoststate1.CV(i,0) = state1.eos->rho_constant_entropy(ref_p1, ref_rho1, state1.eos->p(state1.CV(i,all)));
+				ghoststate2.CV(i+1,0) = state2.eos->rho_constant_entropy(ref_p2, ref_rho2, state2.eos->p(state2.CV(i+1,all)));
+				
+				
+				// Set interface advection velocity as real velocity
+				
+				extension_interface_velocity(i) = state1.get_u(i);
+				extension_interface_velocity(i+1) = state2.get_u(i+1);
 			}
 			else
 			{
+				// TODO: as above
 				/* 
 				 *	Set ghost fluid 1 in cell i, and ghost fluid 2 in cell i+1.
 				 *	Extrapolate constant entropy across interface to compute ghost density.
