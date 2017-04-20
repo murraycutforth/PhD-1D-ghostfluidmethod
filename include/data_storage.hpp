@@ -79,7 +79,7 @@ class levelset_array {
 
 	double normal (double x);
 
-	void advection_step (double dt, blitz::Array<double,1> vfield);
+	void advection_step (double dt, blitz::Array<double,1> vfield, levelset_array& prev_ls);
 
 	void apply_BCs();
 

@@ -1,6 +1,9 @@
 /*
  *	DESCRIPTION:	Performs constant extrapolation away from the interface
  *			of the ghost states and the interface advection velocity.
+ * 			The cells which are adjacent to the interface are held 
+ * 			constant, and ghost cells are extrapolated outwards from
+ * 			these values.
  *
  */
 
@@ -17,7 +20,8 @@ void extension_advection_eqn_1D (
 	levelset_array& ls,
 	fluid_state_array& ghoststatearr1,
 	fluid_state_array& ghoststatearr2,
-	blitz::Array<double,1> vfield
+	blitz::Array<double,1> vfield,
+	int frozenwidth
 )
 {
 	int N = 10;
@@ -39,7 +43,7 @@ void extension_advection_eqn_1D (
 			double phi = ls.linear_interpolation(ghoststatearr1.array.cellcentre_coord(i));
 			double normal = ls.normal(ghoststatearr1.array.cellcentre_coord(i));
 
-			if (!cell_local_to_interface(i, ghoststatearr1.array, ls))
+			if (!cell_local_to_interface(i, ghoststatearr1.array, ls, frozenwidth))
 			{
 				if (phi <= 0.0)
 				{
@@ -49,13 +53,13 @@ void extension_advection_eqn_1D (
 
 					if (normal > 0.0)
 					{
-						tempv = ghoststatearr2.CV(i+1,all) - ghoststatearr2.CV(i,all);
-						delu = vfield(i+1) - vfield(i);
+						tempv = temp2.CV(i+1,all) - temp2.CV(i,all);
+						delu = tempufield(i+1) - tempufield(i);
 					}
 					else
 					{
-						tempv = ghoststatearr2.CV(i,all) - ghoststatearr2.CV(i-1,all);
-						delu = vfield(i) - vfield(i-1);
+						tempv = temp2.CV(i,all) - temp2.CV(i-1,all);
+						delu = tempufield(i) - tempufield(i-1);
 					}
 
 					ghoststatearr2.CV(i,all) += dtodx*normal*tempv;
@@ -69,13 +73,13 @@ void extension_advection_eqn_1D (
 
 					if (normal > 0.0)
 					{
-						tempv = ghoststatearr1.CV(i,all) - ghoststatearr1.CV(i-1,all);
-						delu = vfield(i) - vfield(i-1);
+						tempv = temp1.CV(i,all) - temp1.CV(i-1,all);
+						delu = tempufield(i) - tempufield(i-1);
 					}
 					else
 					{
-						tempv = ghoststatearr1.CV(i+1,all) - ghoststatearr1.CV(i,all);
-						delu = vfield(i+1) - vfield(i);
+						tempv = temp1.CV(i+1,all) - temp1.CV(i,all);
+						delu = tempufield(i+1) - tempufield(i);
 					}
 
 					ghoststatearr1.CV(i,all) -= dtodx*normal*tempv;

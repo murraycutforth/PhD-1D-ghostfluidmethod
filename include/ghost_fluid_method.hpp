@@ -21,6 +21,7 @@ class GFM_base {
 		fluid_state_array& state1,
 		fluid_state_array& state2,
 		levelset_array& ls, 
+		levelset_array& ls_prev,
 		std::shared_ptr<multimat_RS_base> RS
 	) =0;
 };
@@ -36,7 +37,8 @@ class Original_GFM : public GFM_base {
 
 		fluid_state_array& state1,
 		fluid_state_array& state2,
-		levelset_array& ls, 
+		levelset_array& ls,  
+		levelset_array& ls_prev,
 		std::shared_ptr<multimat_RS_base> RS
 	);
 };
@@ -52,7 +54,8 @@ class R_GFM : public GFM_base {
 
 		fluid_state_array& state1,
 		fluid_state_array& state2,
-		levelset_array& ls, 
+		levelset_array& ls,  
+		levelset_array& ls_prev,
 		std::shared_ptr<multimat_RS_base> RS
 	);
 };
@@ -68,7 +71,8 @@ class M_GFM : public GFM_base {
 
 		fluid_state_array& state1,
 		fluid_state_array& state2,
-		levelset_array& ls, 
+		levelset_array& ls,  
+		levelset_array& ls_prev,
 		std::shared_ptr<multimat_RS_base> RS
 	);
 };
@@ -84,7 +88,8 @@ class P_GFM : public GFM_base {
 
 		fluid_state_array& state1,
 		fluid_state_array& state2,
-		levelset_array& ls, 
+		levelset_array& ls,  
+		levelset_array& ls_prev,
 		std::shared_ptr<multimat_RS_base> RS
 	);
 };

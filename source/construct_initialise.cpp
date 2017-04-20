@@ -294,21 +294,23 @@ void construct_initialise_twofluid (
 
 	if (SF.GFM == "OriginalGFM") GFM = std::make_shared<Original_GFM>(ls.array);
 	else if (SF.GFM == "R_GFM") GFM = std::make_shared<R_GFM>(ls.array);
+	else if (SF.GFM == "M_GFM") GFM = std::make_shared<M_GFM>(ls.array);
+	else if (SF.GFM == "P_GFM") GFM = std::make_shared<P_GFM>(ls.array);
 	else assert(!"Invalid GFM");
 
 	if (SF.IC == "TTC1")
 	{
-		SF.T = 0.25;
+		SF.T = 0.0007;
 
 		blitz::Array<double,1> leftprimitives (3);
 		leftprimitives(0) = 1.0;
 		leftprimitives(1) = 0.0;
-		leftprimitives(2) = 1.0;
+		leftprimitives(2) = 100000.0;
 
 		blitz::Array<double,1> rightprimitives (3);
 		rightprimitives(0) = 0.125;
 		rightprimitives(1) = 0.0;
-		rightprimitives(2) = 0.1;
+		rightprimitives(2) = 10000;
 
 		double discontinuitylocation = 0.5;
 		int parity = -1;

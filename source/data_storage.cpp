@@ -281,7 +281,7 @@ double levelset_array :: normal (double x)
 }
 
 
-void levelset_array :: advection_step (double dt, blitz::Array<double,1> vfield)
+void levelset_array :: advection_step (double dt, blitz::Array<double,1> vfield, levelset_array& prev_ls)
 {
 	/*
 	 *	Solve the levelset advection equation for one time step using the
@@ -291,8 +291,7 @@ void levelset_array :: advection_step (double dt, blitz::Array<double,1> vfield)
 	assert(vfield.extent(blitz::firstDim) == phi.extent(blitz::firstDim));
 	assert(array.numGC >= 1);
 
-	static levelset_array templs ((*this).copy());
-	templs.phi = phi;
+	prev_ls.phi = phi;
 
 	for (int i=0; i<array.length; i++)
 	{
@@ -302,21 +301,20 @@ void levelset_array :: advection_step (double dt, blitz::Array<double,1> vfield)
 
 		if (u > 0.0)
 		{
-			phi_x = (phi(lsind) - phi(lsind-1))/array.dx;
+			phi_x = (prev_ls.phi(lsind) - prev_ls.phi(lsind-1))/array.dx;
 		}
 		else if (u < 0.0)
 		{
-			phi_x = (phi(lsind+1) - phi(lsind))/array.dx;
+			phi_x = (prev_ls.phi(lsind+1) - prev_ls.phi(lsind))/array.dx;
 		}
 		else
 		{
 			phi_x = 0.0;
 		}
 
-		templs.phi(lsind) = phi(lsind) - dt*u*phi_x;
+		phi(lsind) = prev_ls.phi(lsind) - dt*u*phi_x;
 	}
 
-	phi = templs.phi;
 	apply_BCs();
 }
 

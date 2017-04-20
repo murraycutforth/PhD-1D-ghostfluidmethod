@@ -93,12 +93,22 @@ double gaussian_function (double A, double mu, double sigma, double x)
 }
 
 
-bool cell_local_to_interface (int i, arrayinfo& array, levelset_array& ls)
+bool cell_local_to_interface (int i, arrayinfo& array, levelset_array& ls, int ext)
 {
+	bool interface = false;
 	double phi = ls.linear_interpolation(array.cellcentre_coord(i));
-	double phiR = ls.linear_interpolation(array.cellcentre_coord(i+1));
-	double phiL = ls.linear_interpolation(array.cellcentre_coord(i-1));
-
-	if (phi*phiR <= 0.0 || phi*phiL <= 0.0) return true;
-	else return false;
+	
+	for (int k=i-ext; k<=i+ext; k++)
+	{
+		int l = std::max(k, array.numGC);
+		l = std::min(l, array.numGC + array.length - 1);
+		
+		if (phi * ls.linear_interpolation(array.cellcentre_coord(l)) <= 0.0)
+		{
+			interface = true;
+			break;
+		}
+	}
+	
+	return interface;
 }

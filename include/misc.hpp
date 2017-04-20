@@ -19,7 +19,7 @@ bool is_state_physical (blitz::Array<double,1> state, std::shared_ptr<eos_base> 
 
 double gaussian_function (double A, double mu, double sigma, double x);
 
-bool cell_local_to_interface (int i, arrayinfo& array, levelset_array& ls);
+bool cell_local_to_interface (int i, arrayinfo& array, levelset_array& ls, int ext);
 
 
 #endif

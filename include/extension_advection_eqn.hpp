@@ -11,7 +11,8 @@ void extension_advection_eqn_1D (
 	levelset_array& ls,
 	fluid_state_array& ghoststatearr1,
 	fluid_state_array& ghoststatearr2,
-	blitz::Array<double,1> vfield
+	blitz::Array<double,1> vfield,
+	int frozenwidth = 1
 );
 
 

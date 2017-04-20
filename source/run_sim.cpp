@@ -9,9 +9,6 @@
 
 
 #include "run_sim.hpp"
-#include "eos.hpp"
-#include "flow_solver.hpp"
-#include "riemann_solver.hpp"
 #include "misc.hpp"
 #include "construct_initialise.hpp"
 #include "error.hpp"
@@ -117,37 +114,55 @@ double onefluid_sim :: compute_dt (
 
 
 
+twofluid_sim :: twofluid_sim ()
+:
+	eos1 (),
+	eos2 (),
+	RS_pure	(),
+	RS_mixed (),
+	FS (),
+	GFM (),
+	statearr1 (),
+	statearr2 (),
+	ls (),
+	FL1 (3),
+	FR1 (3),
+	FL2 (3),
+	FR2 (3),
+	U0 (3),
+	Ut (3)
+{}
+
+
+
 void twofluid_sim :: run_sim (settingsfile SF)
 {
 	/*
 	 *	Run a simulation in two fluid mode using the ghost fluid method.
 	 */
 	
-	std::shared_ptr<eos_base> eos1;
-	std::shared_ptr<eos_base> eos2;
-	std::shared_ptr<singlefluid_RS_base> RS_pure;
-	std::shared_ptr<multimat_RS_base> RS_mixed;
-	std::shared_ptr<flow_solver_base> FS;
-	std::shared_ptr<GFM_base> GFM;
-	fluid_state_array statearr1;
-	fluid_state_array statearr2;
-	levelset_array ls;
+	construct_initialise_twofluid(
 	
-	construct_initialise_twofluid(SF,eos1,eos2,RS_pure,RS_mixed,FS,GFM,statearr1,statearr2,ls);
+		SF,
+		eos1,
+		eos2,
+		RS_pure,
+		RS_mixed,
+		FS,
+		GFM,
+		statearr1,
+		statearr2,
+		ls
+	);
 	
 	fluid_state_array tempstatearr1 (statearr1.copy());
 	fluid_state_array tempstatearr2 (statearr2.copy());
+	levelset_array prev_ls (ls.copy());
 
 	int numsteps = 0;
 	double t = 0.0;
 	double CFL, dt;
 
-	blitz::Array<double,1> FL1 (3);
-	blitz::Array<double,1> FR1 (3);
-	blitz::Array<double,1> FL2 (3);
-	blitz::Array<double,1> FR2 (3);
-	blitz::Array<double,1> U0 (3);
-	blitz::Array<double,1> Ut (3);
 	compute_total_U_twofluid(statearr1, statearr2, ls, U0);
 	compute_total_U_twofluid(statearr1, statearr2, ls, Ut);
 
@@ -162,10 +177,10 @@ void twofluid_sim :: run_sim (settingsfile SF)
 		CFL = (numsteps < 5) ? std::min(SF.CFL, 0.2) : SF.CFL;
 		dt = compute_dt(CFL, SF.T, t, statearr1, statearr2, ls);
 	
-		GFM->set_ghost_cells(statearr1, statearr2, ls, RS_mixed);
+		GFM->set_ghost_cells(statearr1, statearr2, ls, prev_ls, RS_mixed);
 		FS->single_fluid_update(statearr1, tempstatearr1, dt, FL1, FR1);
 		FS->single_fluid_update(statearr2, tempstatearr2, dt, FL2, FR2);
-		ls.advection_step(dt, GFM->extension_interface_velocity);
+		ls.advection_step(dt, GFM->extension_interface_velocity, prev_ls);
 
 		statearr1.CV = tempstatearr1.CV;
 		statearr1.apply_BCs();
@@ -186,6 +201,7 @@ void twofluid_sim :: run_sim (settingsfile SF)
 
 	std::cout << "[" << SF.basename << "] Simulation complete." << std::endl;
 }
+
 
 
 
