@@ -48,4 +48,15 @@ class MUSCL : public flow_solver_base {
 };
 
 
+
+class random_choice_method : public flow_solver_base {
+	
+	public:
+	
+	random_choice_method (std::shared_ptr<singlefluid_RS_base> rs);
+	
+	void single_fluid_update (fluid_state_array& oldstate, fluid_state_array& newstate, double dt, blitz::Array<double,1> FL, blitz::Array<double,1> FR);
+};
+
+
 #endif

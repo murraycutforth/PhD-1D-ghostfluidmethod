@@ -8,6 +8,7 @@
 #include "riemann_solver.hpp"
 #include "ghost_fluid_method.hpp"
 #include "data_storage.hpp"
+#include "new_ghost_fluid_method.hpp"
 
 
 class sim_base {
@@ -20,8 +21,21 @@ class sim_base {
 
 
 class onefluid_sim : public sim_base {
+	
+	private:
+	
+	std::shared_ptr<eos_base> eos;
+	std::shared_ptr<singlefluid_RS_base> RS;
+	std::shared_ptr<flow_solver_base> FS;
+	blitz::Array<double,1> FL;
+	blitz::Array<double,1> FR;
+	blitz::Array<double,1> U0;
+	blitz::Array<double,1> Ut;
+	
 
 	public:
+	
+	onefluid_sim ();
 
 	void run_sim (settingsfile SF);
 
@@ -40,6 +54,7 @@ class twofluid_sim : public sim_base {
 	std::shared_ptr<multimat_RS_base> RS_mixed;
 	std::shared_ptr<flow_solver_base> FS;
 	std::shared_ptr<GFM_base> GFM;
+	std::shared_ptr<newGFM_base> newGFM;
 	fluid_state_array statearr1;
 	fluid_state_array statearr2;
 	levelset_array ls;
@@ -60,11 +75,12 @@ class twofluid_sim : public sim_base {
 
 	double compute_dt (double CFL, double T, double t, fluid_state_array& state1, fluid_state_array& state2, levelset_array& ls);
 
-	void output_endoftimestep (int numsteps, settingsfile& SF, fluid_state_array& state1, fluid_state_array& state2, levelset_array& ls);
+	void output_endoftimestep (int numsteps, settingsfile& SF, fluid_state_array& state1, fluid_state_array& state2, levelset_array& ls, double t);
 	
 	void output_endofsimulation (int numsteps, settingsfile& SF, fluid_state_array& state1, fluid_state_array& state2, levelset_array& ls);
 
 	void output_realfluidonly (std::string name, settingsfile& SF, fluid_state_array& state1, fluid_state_array& state2, levelset_array& ls);
 };
+
 
 #endif

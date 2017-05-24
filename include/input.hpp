@@ -14,10 +14,6 @@ struct settingsfile {
 	int lsnumGC;
 	int lslength;
 	double lsdx;
-	double fluid1_gamma;
-	double fluid1_B;
-	double fluid2_gamma;
-	double fluid2_B;
 	double T;
 	double CFL;
 	bool output;

@@ -19,6 +19,8 @@ class eos_base {
 	virtual std::string get_eos_type () =0;
 
 	virtual double a (blitz::Array<double,1> state) =0;
+	
+	virtual double a (double rho, double p) =0;
 
 	virtual double p (blitz::Array<double,1> state) =0;
 
@@ -31,6 +33,8 @@ class eos_base {
 	virtual double specific_ie_prim (double rho, double u, double p) =0;
 
 	virtual double get_gamma () =0;
+	
+	virtual double get_Pinf () =0;
 
 
 	// Functions used by the original ghost fluid method
@@ -71,8 +75,12 @@ class eos_idealgas : public eos_base {
 	std::string get_eos_type ();
 
 	double get_gamma ();
+	
+	double get_Pinf ();
 
 	double a (blitz::Array<double,1> state);
+	
+	double a (double rho, double p);
 
 	double p (blitz::Array<double,1> state);
 
@@ -107,44 +115,57 @@ class eos_idealgas : public eos_base {
 
 
 
-class eos_tait : public eos_base {
+class eos_stiffenedgas : public eos_base {
 
 	public:
 
 	double gamma;
-	double B;
+	
+	double Pinf;
 
-	eos_tait (double gamma, double B);
+	eos_stiffenedgas (double gamma, double Pinf);
 
+
+	std::string get_eos_type ();
+
+	double get_gamma ();
+	
+	double get_Pinf ();
 
 	double a (blitz::Array<double,1> state);
+	
+	double a (double rho, double p);
 
 	double p (blitz::Array<double,1> state);
 
 	double E (blitz::Array<double,1> primitives);
 
 	double E (double rho, double u, double p);	
-
-	double rho_pS (double p, double S);
-
-	double S_prho (double p, double rho);
-
+	
 	double specific_ie_prim (blitz::Array<double,1> primitives);
 
 	double specific_ie_prim (double rho, double u, double p);
-	
+
+
+	double rho_constant_entropy (double p_old, double rho_old, double p_new);
+
+	double rho (double p, double S);
+
+	double S (double p, double rho);
+
+
+
 	double get_Tau (blitz::Array<double,1> state);
 
 	double get_Psi (blitz::Array<double,1> state);
-
-	double get_gamma ();
 
 	double postshock_density (double P_star, double P_K, double rho_K);
 
 	double postrarefaction_density (double P_star, double P_K, double rho_K);
 
-	std::string get_eos_type ();
+	
 };
+
 
 
 #endif

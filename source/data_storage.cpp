@@ -291,7 +291,10 @@ void levelset_array :: advection_step (double dt, blitz::Array<double,1> vfield,
 	assert(vfield.extent(blitz::firstDim) == phi.extent(blitz::firstDim));
 	assert(array.numGC >= 1);
 
+    static levelset_array prev_ls_reinit ((*this).copy());
+
 	prev_ls.phi = phi;
+	prev_ls.array = array;
 
 	for (int i=0; i<array.length; i++)
 	{
@@ -316,6 +319,49 @@ void levelset_array :: advection_step (double dt, blitz::Array<double,1> vfield,
 	}
 
 	apply_BCs();
+	
+	
+	/*
+	 * 	Now reinitialise to maintain SDF property - one iteration of PDE method with first order upwind discretisation
+	 */
+	
+	prev_ls_reinit.phi = phi;
+	double dtau = 0.8*array.dx;
+	
+	for (int q=1; q<=2; q++)
+	{
+		for (int i=0; i<array.length; i++)
+		{
+			int lsind = i + array.numGC;
+			double phi_x;
+			double phiL = prev_ls_reinit.phi(lsind-1), phiC = prev_ls_reinit.phi(lsind), phiR = prev_ls_reinit.phi(lsind+1);
+			
+			if (phiL*phiC > 0.0 && phiR*phiC > 0.0)
+			{
+				double a = (phiC - phiL)/array.dx;
+				double b = (phiR - phiC)/array.dx;
+				
+				double fpa = std::max(0.0, a);
+				double fpb = std::max(0.0, b);
+				double fna = std::min(0.0, a);
+				double fnb = std::min(0.0, b);
+				
+				if (phiC <= 0.0)
+				{
+					phi_x = std::max(fabs(fna), fabs(fpb));
+				}
+				else
+				{
+					phi_x = std::max(fabs(fpa), fabs(fnb));
+				}
+				
+				phi(lsind) = phiC - dtau * std::copysign(1.0, phiC) * (phi_x - 1.0);
+			}
+		}
+	
+		apply_BCs();
+	}
+	
 }
 
 

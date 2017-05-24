@@ -7,6 +7,7 @@
 #include "flow_solver.hpp"
 #include "riemann_solver.hpp"
 #include "ghost_fluid_method.hpp"
+#include "new_ghost_fluid_method.hpp"
 #include "data_storage.hpp"
 #include <memory>
 #include <blitz/array.h>
@@ -39,6 +40,7 @@ void construct_initialise_twofluid (
 	std::shared_ptr<multimat_RS_base>& RS_mixed, 
 	std::shared_ptr<flow_solver_base>& FS,
 	std::shared_ptr<GFM_base>& GFM,
+	std::shared_ptr<newGFM_base>& newGFM,
 	fluid_state_array& statearr1,
 	fluid_state_array& statearr2,
 	levelset_array& ls

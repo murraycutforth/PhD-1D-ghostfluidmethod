@@ -43,11 +43,40 @@ void output_errornorms_to_file (
 	fluid_state_array& fluid1,
 	settingsfile& SF
 );
-	
+
 
 void output_cellwise_error (
 
 	fluid_state_array& fluid1,
+	settingsfile& SF
+);
+
+
+
+blitz::Array<double,2> get_twofluid_cellwise_error (
+	
+	fluid_state_array& fluid1,
+	fluid_state_array& fluid2,
+	levelset_array& ls,
+	settingsfile& SF
+);
+
+
+void output_twofluid_errornorms_to_file (
+
+	fluid_state_array& fluid1,
+	fluid_state_array& fluid2,
+	levelset_array& ls,
+	settingsfile& SF
+);
+
+
+
+void output_twofluid_cellwise_error (
+
+	fluid_state_array& fluid1,
+	fluid_state_array& fluid2,
+	levelset_array& ls,
 	settingsfile& SF
 );
 

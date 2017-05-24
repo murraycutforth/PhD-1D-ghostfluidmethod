@@ -31,14 +31,6 @@ void settingsfile :: read_settings_file ()
 
 		if (inputname == "lslength") iss >> lslength;
 
-		if (inputname == "fluid1_gamma") iss >> fluid1_gamma;
-
-		if (inputname == "fluid1_B") iss >> fluid1_B;
-
-		if (inputname == "fluid2_gamma") iss >> fluid2_gamma;
-
-		if (inputname == "fluid2_B") iss >> fluid2_B;
-
 		if (inputname == "CFL") iss >> CFL;
 
 		if (inputname == "output") iss >> output;
@@ -53,10 +45,6 @@ void settingsfile :: read_settings_file ()
 		
 		if (inputname == "IC") iss >> IC;
 
-		if (inputname == "eos1") iss >> eos1;
-
-		if (inputname == "eos2") iss >> eos2;
-
 		if (inputname == "BC_L") iss >> BC_L;
 		
 		if (inputname == "BC_R") iss >> BC_R;
@@ -68,9 +56,9 @@ void settingsfile :: read_settings_file ()
 	}
 
 	basename = outputpath + GFM + "_" + FS + "_" + RS_pure + "_" + RS_mixed + "_" + IC + "_" 
-		+ eos1 + "-" + eos2 + "_" + std::to_string(length) + "_";
+		+ std::to_string(length) + "_";
 
-	if (sim == "onefluid") basename = outputpath + "onefluid_" + FS + "_" + RS_pure + "_" + IC + "_" + eos1 + "_" + std::to_string(length) + "_";
+	if (sim == "onefluid") basename = outputpath + "onefluid_" + FS + "_" + RS_pure + "_" + IC + "_" + std::to_string(length) + "_";
 	
 	infile.close();
 }

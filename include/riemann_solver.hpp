@@ -73,6 +73,20 @@ class exact_RS_idealgas : public singlefluid_RS_base {
 };
 
 
+class exact_RS_stiffenedgas : public singlefluid_RS_base {
+
+	public:
+
+	void solve_rp (	
+	
+		blitz::Array<double,1> Lstate, 
+		blitz::Array<double,1> Rstate, 
+		blitz::Array<double,1> flux,
+		std::shared_ptr<eos_base> eos
+	);
+};
+
+
 
 
 
@@ -100,6 +114,25 @@ class M_HLLC_RS : public multimat_RS_base {
 
 
 class exact_RS_multi_idealgas : public multimat_RS_base {
+
+	public:
+	
+	void solve_rp_forinterfaceboundary (	
+	
+		blitz::Array<double,1> Lstate,
+		blitz::Array<double,1> Rstate,
+		double& p_star,
+		double& u_star,
+		double& rho_star_L,
+		double& rho_star_R,
+		std::shared_ptr<eos_base> eosL,
+		std::shared_ptr<eos_base> eosR 
+	);
+};
+
+
+
+class exact_RS_multi_stiffenedgas : public multimat_RS_base {
 
 	public:
 	

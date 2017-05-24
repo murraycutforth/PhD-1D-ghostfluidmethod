@@ -15,6 +15,7 @@
 #include "flow_solver.hpp"
 #include "eos.hpp"
 #include "exact_RS_idealgas.hpp"
+#include "exact_RS_stiffenedgas.hpp"
 #include "misc.hpp"
 #include <cassert>
 #include <string>
@@ -165,6 +166,48 @@ void exact_RS_idealgas :: solve_rp (
 	blitz::Array<double,1> soln (3);
 	soln = RS.sample_solution(Lprimitives, Rprimitives, 0.0);
 	double E = eos->E(soln);
+
+	flux = euler_flux(soln(0), soln(1), soln(2), E);
+}
+
+
+
+
+void exact_RS_stiffenedgas :: solve_rp (	
+
+	blitz::Array<double,1> Lstate,
+	blitz::Array<double,1> Rstate,
+	blitz::Array<double,1> flux,
+	std::shared_ptr<eos_base> eos
+)
+{
+	/*
+	 * 	An exact Riemann solver for stiffened gas. Flux across x/t=0 characteristic returned.
+	 */
+
+	assert(eos->get_eos_type() == "stiff");
+	assert(is_state_physical(Lstate, eos));
+	assert(is_state_physical(Rstate, eos));
+
+	blitz::Array<double,1> Lprimitives (3);
+	blitz::Array<double,1> Rprimitives (3);
+ 
+	Lprimitives(0) = Lstate(0);
+	Lprimitives(1) = Lstate(1)/Lstate(0);
+	Lprimitives(2) = eos->p(Lstate);
+
+	Rprimitives(0) = Rstate(0);  
+	Rprimitives(1) = Rstate(1)/Rstate(0);
+	Rprimitives(2) = eos->p(Rstate);  
+
+	exact_rs_stiffenedgas RS (eos->get_gamma(), eos->get_gamma(), eos->get_Pinf(), eos->get_Pinf());
+	RS.solve_RP(Lprimitives,Rprimitives);
+
+	blitz::Array<double,1> soln (3);
+	soln = RS.sample_solution(Lprimitives, Rprimitives, 0.0);
+	double E = eos->E(soln);
+	
+	//~ std::cout << "Flux state is: " << soln(0) << " " << soln(1) << " " << soln(2) << " from WL = " << Lprimitives(0) << " " << Lprimitives(1) << " " << Lprimitives(2) << " and WR = " << Rprimitives(0) << " " << Rprimitives(1) << " " << Rprimitives(2) << " with gamma, Pinf = " << eos->get_gamma() << ", " << eos->get_Pinf() << std::endl;
 
 	flux = euler_flux(soln(0), soln(1), soln(2), E);
 }
@@ -344,6 +387,53 @@ void exact_RS_multi_idealgas :: solve_rp_forinterfaceboundary (
 	Rprimitives(2) = eosR->p(Rstate);
 
 	exact_rs_idealgas RS (eosL->get_gamma(), eosR->get_gamma());
+	RS.solve_RP(Lprimitives,Rprimitives);
+	
+	p_star = RS.P_STAR;
+	u_star = RS.S_STAR;
+	rho_star_L = RS.rho_star_L;
+	rho_star_R = RS.rho_star_R;
+	
+	assert(is_state_physical(conserved_variables(rho_star_L,u_star,p_star,eosL), eosL));
+	assert(is_state_physical(conserved_variables(rho_star_R,u_star,p_star,eosR), eosR));
+}
+
+
+
+
+
+void exact_RS_multi_stiffenedgas :: solve_rp_forinterfaceboundary (	
+
+	blitz::Array<double,1> Lstate,
+	blitz::Array<double,1> Rstate,
+	double& p_star,
+	double& u_star,
+	double& rho_star_L,
+	double& rho_star_R,
+	std::shared_ptr<eos_base> eosL,
+	std::shared_ptr<eos_base> eosR 
+)
+{
+	/*
+	 * 	Exact mixed Riemann solver, where both left and right fluids obey the
+	 *	ideal gas equation of state.
+	 */
+
+	assert(eosL->get_eos_type() == "stiff");
+	assert(eosR->get_eos_type() == "stiff");
+
+	blitz::Array<double,1> Lprimitives (3);
+	blitz::Array<double,1> Rprimitives (3);
+
+	Lprimitives(0) = Lstate(0);
+	Lprimitives(1) = Lstate(1)/Lstate(0);
+	Lprimitives(2) = eosL->p(Lstate);
+
+	Rprimitives(0) = Rstate(0);
+	Rprimitives(1) = Rstate(1)/Rstate(0);
+	Rprimitives(2) = eosR->p(Rstate);
+
+	exact_rs_stiffenedgas RS (eosL->get_gamma(), eosR->get_gamma(), eosL->get_Pinf(), eosR->get_Pinf());
 	RS.solve_RP(Lprimitives,Rprimitives);
 	
 	p_star = RS.P_STAR;

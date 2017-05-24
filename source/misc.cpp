@@ -75,6 +75,19 @@ blitz::Array<double,1> conserved_variables (
 }
 
 
+
+blitz::Array<double,1> conserved_variables (blitz::Array<double,1> W, std::shared_ptr<eos_base> eos)
+{
+	blitz::Array<double,1> CV (3);
+
+	CV(0) = W(0);
+	CV(1) = W(0) * W(1);
+	CV(2) = eos->E(W(0), W(1), W(2));
+
+	return CV;
+}
+
+
 double specific_ie_cv (blitz::Array<double,1> state)
 {
 	return (state(2)/state(0)) - 0.5*(state(1)/state(0))*(state(1)/state(0));

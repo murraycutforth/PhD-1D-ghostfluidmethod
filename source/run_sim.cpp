@@ -21,6 +21,18 @@
 #define all blitz::Range::all()
 
 
+onefluid_sim :: onefluid_sim ()
+:
+	eos (),
+	RS (),
+	FS (),
+	FL (3),
+	FR (3),
+	U0 (3),
+	Ut (3)
+{}
+
+
 void onefluid_sim :: run_sim (settingsfile SF)
 {
 	/*
@@ -29,17 +41,9 @@ void onefluid_sim :: run_sim (settingsfile SF)
 	 *	solvers and Euler solvers.
 	 */
 	
-	std::shared_ptr<eos_base> eos;
-	std::shared_ptr<singlefluid_RS_base> RS;
-	std::shared_ptr<flow_solver_base> FS;
-	
 	fluid_state_array statearr (construct_initialise_onefluid(SF, eos, RS, FS));
 	fluid_state_array tempstatearr (statearr.copy());
 
-	blitz::Array<double,1> FL (3);
-	blitz::Array<double,1> FR (3);
-	blitz::Array<double,1> U0 (3);
-	blitz::Array<double,1> Ut (3);
 	compute_total_U_onefluid(statearr, U0);
 	compute_total_U_onefluid(statearr, Ut);
 
@@ -56,12 +60,20 @@ void onefluid_sim :: run_sim (settingsfile SF)
 	while (t < SF.T)
 	{
 		CFL = (numsteps < 5) ? std::min(SF.CFL, 0.2) : SF.CFL;
+		
+		
+		/*
+		 * First update all stored variables to next time level
+		 */
+		 
 		dt = compute_dt(CFL, statearr, SF.T, t);
-
 		FS->single_fluid_update(statearr, tempstatearr, dt, FL, FR);
-
 		statearr.CV = tempstatearr.CV;
-		statearr.apply_BCs();
+		
+		
+		/*
+		 * Now deal with output and record-keeping
+		 */
 		
 		numsteps++;
 		t += dt;
@@ -73,8 +85,6 @@ void onefluid_sim :: run_sim (settingsfile SF)
 		std::cout << "[" << SF.basename << "] Time step " << numsteps << " complete. t = " << t << std::endl;
 	}
 
-	
-	
 	statearr.output_to_file(SF.basename + "final.dat");
 	output_errornorms_to_file(statearr, SF);
 
@@ -122,6 +132,7 @@ twofluid_sim :: twofluid_sim ()
 	RS_mixed (),
 	FS (),
 	GFM (),
+	newGFM (),
 	statearr1 (),
 	statearr2 (),
 	ls (),
@@ -150,6 +161,7 @@ void twofluid_sim :: run_sim (settingsfile SF)
 		RS_mixed,
 		FS,
 		GFM,
+		newGFM,
 		statearr1,
 		statearr2,
 		ls
@@ -166,7 +178,7 @@ void twofluid_sim :: run_sim (settingsfile SF)
 	compute_total_U_twofluid(statearr1, statearr2, ls, U0);
 	compute_total_U_twofluid(statearr1, statearr2, ls, Ut);
 
-	output_endoftimestep(0, SF, statearr1, statearr2, ls);
+	output_endoftimestep(0, SF, statearr1, statearr2, ls, t);
 	output_conservation_errors_to_file(Ut, U0, t, SF);
 
 	std::cout << "[" << SF.basename << "] Initialisation complete. Beginning time iterations.." << std::endl;
@@ -175,21 +187,33 @@ void twofluid_sim :: run_sim (settingsfile SF)
 	while (t < SF.T)
 	{
 		CFL = (numsteps < 5) ? std::min(SF.CFL, 0.2) : SF.CFL;
+		
+		
+		/*
+		 * First update all stored variables to next time level
+		 */
+		
 		dt = compute_dt(CFL, SF.T, t, statearr1, statearr2, ls);
 	
-		GFM->set_ghost_cells(statearr1, statearr2, ls, prev_ls, RS_mixed);
+		GFM->set_ghost_cells(statearr1, statearr2, ls, prev_ls, RS_mixed, dt);
+		
 		FS->single_fluid_update(statearr1, tempstatearr1, dt, FL1, FR1);
 		FS->single_fluid_update(statearr2, tempstatearr2, dt, FL2, FR2);
 		ls.advection_step(dt, GFM->extension_interface_velocity, prev_ls);
+		
+		newGFM->update_state(statearr1, tempstatearr1, statearr2, tempstatearr2, ls, prev_ls, RS_mixed, dt);
 
 		statearr1.CV = tempstatearr1.CV;
-		statearr1.apply_BCs();
 		statearr2.CV = tempstatearr2.CV;
-		statearr2.apply_BCs();
+		
+		
+		/*
+		 * Now deal with output and record-keeping
+		 */
 		
 		numsteps++;
 		t += dt;
-		if (SF.output) output_endoftimestep(numsteps, SF, statearr1, statearr2, ls);
+		if (SF.output) output_endoftimestep(numsteps, SF, statearr1, statearr2, ls, t);
 		update_total_U_twofluid(FL1, FR1, FL2, FR2, ls, U0, dt, statearr1);
 		compute_total_U_twofluid(statearr1, statearr2, ls, Ut);
 		output_conservation_errors_to_file(Ut, U0, t, SF);
@@ -222,19 +246,13 @@ double twofluid_sim :: compute_dt (
 	
 	double maxu = 0.0;
 
-	for (int i=state1.array.numGC; i<state1.array.length + state1.array.numGC; i++)
+	for (int i=0; i<=state1.array.length + state1.array.numGC; i++)
 	{
 		double u1 = fabs(state1.CV(i,1)/state1.CV(i,0)) + state1.eos->a(state1.CV(i,all));
 		double u2 = fabs(state2.CV(i,1)/state2.CV(i,0)) + state2.eos->a(state2.CV(i,all));
 		
-		if (ls.linear_interpolation(state1.array.cellcentre_coord(i)) <= 0.0)
-		{
-			maxu = std::max(maxu, u1);
-		}
-		else
-		{
-			maxu = std::max(maxu, u2);
-		}
+		maxu = std::max(maxu, u1);
+		maxu = std::max(maxu, u2);
 	}
 
 	double dt = CFL*state1.array.dx/maxu;
@@ -251,17 +269,93 @@ void twofluid_sim :: output_endoftimestep (
 	settingsfile& SF, 
 	fluid_state_array& state1, 
 	fluid_state_array& state2, 
-	levelset_array& ls
+	levelset_array& ls,
+	double t
 )
 {
 	/*
 	 *	All outputs to be perfomed upon completion of time step
 	 */
 	
-	state1.output_to_file(SF.basename + "fluid1_" + std::to_string(numsteps) + ".dat");
-	state2.output_to_file(SF.basename + "fluid2_" + std::to_string(numsteps) + ".dat");
-	ls.output_to_file(SF.basename + "ls_" + std::to_string(numsteps) + ".dat");
-	output_realfluidonly(std::to_string(numsteps), SF, state1, state2, ls);
+	static double WM0, AM0;
+	 
+	if (SF.IC == "NE4")
+	{
+		// Output wall pressure coefficients at current time
+		
+		if (numsteps % 10 == 0)
+		{
+		
+			double p0 = 1.0;
+			 
+			double PL = state1.eos->p(state1.CV(state1.array.numGC,all));
+			double PR = state1.eos->p(state1.CV(state1.array.numGC + state1.array.length - 1,all));
+			
+			double WM = 0.0, AM = 0.0;
+			for (int i=state1.array.numGC; i<state1.array.length + state1.array.numGC; i++)
+			{
+				double x = state1.array.cellcentre_coord(i);
+				
+				double phiL = ls.linear_interpolation(x - 0.5*state1.array.dx);
+				double phiR = ls.linear_interpolation(x + 0.5*state1.array.dx);
+				
+				if (phiL <= 0.0 && phiR <= 0.0)
+				{
+					AM += state1.array.dx*state1.CV(i,0);
+				}
+				else if (phiL > 0.0 && phiR > 0.0)
+				{
+					WM += state1.array.dx*state2.CV(i,0);
+				}
+				else
+				{
+					if (phiL <= 0.0)
+					{
+						AM += (fabs(phiL))*state1.CV(i,0);
+						WM += ((state1.array.dx - fabs(phiL)))*state2.CV(i,0);
+					}
+					else
+					{
+						WM += (fabs(phiL))*state2.CV(i,0);
+						AM += ((state1.array.dx - fabs(phiL)))*state1.CV(i,0);
+					}
+				}
+			}
+			
+			std::ofstream outfile1, outfile2, outfile3, outfile4;
+			if (t==0)
+			{ 
+				outfile1.open(SF.basename + "_PL.dat");
+				outfile2.open(SF.basename + "_PR.dat");
+				outfile3.open(SF.basename + "_watermass.dat");
+				outfile4.open(SF.basename + "_airmass.dat");
+				
+				AM0 = AM;
+				WM0 = WM;
+			}
+				
+		
+			else
+			{
+				outfile1.open(SF.basename + "_PL.dat", std::fstream::app);
+				outfile2.open(SF.basename + "_PR.dat", std::fstream::app);
+				outfile3.open(SF.basename + "_watermass.dat", std::fstream::app);
+				outfile4.open(SF.basename + "_airmass.dat", std::fstream::app);
+			}
+			
+			outfile1 << t << " " << (PL - p0)/p0 << std::endl;
+			outfile2 << t << " " << (PR - p0)/p0 << std::endl;
+			outfile3 << t << " " << (WM - WM0)/WM0 << std::endl;
+			outfile4 << t << " " << (AM - AM0)/AM0 << std::endl;
+		}
+	}
+	else
+	{
+		state1.output_to_file(SF.basename + "fluid1_" + std::to_string(numsteps) + ".dat");
+		state2.output_to_file(SF.basename + "fluid2_" + std::to_string(numsteps) + ".dat");
+		ls.output_to_file(SF.basename + "ls_" + std::to_string(numsteps) + ".dat");
+		output_realfluidonly(std::to_string(numsteps), SF, state1, state2, ls);
+	}
 }
 	
 
@@ -283,22 +377,11 @@ void twofluid_sim :: output_endofsimulation (
 	ls.output_to_file(SF.basename + "ls_final.dat");
 	output_realfluidonly("final", SF, state1, state2, ls);
 
-	fluid_state_array realstate (state1.copy());
-	for (int i=state1.array.numGC; i<state1.array.length + state1.array.numGC; i++)
+	if (SF.IC != "NE4")
 	{
-		double x = state1.array.cellcentre_coord(i);
-
-		if (ls.linear_interpolation(x) <= 0.0)
-		{
-			realstate.CV(i,all) = state1.CV(i,all);
-		}
-		else
-		{
-			realstate.CV(i,all) = state2.CV(i,all);
-		}
+		output_twofluid_errornorms_to_file(state1, state2, ls, SF);
+		output_twofluid_cellwise_error(state1, state2, ls, SF);
 	}
-	output_errornorms_to_file(realstate, SF);
-	output_cellwise_error(realstate, SF);
 }
 
 
@@ -336,3 +419,10 @@ void twofluid_sim :: output_realfluidonly (
 		}
 	}
 }
+
+
+
+
+
+
+

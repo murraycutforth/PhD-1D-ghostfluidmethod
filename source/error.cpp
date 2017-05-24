@@ -25,11 +25,13 @@ blitz::Array<double,2> get_cellwise_error (
 	 *	variables in each cell.
 	 */
 
-	blitz::Array<double,2> cellwise_error (fluid1.array.length,3);
+	blitz::Array<double,2> cellwise_error (fluid1.array.length,4);
 	blitz::Array<double,1> leftprimitives (3);
 	blitz::Array<double,1> rightprimitives (3);
 	blitz::Array<double,1> soln (3);
 	double discontinuitylocation;
+	double gammaL = 1.4;
+	double gammaR = 1.4;
 	
 	if (SF.IC == "TTC1")
 	{
@@ -81,6 +83,17 @@ blitz::Array<double,2> get_cellwise_error (
 		rightprimitives(2) = 46.0950;
 		discontinuitylocation = 0.5;
 	}
+	else if (SF.IC == "NE1")
+	{
+		leftprimitives(0) = 1.0;
+		leftprimitives(1) = 0.0;
+		leftprimitives(2) = 100000.0;
+		rightprimitives(0) = 0.125;
+		rightprimitives(1) = 0.0;
+		rightprimitives(2) = 10000.0;
+		discontinuitylocation = 0.5;
+		gammaR = 1.2;
+	}
 	else if (SF.IC == "GDA")
 	{
 		
@@ -99,6 +112,7 @@ blitz::Array<double,2> get_cellwise_error (
 			cellwise_error(i,0) = fabs(exactrho - fluid1.CV(fluidcellind,0));
 			cellwise_error(i,1) = fabs(u - (fluid1.CV(fluidcellind,1)/fluid1.CV(fluidcellind,0)));
 			cellwise_error(i,2) = fabs(p - fluid1.eos->p(fluid1.CV(fluidcellind,blitz::Range::all())));
+			cellwise_error(i,3) = fabs(fluid1.eos->specific_ie_prim(exactrho, u, p) - specific_ie_cv(fluid1.CV(fluidcellind,blitz::Range::all())));
 		}
 
 		return cellwise_error;		
@@ -109,7 +123,7 @@ blitz::Array<double,2> get_cellwise_error (
 	}
 	
 
-	exact_rs_idealgas RS (fluid1.eos->get_gamma(), fluid1.eos->get_gamma());
+	exact_rs_idealgas RS (gammaL, gammaR);
 	RS.solve_RP(leftprimitives,rightprimitives);
 	
 	for (int i=0; i<fluid1.array.length; i++)
@@ -122,10 +136,172 @@ blitz::Array<double,2> get_cellwise_error (
 		cellwise_error(i,0) = fabs(soln(0) - fluid1.CV(fluidcellind,0));
 		cellwise_error(i,1) = fabs(soln(1) - (fluid1.CV(fluidcellind,1)/fluid1.CV(fluidcellind,0)));
 		cellwise_error(i,2) = fabs(soln(2) - fluid1.eos->p(fluid1.CV(fluidcellind,blitz::Range::all())));
+		cellwise_error(i,3) = fabs(fluid1.eos->specific_ie_prim(soln) - specific_ie_cv(fluid1.CV(fluidcellind,blitz::Range::all())));
 	}
 	
 	return cellwise_error;
 }
+
+
+
+
+blitz::Array<double,2> get_twofluid_cellwise_error (
+	
+	fluid_state_array& fluid1,
+	fluid_state_array& fluid2,
+	levelset_array& ls,
+	settingsfile& SF
+)
+{
+	blitz::Array<double,2> cellwise_error (fluid1.array.length,4);
+	blitz::Array<double,1> leftprimitives (3);
+	blitz::Array<double,1> rightprimitives (3);
+	blitz::Array<double,1> soln (3);
+	blitz::Array<double,1> computedsoln (3);
+	double discontinuitylocation;
+	std::shared_ptr<eos_base> thiseos;
+	std::shared_ptr<eos_base> exacteos;
+	
+	if (SF.IC == "TTC1")
+	{
+		leftprimitives(0) = 1.0;
+		leftprimitives(1) = 0.0;
+		leftprimitives(2) = 1.0;
+		rightprimitives(0) = 0.125;
+		rightprimitives(1) = 0.0;
+		rightprimitives(2) = 0.1;
+		discontinuitylocation = 0.5;
+	}
+	else if (SF.IC == "TTC2")
+	{
+		leftprimitives(0) = 1.0;
+		leftprimitives(1) = -2.0;
+		leftprimitives(2) = 0.4;
+		rightprimitives(0) = 1.0;
+		rightprimitives(1) = 2.0;
+		rightprimitives(2) = 0.4;
+		discontinuitylocation = 0.5;
+	}
+	else if (SF.IC == "TTC5")
+	{
+		leftprimitives(0) = 5.99924;
+		leftprimitives(1) = 19.5975;
+		leftprimitives(2) = 460.894;
+		rightprimitives(0) = 5.99242;
+		rightprimitives(1) = -6.19633;
+		rightprimitives(2) = 46.0950;
+		discontinuitylocation = 0.5;
+	}
+	else if (SF.IC == "NE1")
+	{
+		leftprimitives(0) = 1.0;
+		leftprimitives(1) = 0.0;
+		leftprimitives(2) = 100000.0;
+		rightprimitives(0) = 0.125;
+		rightprimitives(1) = 0.0;
+		rightprimitives(2) = 10000.0;
+		discontinuitylocation = 0.5;
+	}
+	else if (SF.IC == "NE2")
+	{
+		leftprimitives(0) = 3.175962;
+		leftprimitives(1) = 9.434992;
+		leftprimitives(2) = 100.0;
+		rightprimitives(0) = 1.0;
+		rightprimitives(1) = 0.0;
+		rightprimitives(2) = 1.0;
+		discontinuitylocation = 0.2;
+	}
+	else if (SF.IC == "NE3")
+	{
+		leftprimitives(0) = 0.00596521;
+		leftprimitives(1) = 911.8821;
+		leftprimitives(2) = 100.0;
+		rightprimitives(0) = 1.0;
+		rightprimitives(1) = 0.0;
+		rightprimitives(2) = 1.0;
+		discontinuitylocation = 0.5;
+	}
+	else if (SF.IC == "GDA")
+	{
+		
+		double u = 1.0;
+		double p = 0.0001;
+		double mu = 0.5;
+		double A = 1000.0;
+		double sigma = 0.1;
+
+		for (int i=0; i<fluid1.array.length; i++)
+		{
+			int fluidcellind = i + fluid1.array.numGC;
+			double x = fluid1.array.cellcentre_coord(fluidcellind);
+			double exactrho = gaussian_function(A,mu,sigma,x);
+			
+			double phi = ls.linear_interpolation(fluid1.array.cellcentre_coord(fluidcellind));
+			if (phi <= 0.0)
+			{
+				computedsoln = fluid1.CV(fluidcellind, blitz::Range::all());
+				thiseos = fluid1.eos;
+			}
+			else 
+			{
+				computedsoln = fluid2.CV(fluidcellind, blitz::Range::all());
+				thiseos = fluid2.eos;
+			}
+
+			cellwise_error(i,0) = fabs(exactrho - computedsoln(0));
+			cellwise_error(i,1) = fabs(u - (computedsoln(1)/computedsoln(0)));
+			cellwise_error(i,2) = fabs(p - thiseos->p(computedsoln));
+		}
+
+		return cellwise_error;		
+	}
+	else
+	{
+		assert(!"Invalid IC in error function");
+	}
+	
+
+	exact_rs_idealgas RS (fluid1.eos->get_gamma(), fluid2.eos->get_gamma());
+	RS.solve_RP(leftprimitives,rightprimitives);
+	
+	for (int i=0; i<fluid1.array.length; i++)
+	{
+		int fluidcellind = i + fluid1.array.numGC;
+		double x = fluid1.array.cellcentre_coord(fluidcellind);
+		double xot = (x - discontinuitylocation)/SF.T;
+		soln = RS.sample_solution(leftprimitives, rightprimitives, xot);
+
+		double phi = ls.linear_interpolation(fluid1.array.cellcentre_coord(fluidcellind));
+		if (phi <= 0.0)
+		{
+			computedsoln = fluid1.CV(fluidcellind, blitz::Range::all());
+			thiseos = fluid1.eos;
+		}
+		else 
+		{
+			computedsoln = fluid2.CV(fluidcellind, blitz::Range::all());
+			thiseos = fluid2.eos;
+		}
+		
+		if (xot < RS.S_STAR)
+		{
+			exacteos = fluid1.eos;
+		}
+		else
+		{
+			exacteos = fluid2.eos;
+		}
+
+		cellwise_error(i,0) = fabs(soln(0) - computedsoln(0));
+		cellwise_error(i,1) = fabs(soln(1) - (computedsoln(1)/computedsoln(0)));
+		cellwise_error(i,2) = fabs(soln(2) - thiseos->p(computedsoln));
+		cellwise_error(i,3) = fabs(exacteos->specific_ie_prim(soln) - specific_ie_cv(computedsoln));
+	}
+	
+	return cellwise_error;
+}
+
 
 
 
@@ -243,6 +419,36 @@ void output_errornorms_to_file (
 }
 
 
+void output_twofluid_errornorms_to_file (
+
+	fluid_state_array& fluid1,
+	fluid_state_array& fluid2,
+	levelset_array& ls,
+	settingsfile& SF
+)
+{
+	blitz::Array<double,2> cellwise_error (get_twofluid_cellwise_error(fluid1,fluid2,ls,SF));
+
+	double L1errrho, Linferrrho;	
+	get_density_errornorms(cellwise_error, L1errrho, Linferrrho);
+	std::ofstream outfile;
+	outfile.open(SF.basename + "densityerror.dat");
+	outfile << SF.length << " " << L1errrho << std::endl;
+	
+	double L1erru, Linferru;	
+	get_velocity_errornorms(cellwise_error, L1erru, Linferru);
+	std::ofstream outfile2;
+	outfile2.open(SF.basename + "velocityerror.dat");
+	outfile2 << SF.length << " " << L1erru << std::endl;
+	
+	double L1errp, Linferrp;	
+	get_pressure_errornorms(cellwise_error, L1errp, Linferrp);
+	std::ofstream outfile3;
+	outfile3.open(SF.basename + "pressureerror.dat");
+	outfile3 << SF.length << " " << L1errp << std::endl;
+}
+
+
 void output_cellwise_error (
 
 	fluid_state_array& fluid1,
@@ -265,6 +471,35 @@ void output_cellwise_error (
 		outfile << x << " " << cellwise_error(i,0) << " " << cellwise_error(i,1) << " " << cellwise_error(i,2) << std::endl;
 	}
 }
+
+
+
+void output_twofluid_cellwise_error (
+
+	fluid_state_array& fluid1,
+	fluid_state_array& fluid2,
+	levelset_array& ls,
+	settingsfile& SF
+)
+{
+	std::ofstream outfile;
+	outfile.open(SF.basename + "cellwiseerror.dat");
+	
+	if (SF.IC != "NE4")
+	{
+		blitz::Array<double,2> cellwise_error (get_twofluid_cellwise_error(fluid1,fluid2,ls,SF));
+		
+		outfile << fluid1.array.x0 << " " << 0 << " " << 0 << " " << 0 << " " << 0 << std::endl;
+	
+		for (int i=0; i<SF.length; i++)
+		{
+			int fluidcellind = i + fluid1.array.numGC;
+			double x = fluid1.array.cellcentre_coord(fluidcellind);
+			outfile << x << " " << cellwise_error(i,0) << " " << cellwise_error(i,1) << " " << cellwise_error(i,2) << " " << cellwise_error(i,3) << std::endl;
+		}
+	}
+}
+	
 
 
 
